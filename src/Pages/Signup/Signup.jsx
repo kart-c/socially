@@ -1,3 +1,4 @@
+import React from 'react';
 import {
 	Button,
 	Checkbox,
@@ -10,7 +11,7 @@ import {
 	SimpleGrid,
 	Text,
 } from '@chakra-ui/react';
-import React from 'react';
+import { Link as ReachLink } from 'react-router-dom';
 
 const Signup = () => {
 	return (
@@ -47,7 +48,7 @@ const Signup = () => {
 					</Button>
 					<Text>
 						Already a user?
-						<Link href="/login" color="brand.500" px="2">
+						<Link as={ReachLink} to="/login" color="brand.500" px="2">
 							Login
 						</Link>
 					</Text>

@@ -1,3 +1,4 @@
+import React from 'react';
 import {
 	Button,
 	Checkbox,
@@ -9,7 +10,7 @@ import {
 	Link,
 	Text,
 } from '@chakra-ui/react';
-import React from 'react';
+import { Link as ReachLink } from 'react-router-dom';
 
 const Login = () => {
 	return (
@@ -31,7 +32,7 @@ const Login = () => {
 				</Button>
 				<Text>
 					Not a user?
-					<Link href="/signup" color="brand.500" px="2">
+					<Link as={ReachLink} to="/signup" color="brand.500" px="2">
 						Signup
 					</Link>
 				</Text>
