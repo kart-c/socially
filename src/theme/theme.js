@@ -9,8 +9,9 @@ export const theme = extendTheme(
 				400: '#1fa5ff',
 				500: '#1d9bf0',
 			},
-			bg: {
+			gray: {
 				100: '#f7f9f9',
+				200: '#0f14191a',
 			},
 			black: '#0f1419',
 		},
@@ -37,6 +38,7 @@ export const theme = extendTheme(
 				variants: {
 					brand: {
 						backgroundColor: 'brand.500',
+						color: '#fff',
 						_hover: {
 							backgroundColor: 'brand.400',
 						},
