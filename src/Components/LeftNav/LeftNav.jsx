@@ -2,7 +2,7 @@ import { Button, Flex, Heading, Text } from '@chakra-ui/react';
 import { Link, NavLink } from 'react-router-dom';
 import { FiHome, FiHash, FiBookmark, FiUser, FiPlusCircle } from 'react-icons/fi';
 
-const LeftNav = () => {
+const LeftNav = ({ onOpen }) => {
 	const activeLink = ({ isActive }) => (isActive ? { fontWeight: 'bold' } : '');
 
 	return (
@@ -84,9 +84,7 @@ const LeftNav = () => {
 				</Text>
 			</Flex>
 			<Flex
-				as={NavLink}
-				// style={activeLink}
-				to="/"
+				as={'button'}
 				align="center"
 				fontSize="20"
 				pl="4"
@@ -102,6 +100,7 @@ const LeftNav = () => {
 				_hover={{
 					bgColor: 'gray.200',
 				}}
+				onClick={onOpen}
 			>
 				<FiPlusCircle display="inline" />
 			</Flex>
@@ -151,6 +150,7 @@ const LeftNav = () => {
 				borderRadius="100px"
 				py="6"
 				display={{ base: 'none', mySm: 'inline-flex' }}
+				onClick={onOpen}
 			>
 				New Post
 			</Button>
