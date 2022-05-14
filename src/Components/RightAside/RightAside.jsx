@@ -12,6 +12,8 @@ const RightAside = () => {
 			borderRadius="lg"
 			align="flex-start"
 			h="max-content"
+			position="sticky"
+			top="6"
 			display={{ base: 'none', myMd: 'flex' }}
 		>
 			<Text m="4">People you may know</Text>
