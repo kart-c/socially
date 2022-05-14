@@ -128,7 +128,7 @@ const LeftNav = () => {
 			<Flex
 				as={NavLink}
 				// style={activeLink}
-				to="/"
+				to="/login"
 				align="center"
 				fontSize="20"
 				pl="4"
