@@ -1,21 +1,46 @@
-import { Button, Flex, Heading, Text, VStack } from '@chakra-ui/react';
+import { Button, Flex, Heading, Text } from '@chakra-ui/react';
 import { Link, NavLink } from 'react-router-dom';
-import { FiHome, FiHash, FiBookmark, FiUser } from 'react-icons/fi';
+import { FiHome, FiHash, FiBookmark, FiUser, FiPlusCircle } from 'react-icons/fi';
 
 const LeftNav = () => {
 	const activeLink = ({ isActive }) => (isActive ? { fontWeight: 'bold' } : '');
 
 	return (
-		<VStack
+		<Flex
 			as="nav"
 			w="300"
-			p="4"
 			align="flex-start"
 			gap="3"
-			pt="6"
-			display={{ base: 'none', mySm: 'flex' }}
+			mt="6"
+			height="max-content"
+			zIndex="2"
+			p={{ base: '2', mySm: '4' }}
+			pt={{ base: '2', mySm: '0' }}
+			position={{ mySm: 'sticky', base: 'fixed' }}
+			top={{ base: 'unset', mySm: '6' }}
+			bottom={{ base: '0', mySm: 'unset' }}
+			flexDir={{
+				base: 'row',
+				mySm: 'column',
+			}}
+			right={{
+				base: 0,
+				mySm: 'initial',
+			}}
+			left={{
+				base: 0,
+				mySm: 'initial',
+			}}
+			justify={{
+				base: 'space-evenly',
+				mySm: 'unset',
+			}}
+			bgColor={{
+				base: 'gray.100',
+				mySm: 'initial',
+			}}
 		>
-			<Heading as="h1" my="0" color="brand.500">
+			<Heading as="h1" my="0" color="brand.500" ml="4" display={{ base: 'none', mySm: 'block' }}>
 				<Link to="/">Socially</Link>
 			</Heading>
 			<Flex
@@ -34,7 +59,7 @@ const LeftNav = () => {
 				}}
 			>
 				<FiHome display="inline" />
-				<Text as="span" pt="1" ml="3">
+				<Text as="span" pt="1" ml="3" display={{ base: 'none', mySm: 'block' }}>
 					Home
 				</Text>
 			</Flex>
@@ -54,9 +79,31 @@ const LeftNav = () => {
 				}}
 			>
 				<FiHash display="inline" />
-				<Text as="span" pt="1" ml="3">
+				<Text as="span" pt="1" ml="3" display={{ base: 'none', mySm: 'block' }}>
 					Explore
 				</Text>
+			</Flex>
+			<Flex
+				as={NavLink}
+				// style={activeLink}
+				to="/"
+				align="center"
+				fontSize="20"
+				pl="4"
+				pr="5"
+				pt="2"
+				pb="3"
+				color="brand.500"
+				borderRadius="100px"
+				display={{
+					base: 'flex',
+					mySm: 'none',
+				}}
+				_hover={{
+					bgColor: 'gray.200',
+				}}
+			>
+				<FiPlusCircle display="inline" />
 			</Flex>
 			<Flex
 				as={NavLink}
@@ -74,7 +121,7 @@ const LeftNav = () => {
 				}}
 			>
 				<FiBookmark display="inline" />
-				<Text as="span" pt="1" ml="3">
+				<Text as="span" pt="1" ml="3" display={{ base: 'none', mySm: 'block' }}>
 					Bookmark
 				</Text>
 			</Flex>
@@ -94,14 +141,20 @@ const LeftNav = () => {
 				}}
 			>
 				<FiUser display="inline" />
-				<Text as="span" pt="1" ml="3">
+				<Text as="span" pt="1" ml="3" display={{ base: 'none', mySm: 'block' }}>
 					Profile
 				</Text>
 			</Flex>
-			<Button variant="brand" w="90%" borderRadius="100px" py="6">
+			<Button
+				variant="brand"
+				w="90%"
+				borderRadius="100px"
+				py="6"
+				display={{ base: 'none', mySm: 'inline-flex' }}
+			>
 				New Post
 			</Button>
-		</VStack>
+		</Flex>
 	);
 };
 
