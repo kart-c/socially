@@ -31,7 +31,7 @@ const RightAside = () => {
 				}}
 			>
 				<HStack>
-					<Avatar name="Kartik Choudhary" src="https://" size="sm" />
+					<Avatar name="Master Oogway" src="https://" size="sm" />
 					<VStack align="flex-start" spacing="0" ml="2">
 						<Text as="span" fontSize="16px">
 							Kartik Choudhary
