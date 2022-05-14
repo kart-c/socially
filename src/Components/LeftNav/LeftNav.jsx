@@ -3,7 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { FiHome, FiHash, FiBookmark, FiUser, FiPlusCircle } from 'react-icons/fi';
 
 const LeftNav = ({ onOpen }) => {
-	const activeLink = ({ isActive }) => (isActive ? { fontWeight: 'bold' } : '');
+	const activeLink = ({ isActive }) => (isActive ? { fontWeight: '700' } : { fontWeight: '400' });
 
 	return (
 		<Flex
@@ -65,8 +65,8 @@ const LeftNav = ({ onOpen }) => {
 			</Flex>
 			<Flex
 				as={NavLink}
-				// style={activeLink}
-				to="/"
+				style={activeLink}
+				to="/explore"
 				align="center"
 				fontSize="20"
 				pl="4"
@@ -106,8 +106,8 @@ const LeftNav = ({ onOpen }) => {
 			</Flex>
 			<Flex
 				as={NavLink}
-				// style={activeLink}
-				to="/"
+				style={activeLink}
+				to="/bookmark"
 				align="center"
 				fontSize="20"
 				pl="4"
@@ -126,8 +126,8 @@ const LeftNav = ({ onOpen }) => {
 			</Flex>
 			<Flex
 				as={NavLink}
-				// style={activeLink}
-				to="/login"
+				style={activeLink}
+				to="/profile"
 				align="center"
 				fontSize="20"
 				pl="4"
