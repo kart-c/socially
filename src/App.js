@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, useDisclosure } from '@chakra-ui/react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { LeftNav, PostModal, RightAside } from 'Components';
-import { Explore, Home, Login, Signup, Bookmark } from 'Pages';
+import { Explore, Home, Login, Signup, Bookmark, Profile } from 'Pages';
 import './App.css';
 
 function App() {
@@ -28,6 +28,7 @@ function App() {
 				<Route path="/signup" element={<Signup />} />
 				<Route path="/explore" element={<Explore />} />
 				<Route path="/bookmark" element={<Bookmark />} />
+				<Route path="/profile" element={<Profile />} />
 			</Routes>
 			{pathname.slice(1) === 'login' || pathname.slice(1) === 'signup' ? null : <RightAside />}
 		</Container>
