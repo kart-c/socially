@@ -1,5 +1,6 @@
-import { Box } from '@chakra-ui/react';
 import React from 'react';
+import { Box, Heading } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 
 const PgWrapper = ({ children }) => {
 	return (
@@ -13,6 +14,16 @@ const PgWrapper = ({ children }) => {
 			borderColor="gray.200"
 			flexGrow="1"
 		>
+			<Heading
+				as="h1"
+				my="0"
+				color="brand.500"
+				px="4"
+				mb="2"
+				display={{ base: 'block', mySm: 'none' }}
+			>
+				<Link to="/">Socially</Link>
+			</Heading>
 			{children}
 		</Box>
 	);

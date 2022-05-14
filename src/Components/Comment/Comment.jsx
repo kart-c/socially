@@ -10,7 +10,13 @@ const Comment = () => {
 				<Box bgColor="gray.200" p="3" flexGrow="1" borderRadius="lg" position="relative">
 					<Heading as="h4" fontWeight="700" fontSize="16" mb="2">
 						Kartik Choudhary{' '}
-						<Text as="span" fontWeight="400" fontSize="14" color="gray.300">
+						<Text
+							as="span"
+							fontWeight="400"
+							fontSize="14"
+							color="gray.300"
+							display={{ base: 'none', mySm: 'inline' }}
+						>
 							@kart_c11
 						</Text>
 					</Heading>
