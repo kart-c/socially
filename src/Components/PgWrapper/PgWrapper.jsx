@@ -11,6 +11,7 @@ const PgWrapper = ({ children }) => {
 			borderRight="1px solid"
 			borderLeft="1px solid"
 			borderColor="gray.200"
+			flexGrow="1"
 		>
 			{children}
 		</Box>

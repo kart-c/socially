@@ -6,11 +6,18 @@ const LeftNav = () => {
 	const activeLink = ({ isActive }) => (isActive ? { fontWeight: 'bold' } : '');
 
 	return (
-		<VStack as="nav" w="25%" p="4" pl="12" align="flex-start" gap="3" pt="6">
+		<VStack
+			as="nav"
+			w="300"
+			p="4"
+			align="flex-start"
+			gap="3"
+			pt="6"
+			display={{ base: 'none', mySm: 'flex' }}
+		>
 			<Heading as="h1" my="0" color="brand.500">
 				<Link to="/">Socially</Link>
 			</Heading>
-
 			<Flex
 				as={NavLink}
 				style={activeLink}
