@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, useDisclosure } from '@chakra-ui/react';
 import { LeftNav, PostModal, RightAside } from 'Components';
-import { Home, Login, Signup } from 'Pages';
+import { Explore, Home, Login, Signup } from 'Pages';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import './App.css';
 
@@ -26,6 +26,7 @@ function App() {
 				<Route path="/" element={<Home onOpen={onOpen} />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/signup" element={<Signup />} />
+				<Route path="/explore" element={<Explore />} />
 			</Routes>
 			{pathname.slice(1) === 'login' || pathname.slice(1) === 'signup' ? null : <RightAside />}
 		</Container>
