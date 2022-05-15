@@ -13,6 +13,7 @@ import {
 	ModalFooter,
 	ModalOverlay,
 	Text,
+	Textarea,
 } from '@chakra-ui/react';
 import { AiFillCamera } from 'react-icons/ai';
 
@@ -51,9 +52,14 @@ const ProfileModal = ({ onClose, isOpen }) => {
 								</FormLabel>
 							</Box>
 						</HStack>
-						<Flex align="center">
+						<Flex align="flex-start">
 							<Text as="span">Bio</Text>
-							<Input type="text" placeholder="I like to do . . ." width="80%" marginLeft="auto" />
+							<Textarea
+								placeholder="I like to do . . ."
+								width="80%"
+								marginLeft="auto"
+								resize="none"
+							/>
 						</Flex>
 						<Flex align="center">
 							<Text as="span">Website</Text>
