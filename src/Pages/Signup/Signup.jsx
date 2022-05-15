@@ -49,7 +49,7 @@ const Signup = () => {
 						</Button>
 						<Text>
 							Already a user?
-							<Link as={ReachLink} to="/login" color="brand.500" px="2">
+							<Link as={ReachLink} to="/" color="brand.500" px="2">
 								Login
 							</Link>
 						</Text>

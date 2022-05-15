@@ -9,9 +9,15 @@ function App() {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const { pathname } = useLocation();
 	return (
-		<Container as="main" maxW="container.xl" mx="auto" display="flex">
+		<Container
+			as="main"
+			maxW="container.xl"
+			mx="auto"
+			display="flex"
+			justifyContent={pathname === '/signup' ? 'center' : 'initial'}
+		>
 			<PostModal onClose={onClose} isOpen={isOpen} />
-			{pathname === '/' || pathname.slice(1) === '/signup' ? null : <LeftNav onOpen={onOpen} />}
+			{pathname === '/' || pathname === '/signup' ? null : <LeftNav onOpen={onOpen} />}
 			<Routes>
 				<Route path="/home" element={<Home onOpen={onOpen} />} />
 				<Route path="/" element={<Login />} />
@@ -20,7 +26,7 @@ function App() {
 				<Route path="/bookmark" element={<Bookmark />} />
 				<Route path="/profile" element={<Profile />} />
 			</Routes>
-			{pathname === '/' || pathname.slice(1) === '/signup' ? null : <RightAside />}
+			{pathname === '/' || pathname === '/signup' ? null : <RightAside />}
 		</Container>
 	);
 }
