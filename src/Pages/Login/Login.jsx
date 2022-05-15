@@ -9,16 +9,12 @@ import {
 	Input,
 	Link,
 	Text,
-	Heading,
 } from '@chakra-ui/react';
 import { Link as ReachLink } from 'react-router-dom';
 
 const Login = () => {
 	return (
 		<>
-			<Heading as="h1" my="0" color="brand.500" position="fixed" top="4">
-				<ReachLink to="/">Socially</ReachLink>
-			</Heading>
 			<Container maxW={320}>
 				<Flex height="100vh" justifyContent="center" maxW="full" flexDir="column">
 					<FormControl>

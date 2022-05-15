@@ -6,7 +6,6 @@ import {
 	FormControl,
 	FormLabel,
 	GridItem,
-	Heading,
 	Input,
 	Link,
 	SimpleGrid,
@@ -17,9 +16,6 @@ import { Link as ReachLink } from 'react-router-dom';
 const Signup = () => {
 	return (
 		<>
-			<Heading as="h1" my="0" color="brand.500" position="fixed" top="4">
-				<ReachLink to="/">Socially</ReachLink>
-			</Heading>
 			<Flex h="100vh" justify="center" align="center">
 				<SimpleGrid columnGap="2" columns="2" maxW={320}>
 					<GridItem colSpan="1">
