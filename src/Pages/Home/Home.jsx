@@ -3,7 +3,7 @@ import { Avatar, Box, Flex, Text } from '@chakra-ui/react';
 import { FiPlusCircle } from 'react-icons/fi';
 import { PgWrapper, Post } from 'Components';
 
-const Home = () => {
+const Home = ({ onOpen }) => {
 	return (
 		<>
 			<PgWrapper>
@@ -13,10 +13,10 @@ const Home = () => {
 					</Text>
 					<Flex gap="3" align="flex-end">
 						<Avatar name="Kartik Choudhary" src="https://" />
-						<Text fontSize="lg" mb="1" color="gray.300" cursor="text" flexGrow="1">
+						<Text fontSize="lg" mb="1" color="gray.300" cursor="text" flexGrow="1" onClick={onOpen}>
 							What's Happening?
 						</Text>
-						<Box color="brand.500" bgColor="#fff" mb="1.5" cursor="pointer">
+						<Box color="brand.500" bgColor="#fff" mb="1.5" cursor="pointer" onClick={onOpen}>
 							<FiPlusCircle fontSize="24px" />
 						</Box>
 					</Flex>

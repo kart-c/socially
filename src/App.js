@@ -1,11 +1,12 @@
 import React from 'react';
-import { Container } from '@chakra-ui/react';
-import { LeftNav, RightAside } from 'Components';
-import { Home, Login, Signup } from 'Pages';
+import { Container, useDisclosure } from '@chakra-ui/react';
 import { Route, Routes, useLocation } from 'react-router-dom';
+import { LeftNav, PostModal, RightAside } from 'Components';
+import { Explore, Home, Login, Signup, Bookmark, Profile } from 'Pages';
 import './App.css';
 
 function App() {
+	const { isOpen, onOpen, onClose } = useDisclosure();
 	const { pathname } = useLocation();
 	return (
 		<Container
@@ -17,11 +18,17 @@ function App() {
 				pathname.slice(1) === 'login' || pathname.slice(1) === 'signup' ? 'center' : 'unset'
 			}
 		>
-			{pathname.slice(1) === 'login' || pathname.slice(1) === 'signup' ? null : <LeftNav />}
+			<PostModal onClose={onClose} isOpen={isOpen} />
+			{pathname.slice(1) === 'login' || pathname.slice(1) === 'signup' ? null : (
+				<LeftNav onOpen={onOpen} />
+			)}
 			<Routes>
-				<Route path="/" element={<Home />} />
+				<Route path="/" element={<Home onOpen={onOpen} />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/signup" element={<Signup />} />
+				<Route path="/explore" element={<Explore />} />
+				<Route path="/bookmark" element={<Bookmark />} />
+				<Route path="/profile" element={<Profile />} />
 			</Routes>
 			{pathname.slice(1) === 'login' || pathname.slice(1) === 'signup' ? null : <RightAside />}
 		</Container>

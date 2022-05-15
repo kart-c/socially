@@ -2,7 +2,7 @@ import { extendTheme, theme as base, withDefaultColorScheme } from '@chakra-ui/r
 
 const breakpoints = {
 	mySm: '640px',
-	myMd: '840px',
+	myMd: '880px',
 };
 
 export const theme = extendTheme(
