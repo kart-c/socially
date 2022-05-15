@@ -11,9 +11,13 @@ import {
 	Text,
 } from '@chakra-ui/react';
 import { Link as ReachLink } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from 'Redux/Thunk';
 
 const Login = () => {
 	const [user, setUser] = useState({ username: '', password: '', rememberMe: false });
+	const dispatch = useDispatch();
+	const { isLoading } = useSelector((state) => state.auth);
 
 	const inputHandler = (e) => {
 		const {
@@ -30,10 +34,23 @@ const Login = () => {
 			rememberMe: true,
 		}));
 
+	const loginHandler = async (e) => {
+		if (user.username && user.password) {
+			e.preventDefault();
+			const { payload } = await dispatch(login(user));
+			if (payload.status === 200) {
+				if (user.rememberMe) {
+					localStorage.setItem('token', payload.data.encodedToken);
+					localStorage.setItem('user', JSON.stringify(payload.data.foundUser));
+				}
+			}
+		}
+	};
+
 	return (
 		<>
 			<Container maxW={320}>
-				<Flex height="100vh" justifyContent="center" maxW="full" flexDir="column">
+				<Flex height="100vh" justifyContent="center" maxW="full" flexDir="column" as="form">
 					<FormControl>
 						<FormLabel my="3">Username</FormLabel>
 						<Input
@@ -42,6 +59,7 @@ const Login = () => {
 							name="username"
 							value={user.username}
 							onChange={inputHandler}
+							required
 						/>
 					</FormControl>
 					<FormControl>
@@ -52,6 +70,7 @@ const Login = () => {
 							name="password"
 							value={user.password}
 							onChange={inputHandler}
+							required
 						/>
 					</FormControl>
 					<Checkbox
@@ -67,7 +86,14 @@ const Login = () => {
 					<Button w="full" mb="4" colorScheme="orange" onClick={testUserHandler}>
 						Guest User
 					</Button>
-					<Button w="full" mb="4" variant="brand">
+					<Button
+						w="full"
+						mb="4"
+						variant="brand"
+						type="submit"
+						onClick={loginHandler}
+						isLoading={isLoading}
+					>
 						Login
 					</Button>
 					<Text>
