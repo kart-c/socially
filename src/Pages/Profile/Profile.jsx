@@ -8,14 +8,18 @@ import {
 	Link,
 	Text,
 	Tooltip,
+	useDisclosure,
 	VStack,
 } from '@chakra-ui/react';
 import { MdLogout } from 'react-icons/md';
-import { PgWrapper, Post } from 'Components';
+import { PgWrapper, Post, ProfileModal } from 'Components';
 
 const Profile = () => {
+	const { isOpen, onOpen, onClose } = useDisclosure();
+
 	return (
 		<PgWrapper>
+			<ProfileModal isOpen={isOpen} onClose={onClose} />
 			<Flex
 				p="4"
 				align="flex-start"
@@ -49,7 +53,7 @@ const Profile = () => {
 					ml="auto"
 					w={{ base: '100%', sm: 'auto' }}
 				>
-					<Button variant="outline" border="2px solid" borderColor="brand.500">
+					<Button variant="outline" border="2px solid" borderColor="brand.500" onClick={onOpen}>
 						Edit
 					</Button>
 					<Tooltip label="Logout">
