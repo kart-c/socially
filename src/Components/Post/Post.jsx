@@ -93,7 +93,7 @@ const Post = ({ content, likes, username, img, firstName, lastName, profilePic, 
 				</Tooltip>
 			</Flex>
 			<HStack mt="1" gap="2" position="relative">
-				<Avatar name="Kartik Choudhary" src="https://" size="sm" />
+				<Avatar name={`${firstName}  ${lastName}`} src={profilePic} size="sm" />
 				<Input type="text" placeholder="Comment . . ." pr="14" />
 				<Button
 					variant="basic"
