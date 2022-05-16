@@ -9,20 +9,27 @@ import { formatDate } from '../utils/authUtils';
 export const posts = [
 	{
 		_id: uuid(),
-		content:
-			'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.',
+		content: 'What have I got in my pocket?',
 		likes: {
 			likeCount: 0,
 			likedBy: [],
 			dislikedBy: [],
 		},
-		username: 'adarshbalika',
+		firstName: 'Bilbo',
+		lastName: 'Baggins',
+		username: 'hobbit',
 		createdAt: formatDate(),
 		updatedAt: formatDate(),
+		profilePic:
+			'https://res.cloudinary.com/obi-wan/image/upload/v1652687739/Socially/Profiles/avataaars_jhvh1w.png',
 		comments: [
 			{
 				_id: uuid(),
-				username: 'hobbit',
+				firstName: 'Adarsh',
+				lastName: 'Balika',
+				username: 'adarshbalika',
+				profilePic:
+					'https://res.cloudinary.com/obi-wan/image/upload/v1652687739/Socially/Profiles/avataaars_jhvh1w.png',
 				text: 'Interesting',
 				votes: {
 					upvotedBy: [],
@@ -31,8 +38,12 @@ export const posts = [
 			},
 			{
 				_id: uuid(),
-				username: 'kart_c11',
-				text: 'Wow!',
+				firstName: 'Smeagol',
+				lastName: 'Smeagol',
+				username: 'gollum',
+				profilePic:
+					'https://res.cloudinary.com/obi-wan/image/upload/v1652687739/Socially/Profiles/avataaars_jhvh1w.png',
+				text: "That's no fair, that's no fair, that's against the rules.",
 				votes: {
 					upvotedBy: [],
 					downvotedBy: [],
@@ -43,18 +54,25 @@ export const posts = [
 	{
 		_id: uuid(),
 		content:
-			'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.',
+			'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate.',
 		likes: {
 			likeCount: 0,
 			likedBy: [],
 			dislikedBy: [],
 		},
+		firstName: 'Kartik',
+		lastName: 'Choudhary',
 		username: 'kart_c11',
-
+		profilePic:
+			'https://res.cloudinary.com/obi-wan/image/upload/v1652687739/Socially/Profiles/avataaars_jhvh1w.png',
 		comments: [
 			{
 				_id: uuid(),
+				firstName: 'Bilbo',
+				lastName: 'Baggins',
 				username: 'hobbit',
+				profilePic:
+					'https://res.cloudinary.com/obi-wan/image/upload/v1652687739/Socially/Profiles/avataaars_jhvh1w.png',
 				text: 'Interesting',
 				votes: {
 					upvotedBy: [],
@@ -63,7 +81,11 @@ export const posts = [
 			},
 			{
 				_id: uuid(),
+				firstName: 'Gandalf',
+				lastName: 'Grey',
 				username: 'wizard',
+				profilePic:
+					'https://res.cloudinary.com/obi-wan/image/upload/v1652687739/Socially/Profiles/avataaars_jhvh1w.png',
 				text: 'Wow!',
 				votes: {
 					upvotedBy: [],
