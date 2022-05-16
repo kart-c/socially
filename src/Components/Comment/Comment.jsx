@@ -6,8 +6,6 @@ import { useSelector } from 'react-redux';
 const Comment = ({ firstName, lastName, profilePic, text, username, _id }) => {
 	const { user } = useSelector((state) => state.auth);
 
-	console.log(user);
-
 	return (
 		<>
 			<HStack mt="3" gap="2" align="flex-start">
