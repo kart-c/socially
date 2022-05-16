@@ -39,7 +39,7 @@ const Signup = () => {
 		if (user.firstName && user.lastName && user.username && user.password && user.checkbox) {
 			e.preventDefault();
 			const { payload } = await dispatch(signup(user));
-			if (payload.status === 201) {
+			if (payload?.status === 201) {
 				navigate('/home');
 			}
 		}
