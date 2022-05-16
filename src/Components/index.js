@@ -5,3 +5,4 @@ export { Comment } from './Comment/Comment';
 export { RightAside } from './RightAside/RightAside';
 export { PostModal } from './PostModal/PostModal';
 export { ProfileModal } from './ProfileModal/ProfileModal';
+export { Loader } from './Loader/Loader';

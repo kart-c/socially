@@ -1,12 +1,20 @@
-import { PgWrapper, Post } from 'Components';
 import React from 'react';
+import { Loader, PgWrapper, Post } from 'Components';
+import { useSelector } from 'react-redux';
 
 const Explore = () => {
+	const { posts, isLoading } = useSelector((state) => state.posts);
+
+	console.log(posts, isLoading);
+
 	return (
 		<PgWrapper>
-			<Post img={'https://www.picsum.photos/300'} />
-			<Post />
-			<Post />
+			{isLoading && <Loader />}
+			{posts?.length > 0 ? (
+				posts.map((post) => <Post key={post._id} {...post} />)
+			) : (
+				<div>No posts to show</div>
+			)}
 		</PgWrapper>
 	);
 };
