@@ -11,23 +11,8 @@ export const posts = [
 		_id: uuid(),
 		content: 'What have I got in my pocket?',
 		likes: {
-			likeCount: 0,
-			likedBy: [
-				{
-					firstName: 'Bilbo',
-					lastName: 'Baggins',
-					username: 'hobbit',
-					profilePic:
-						'https://res.cloudinary.com/obi-wan/image/upload/v1652698572/Socially/Profiles/bilbo.jpg',
-				},
-				{
-					firstName: 'Bruce',
-					lastName: 'Wayne',
-					username: 'not_batman',
-					profilePic:
-						'https://res.cloudinary.com/obi-wan/image/upload/v1652699201/Socially/Profiles/Bruce.jpg',
-				},
-			],
+			likeCount: 2,
+			likedBy: [],
 			dislikedBy: [],
 		},
 		firstName: 'Bilbo',
@@ -71,23 +56,8 @@ export const posts = [
 		content:
 			'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate.',
 		likes: {
-			likeCount: 0,
-			likedBy: [
-				{
-					firstName: 'Bilbo',
-					lastName: 'Baggins',
-					username: 'hobbit',
-					profilePic:
-						'https://res.cloudinary.com/obi-wan/image/upload/v1652698572/Socially/Profiles/bilbo.jpg',
-				},
-				{
-					firstName: 'Gandalf',
-					lastName: 'Grey',
-					username: 'wizard',
-					profilePic:
-						'https://res.cloudinary.com/obi-wan/image/upload/v1652698930/Socially/Profiles/gandalf.jpg',
-				},
-			],
+			likeCount: 2,
+			likedBy: [],
 			dislikedBy: [],
 		},
 		firstName: 'Kartik',
@@ -130,17 +100,9 @@ export const posts = [
 		_id: uuid(),
 		content: "It's over, Anakin! I have the high ground.",
 		likes: {
-			likeCount: 0,
+			likeCount: 1,
 			likedBy: [],
-			dislikedBy: [
-				{
-					firstName: 'Anakin',
-					lastName: 'Skywalker',
-					username: 'vader',
-					profilePic:
-						'https://res.cloudinary.com/obi-wan/image/upload/v1652699069/Socially/Profiles/anakin.jpg',
-				},
-			],
+			dislikedBy: [],
 		},
 		firstName: 'Obiwan',
 		lastName: 'Kenobi',
@@ -182,37 +144,8 @@ export const posts = [
 		_id: uuid(),
 		content: 'You shall not pass',
 		likes: {
-			likeCount: 0,
-			likedBy: [
-				{
-					firstName: 'Kartik',
-					lastName: 'Choudhary',
-					username: 'kart_c11',
-					profilePic:
-						'https://res.cloudinary.com/obi-wan/image/upload/v1652687739/Socially/Profiles/avataaars_jhvh1w.png',
-				},
-				{
-					firstName: 'Bilbo',
-					lastName: 'Baggins',
-					username: 'hobbit',
-					profilePic:
-						'https://res.cloudinary.com/obi-wan/image/upload/v1652698572/Socially/Profiles/bilbo.jpg',
-				},
-				{
-					firstName: 'Bruce',
-					lastName: 'Wayne',
-					username: 'not_batman',
-					profilePic:
-						'https://res.cloudinary.com/obi-wan/image/upload/v1652699201/Socially/Profiles/Bruce.jpg',
-				},
-				{
-					firstName: 'Obiwan',
-					lastName: 'Kenobi',
-					username: 'ben',
-					profilePic:
-						'https://res.cloudinary.com/obi-wan/image/upload/v1652699372/Socially/Profiles/kenobi.png',
-				},
-			],
+			likeCount: 4,
+			likedBy: [],
 			dislikedBy: [],
 		},
 		firstName: 'Gandalf',
@@ -228,23 +161,8 @@ export const posts = [
 		_id: uuid(),
 		content: 'Good Morning everyone. Have a nice day',
 		likes: {
-			likeCount: 0,
-			likedBy: [
-				{
-					firstName: 'Kartik',
-					lastName: 'Choudhary',
-					username: 'kart_c11',
-					profilePic:
-						'https://res.cloudinary.com/obi-wan/image/upload/v1652687739/Socially/Profiles/avataaars_jhvh1w.png',
-				},
-				{
-					firstName: 'Bilbo',
-					lastName: 'Baggins',
-					username: 'hobbit',
-					profilePic:
-						'https://res.cloudinary.com/obi-wan/image/upload/v1652698572/Socially/Profiles/bilbo.jpg',
-				},
-			],
+			likeCount: 3,
+			likedBy: [],
 			dislikedBy: [],
 		},
 		firstName: 'Adarsh',
@@ -274,23 +192,8 @@ export const posts = [
 		_id: uuid(),
 		content: 'Only a small part is played in great deeds by any hero.',
 		likes: {
-			likeCount: 0,
-			likedBy: [
-				{
-					firstName: 'Kartik',
-					lastName: 'Choudhary',
-					username: 'kart_c11',
-					profilePic:
-						'https://res.cloudinary.com/obi-wan/image/upload/v1652687739/Socially/Profiles/avataaars_jhvh1w.png',
-				},
-				{
-					firstName: 'Bilbo',
-					lastName: 'Baggins',
-					username: 'hobbit',
-					profilePic:
-						'https://res.cloudinary.com/obi-wan/image/upload/v1652698572/Socially/Profiles/bilbo.jpg',
-				},
-			],
+			likeCount: 3,
+			likedBy: [],
 			dislikedBy: [],
 		},
 		firstName: 'Gandalf',
@@ -321,7 +224,7 @@ export const posts = [
 		content:
 			'We wants it. We needs it. Must have the precious. They stole it from us. Sneaky little Hobbitses. Wicked. Tricksy. False.',
 		likes: {
-			likeCount: 0,
+			likeCount: 2,
 			likedBy: [],
 			dislikedBy: [],
 		},

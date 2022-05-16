@@ -16,6 +16,7 @@ export const users = [
 		link: 'https://adarshbalika.netlify.app/',
 		profilePic:
 			'https://res.cloudinary.com/obi-wan/image/upload/v1652687739/Socially/Profiles/avataaars_jhvh1w.png',
+		bookmarks: [],
 		createdAt: formatDate(),
 		updatedAt: formatDate(),
 	},
@@ -29,6 +30,7 @@ export const users = [
 		link: 'https://github.com/kart-c',
 		profilePic:
 			'https://res.cloudinary.com/obi-wan/image/upload/v1652687739/Socially/Profiles/avataaars_jhvh1w.png',
+		bookmarks: [],
 		createdAt: formatDate(),
 		updatedAt: formatDate(),
 	},
@@ -42,6 +44,7 @@ export const users = [
 		link: 'https://github.com/kart-c',
 		profilePic:
 			'https://res.cloudinary.com/obi-wan/image/upload/v1652698572/Socially/Profiles/bilbo.jpg',
+		bookmarks: [],
 		createdAt: formatDate(),
 		updatedAt: formatDate(),
 	},
@@ -55,6 +58,7 @@ export const users = [
 		link: 'https://github.com/kart-c',
 		profilePic:
 			'https://res.cloudinary.com/obi-wan/image/upload/v1652698709/Socially/Profiles/gollum.jpg',
+		bookmarks: [],
 		createdAt: formatDate(),
 		updatedAt: formatDate(),
 	},
@@ -68,6 +72,7 @@ export const users = [
 		link: 'https://res.cloudinary.com/obi-wan/image/upload/v1652698930/Socially/Profiles/gandalf.jpg',
 		profilePic: '',
 		createdAt: formatDate(),
+		bookmarks: [],
 		updatedAt: formatDate(),
 	},
 	{
@@ -80,6 +85,7 @@ export const users = [
 		link: '',
 		profilePic:
 			'https://res.cloudinary.com/obi-wan/image/upload/v1652699069/Socially/Profiles/anakin.jpg',
+		bookmarks: [],
 		createdAt: formatDate(),
 		updatedAt: formatDate(),
 	},
@@ -93,6 +99,7 @@ export const users = [
 		link: '',
 		profilePic:
 			'https://res.cloudinary.com/obi-wan/image/upload/v1652699201/Socially/Profiles/Bruce.jpg',
+		bookmarks: [],
 		createdAt: formatDate(),
 		updatedAt: formatDate(),
 	},
@@ -106,6 +113,7 @@ export const users = [
 		link: '',
 		profilePic:
 			'https://res.cloudinary.com/obi-wan/image/upload/v1652699372/Socially/Profiles/kenobi.png',
+		bookmarks: [],
 		createdAt: formatDate(),
 		updatedAt: formatDate(),
 	},
