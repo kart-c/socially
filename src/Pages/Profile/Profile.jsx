@@ -67,8 +67,8 @@ const Profile = () => {
 					</Tooltip>
 				</Flex>
 			</Flex>
-			<Post />
-			<Post />
+			{/* <Post />
+			<Post /> */}
 		</PgWrapper>
 	);
 };
