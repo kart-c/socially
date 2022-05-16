@@ -10,11 +10,10 @@ const Home = ({ onOpen }) => {
 	const { isLoading } = useSelector((state) => state.users);
 	const { posts, isLoading: postLoading } = useSelector((state) => state.posts);
 
-	const getPosts = async () => await dispatch(getAllPosts());
-
 	useEffect(() => {
+		const getPosts = async () => await dispatch(getAllPosts());
 		getPosts();
-	}, []);
+	}, [dispatch]);
 	return (
 		<>
 			<PgWrapper>
