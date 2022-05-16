@@ -12,8 +12,10 @@ import {
 	HStack,
 	Button,
 } from '@chakra-ui/react';
+// eslint-disable-next-line
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { FaEllipsisV } from 'react-icons/fa';
+// eslint-disable-next-line
 import { MdOutlineBookmarkBorder, MdOutlineBookmark } from 'react-icons/md';
 import { Comment } from 'Components';
 
@@ -58,7 +60,7 @@ const Post = ({ content, likes, username, img, firstName, lastName, profilePic, 
 							borderRadius="full"
 							variant="redIcon"
 						/>
-						{likes.likedBy.length ? likes.likedBy.length : null}
+						{likes.likeCount ? likes.likeCount : null}
 					</Box>
 				</Tooltip>
 				{/* <Tooltip label="Like">

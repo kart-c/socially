@@ -9,16 +9,17 @@ const RightAside = () => {
 	const { users } = useSelector((state) => state.users);
 	const { user } = useSelector((state) => state.auth);
 
-	const getAllUsers = async () => await dispatch(getUsers());
+	console.log('right aside');
 
 	useEffect(() => {
+		const getAllUsers = async () => await dispatch(getUsers());
 		getAllUsers();
-	}, []);
+	}, [dispatch]);
 
 	useEffect(() => {
 		const removeCurrUser = users.filter((item) => item.username !== user.username);
 		setUnfollowedUsers(removeCurrUser);
-	}, [users]);
+	}, [users, user.username]);
 
 	return (
 		<VStack
@@ -34,9 +35,10 @@ const RightAside = () => {
 			top="6"
 			display={{ base: 'none', myMd: 'flex' }}
 		>
-			<Text m="4">People you may know</Text>
-			{unfollowedUsers.length > 0
-				? unfollowedUsers.map((user) => (
+			{unfollowedUsers.length > 0 ? (
+				<>
+					<Text m="4">People you may know</Text>
+					{unfollowedUsers.map((user) => (
 						<Flex
 							key={user._id}
 							w="full"
@@ -69,8 +71,9 @@ const RightAside = () => {
 								Follow
 							</Button>
 						</Flex>
-				  ))
-				: null}
+					))}
+				</>
+			) : null}
 		</VStack>
 	);
 };
