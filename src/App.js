@@ -14,23 +14,19 @@ function App() {
 			maxW="container.xl"
 			mx="auto"
 			display="flex"
-			justifyContent={
-				pathname.slice(1) === 'login' || pathname.slice(1) === 'signup' ? 'center' : 'unset'
-			}
+			justifyContent={pathname === '/signup' ? 'center' : 'initial'}
 		>
 			<PostModal onClose={onClose} isOpen={isOpen} />
-			{pathname.slice(1) === 'login' || pathname.slice(1) === 'signup' ? null : (
-				<LeftNav onOpen={onOpen} />
-			)}
+			{pathname === '/' || pathname === '/signup' ? null : <LeftNav onOpen={onOpen} />}
 			<Routes>
-				<Route path="/" element={<Home onOpen={onOpen} />} />
-				<Route path="/login" element={<Login />} />
+				<Route path="/home" element={<Home onOpen={onOpen} />} />
+				<Route path="/" element={<Login />} />
 				<Route path="/signup" element={<Signup />} />
 				<Route path="/explore" element={<Explore />} />
 				<Route path="/bookmark" element={<Bookmark />} />
 				<Route path="/profile" element={<Profile />} />
 			</Routes>
-			{pathname.slice(1) === 'login' || pathname.slice(1) === 'signup' ? null : <RightAside />}
+			{pathname === '/' || pathname === '/signup' ? null : <RightAside />}
 		</Container>
 	);
 }

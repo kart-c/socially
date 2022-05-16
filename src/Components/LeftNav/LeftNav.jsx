@@ -41,12 +41,12 @@ const LeftNav = ({ onOpen }) => {
 			}}
 		>
 			<Heading as="h1" my="0" color="brand.500" ml="4" display={{ base: 'none', mySm: 'block' }}>
-				<Link to="/">Socially</Link>
+				<Link to="/home">Socially</Link>
 			</Heading>
 			<Flex
 				as={NavLink}
 				style={activeLink}
-				to="/"
+				to="/home"
 				align="center"
 				fontSize="20"
 				pl="4"
