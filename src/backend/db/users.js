@@ -1,4 +1,3 @@
-import { v4 as uuid } from 'uuid';
 import { formatDate } from '../utils/authUtils';
 /**
  * User Database can be added here.
@@ -7,7 +6,7 @@ import { formatDate } from '../utils/authUtils';
 
 export const users = [
 	{
-		_id: uuid(),
+		_id: '5bc70fce-51ee-432e-8906-2794bd07540e',
 		firstName: 'Adarsh',
 		lastName: 'Balika',
 		username: 'adarshbalika',
@@ -21,7 +20,7 @@ export const users = [
 		updatedAt: formatDate(),
 	},
 	{
-		_id: uuid(),
+		_id: 'bef48613-66a7-4bf3-8733-2d574df0f3f9',
 		firstName: 'Kartik',
 		lastName: 'Choudhary',
 		username: 'kart_c11',
@@ -35,7 +34,7 @@ export const users = [
 		updatedAt: formatDate(),
 	},
 	{
-		_id: uuid(),
+		_id: '4f41732c-f426-4156-a2c9-53ee437a70f7',
 		firstName: 'Bilbo',
 		lastName: 'Baggins',
 		username: 'hobbit',
@@ -49,7 +48,7 @@ export const users = [
 		updatedAt: formatDate(),
 	},
 	{
-		_id: uuid(),
+		_id: 'e2d77e00-f2b3-4dd3-a38b-b276a45c1f79',
 		firstName: 'Smeagol',
 		lastName: 'Smeogol',
 		username: 'gollum',
@@ -63,7 +62,7 @@ export const users = [
 		updatedAt: formatDate(),
 	},
 	{
-		_id: uuid(),
+		_id: 'f7b5f617-a4be-41eb-9ce9-e6a59b05b065',
 		firstName: 'Gandalf',
 		lastName: 'Grey',
 		username: 'wizard',
@@ -76,7 +75,7 @@ export const users = [
 		updatedAt: formatDate(),
 	},
 	{
-		_id: uuid(),
+		_id: '1229c469-14e7-46be-8056-2763994b3e24',
 		firstName: 'Anakin',
 		lastName: 'Skywalker',
 		username: 'vader',
@@ -90,7 +89,7 @@ export const users = [
 		updatedAt: formatDate(),
 	},
 	{
-		_id: uuid(),
+		_id: 'bf6d24fe-1dc4-4322-b35f-a5553d7b8d66',
 		firstName: 'Bruce',
 		lastName: 'Wayne',
 		username: 'not_batman',
@@ -104,7 +103,7 @@ export const users = [
 		updatedAt: formatDate(),
 	},
 	{
-		_id: uuid(),
+		_id: '8b049b96-e973-4b15-a671-1bbecdc8556e',
 		firstName: 'Obiwan',
 		lastName: 'Kenobi',
 		username: 'ben',
