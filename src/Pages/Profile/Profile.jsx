@@ -60,11 +60,15 @@ const Profile = () => {
 	}, [username, users, loggedInUser]);
 
 	useEffect(() => {
-		const getUserPosts = async () => {
-			const response = await axios.get(`/api/posts/user/${username}`);
-			if (response.status === 200) setUserPosts(response.data.posts);
-		};
-		getUserPosts();
+		try {
+			const getUserPosts = async () => {
+				const response = await axios.get(`/api/posts/user/${username}`);
+				if (response.status === 200) setUserPosts(response.data.posts);
+			};
+			getUserPosts();
+		} catch (error) {
+			console.error(error);
+		}
 	}, [username]);
 
 	const followHandler = async () => {
