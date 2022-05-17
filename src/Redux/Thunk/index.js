@@ -1,4 +1,3 @@
-export { login } from './authThunk';
-export { signup } from './authThunk';
+export { login, signup } from './authThunk';
 export { getAllPosts } from './postsThunk';
-export { getUsers } from './usersThunk';
+export { getUsers, editProfile } from './usersThunk';
