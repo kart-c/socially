@@ -1,0 +1,1 @@
+export { followUser } from './authSlice';
