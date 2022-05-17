@@ -15,16 +15,19 @@ import { MdLogout } from 'react-icons/md';
 import { Loader, PgWrapper, Post, ProfileModal } from 'Components';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { followUser } from 'Redux/Slice';
+import { follow, unfollow } from 'Redux/Thunk';
 
 const Profile = () => {
 	const { users } = useSelector((state) => state.users);
-	const { user: loggedInUser, isLoading } = useSelector((state) => state.auth);
+	const { user: loggedInUser, isLoading, token } = useSelector((state) => state.auth);
+	const [profileLoading, setProfileLoading] = useState(false);
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const [userObj, setUserObj] = useState();
 	const { username } = useParams();
 	const [userPosts, setUserPosts] = useState([]);
-	const [profileLoading, setProfileLoading] = useState(false);
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		const getUser = async () => {
@@ -64,6 +67,22 @@ const Profile = () => {
 		getUserPosts();
 	}, [username]);
 
+	const followHandler = async () => {
+		const currentUser = users.find((item) => item.username === username);
+		const response = await dispatch(follow({ token, _id: currentUser._id }));
+		if (response.payload.status === 200) {
+			dispatch(followUser(response.payload.data.user));
+		}
+	};
+
+	const unfollowHandler = async () => {
+		const currentUser = users.find((item) => item.username === username);
+		const response = await dispatch(unfollow({ token, _id: currentUser._id }));
+		if (response.payload.status === 200) {
+			dispatch(followUser(response.payload.data.user));
+		}
+	};
+
 	return (
 		<PgWrapper>
 			{isLoading || profileLoading ? (
@@ -85,7 +104,7 @@ const Profile = () => {
 						align="flex-start"
 						gap="3"
 						wrap={{ base: 'wrap', sm: 'nowrap' }}
-						borderBottom="1px solid"
+						borderBottom={loggedInUser.username === username ? '1px solid' : '0'}
 						borderColor="gray.200"
 					>
 						<Avatar
@@ -102,7 +121,7 @@ const Profile = () => {
 							</Text>
 							<Text>{userObj.bio}</Text>
 							<Flex gap="4">
-								<Text as="span">0 Posts</Text>
+								<Text as="span">{userPosts.length} Posts</Text>
 								<Text as="span">{userObj.followers.length} Followers</Text>
 								<Text as="span">{userObj.following.length} Following</Text>
 							</Flex>
@@ -138,6 +157,17 @@ const Profile = () => {
 							</Flex>
 						) : null}
 					</Flex>
+					{loggedInUser.username !== username ? (
+						loggedInUser.following.some((item) => item.username === username) ? (
+							<Flex justifyContent="center" pb="6" borderBottom="1px solid" borderColor="gray.200">
+								<Button onClick={unfollowHandler}>Unfollow</Button>
+							</Flex>
+						) : (
+							<Flex justifyContent="center" pb="6" borderBottom="1px solid" borderColor="gray.200">
+								<Button onClick={followHandler}>Follow</Button>
+							</Flex>
+						)
+					) : null}
 					{userPosts.length > 0 ? userPosts.map((post) => <Post {...post} key={post._id} />) : null}
 				</>
 			) : null}

@@ -10,7 +10,14 @@ const initialState = {
 const authSlice = createSlice({
 	name: 'auth',
 	initialState,
-	reducers: {},
+	reducers: {
+		followUser: (state, action) => {
+			state.user = action.payload;
+		},
+		unfollowUser: (state, action) => {
+			state.user = action.payload;
+		},
+	},
 	extraReducers: {
 		[login.pending]: (state, action) => {
 			state.isLoading = true;
@@ -49,5 +56,7 @@ const authSlice = createSlice({
 		},
 	},
 });
+
+export const { followUser } = authSlice.actions;
 
 export default authSlice.reducer;

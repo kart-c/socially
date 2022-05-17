@@ -8,12 +8,20 @@ import { getAllPosts } from 'Redux/Thunk';
 const Home = ({ onOpen }) => {
 	const dispatch = useDispatch();
 	const { isLoading } = useSelector((state) => state.users);
+	const { user: loggedInUser } = useSelector((state) => state.auth);
 	const { posts, isLoading: postLoading } = useSelector((state) => state.posts);
 
 	useEffect(() => {
 		const getPosts = async () => await dispatch(getAllPosts());
 		getPosts();
 	}, [dispatch]);
+
+	const followedPosts = posts.filter(
+		(item) =>
+			loggedInUser.username === item.username ||
+			loggedInUser.following.some((follower) => follower.username === item.username)
+	);
+
 	return (
 		<>
 			<PgWrapper>
@@ -42,8 +50,8 @@ const Home = ({ onOpen }) => {
 						</Flex>
 					</Box>
 				)}
-				{posts?.length > 0 ? (
-					posts.map((post) => <Post key={post._id} {...post} />)
+				{followedPosts?.length > 0 ? (
+					followedPosts.map((post) => <Post key={post._id} {...post} />)
 				) : (
 					<div>No posts</div>
 				)}

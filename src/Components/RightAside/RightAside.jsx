@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Avatar, Button, Flex, HStack, Text, VStack } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUsers } from 'Redux/Thunk';
+import { follow, getUsers } from 'Redux/Thunk';
+import { Loader } from 'Components';
+import { followUser } from 'Redux/Slice';
+import { useNavigate } from 'react-router-dom';
 
 const RightAside = () => {
 	const [unfollowedUsers, setUnfollowedUsers] = useState([]);
 	const dispatch = useDispatch();
-	const { users } = useSelector((state) => state.users);
-	const { user } = useSelector((state) => state.auth);
+	const navigate = useNavigate();
+	const { users, isLoading } = useSelector((state) => state.users);
+	const { token, user } = useSelector((state) => state.auth);
 
 	useEffect(() => {
 		const getAllUsers = async () => await dispatch(getUsers());
@@ -16,8 +20,18 @@ const RightAside = () => {
 
 	useEffect(() => {
 		const removeCurrUser = users.filter((item) => item.username !== user.username);
-		setUnfollowedUsers(removeCurrUser);
-	}, [users, user.username]);
+		const filterUsers = removeCurrUser.filter((userToFilter) =>
+			user.following.every((item) => item.username !== userToFilter.username)
+		);
+		setUnfollowedUsers(filterUsers);
+	}, [users, user.username, user.following]);
+
+	const followHandler = async (_id) => {
+		const response = await dispatch(follow({ token, _id }));
+		if (response.payload.status === 200) {
+			dispatch(followUser(response.payload.data.user));
+		}
+	};
 
 	return (
 		<VStack
@@ -29,16 +43,22 @@ const RightAside = () => {
 			borderRadius="lg"
 			align="flex-start"
 			h="max-content"
+			maxH="calc(100vh - 48px)"
 			position="sticky"
 			top="6"
 			display={{ base: 'none', myMd: 'flex' }}
+			w="300px"
+			overflowY="auto"
+			minW="max-content"
 		>
-			{unfollowedUsers.length > 0 ? (
+			{isLoading ? (
+				<Loader />
+			) : unfollowedUsers.length > 0 ? (
 				<>
 					<Text m="4">People you may know</Text>
-					{unfollowedUsers.map((user) => (
+					{unfollowedUsers.map((unFollowUser) => (
 						<Flex
-							key={user._id}
+							key={unFollowUser._id}
 							w="full"
 							borderBottom="1px solid"
 							borderColor="gray.200"
@@ -55,17 +75,34 @@ const RightAside = () => {
 							}}
 						>
 							<HStack>
-								<Avatar name="Master Oogway" src="https://" size="sm" />
+								<Avatar
+									name="Master Oogway"
+									src="https://"
+									size="sm"
+									cursor="pointer"
+									onClick={() => navigate(`/profile/${unFollowUser.username}`)}
+								/>
 								<VStack align="flex-start" spacing="0" ml="2">
-									<Text as="span" fontSize="16px">
-										{`${user.firstName} ${user.lastName}`}
+									<Text
+										as="span"
+										fontSize="16px"
+										cursor="pointer"
+										onClick={() => navigate(`/profile/${unFollowUser.username}`)}
+									>
+										{`${unFollowUser.firstName} ${unFollowUser.lastName}`}
 									</Text>
 									<Text as="span" fontSize="14px" color="gray.300">
-										@{user.username}
+										@{unFollowUser.username}
 									</Text>
 								</VStack>
 							</HStack>
-							<Button variant="brand" m="0" ml={{ base: '0', lg: 'auto' }} size="sm">
+							<Button
+								variant="brand"
+								m="0"
+								ml={{ base: '0', lg: 'auto' }}
+								size="sm"
+								onClick={() => followHandler(unFollowUser._id)}
+							>
 								Follow
 							</Button>
 						</Flex>
