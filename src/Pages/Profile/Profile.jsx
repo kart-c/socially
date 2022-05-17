@@ -12,53 +12,72 @@ import {
 	VStack,
 } from '@chakra-ui/react';
 import { MdLogout } from 'react-icons/md';
-import { PgWrapper, Post, ProfileModal } from 'Components';
+import { Loader, PgWrapper, Post, ProfileModal } from 'Components';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 
 const Profile = () => {
 	const { users } = useSelector((state) => state.users);
-	const { user } = useSelector((state) => state.auth);
+	const { user: loggedInUser, isLoading } = useSelector((state) => state.auth);
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const [userObj, setUserObj] = useState();
 	const { username } = useParams();
 	const [userPosts, setUserPosts] = useState([]);
-	const [userData, setUserData] = useState({
-		bio: '',
-		website: '',
-		avatar: '',
-	});
+	const [profileLoading, setProfileLoading] = useState(false);
 
 	useEffect(() => {
 		const getUser = async () => {
-			const user = users.find((item) => item.username === username);
-			if (user) {
-				const response = await axios.get(`/api/users/${user?._id}`);
-				setUserObj(response.data.user);
+			const currentUser = users.find((item) => item.username === username);
+			if (currentUser) {
+				if (loggedInUser.username === username) {
+					try {
+						setProfileLoading(true);
+						const response = await axios.get(`/api/users/${loggedInUser?._id}`);
+						if (response.status === 200) setUserObj(response.data.user);
+					} catch (error) {
+						console.error('error', error);
+					} finally {
+						setProfileLoading(false);
+					}
+				} else {
+					try {
+						setProfileLoading(true);
+						const response = await axios.get(`/api/users/${currentUser?._id}`);
+						if (response.status === 200) setUserObj(response.data.user);
+					} catch (error) {
+						console.error('error', error);
+					} finally {
+						setProfileLoading(false);
+					}
+				}
 			}
 		};
 		getUser();
-	}, [username, users]);
+	}, [username, users, loggedInUser]);
 
 	useEffect(() => {
 		const getUserPosts = async () => {
 			const response = await axios.get(`/api/posts/user/${username}`);
-			setUserPosts(response.data.posts);
+			if (response.status === 200) setUserPosts(response.data.posts);
 		};
 		getUserPosts();
 	}, [username]);
 
 	return (
 		<PgWrapper>
-			{userObj?.username ? (
+			{isLoading || profileLoading ? (
+				<Loader />
+			) : userObj?.username ? (
 				<>
 					<ProfileModal
 						isOpen={isOpen}
 						onClose={onClose}
-						userData={userData}
-						setUserData={setUserData}
-						defaultAvatar={userObj.profilePic}
+						defaultdata={{
+							profile: userObj.profilePic,
+							userBio: userObj.bio,
+							userLink: userObj.link,
+						}}
 						name={`${userObj.firstName} ${userObj.lastName}`}
 					/>
 					<Flex
@@ -91,7 +110,7 @@ const Profile = () => {
 								{userObj.link}
 							</Link>
 						</VStack>
-						{user.username === username ? (
+						{loggedInUser.username === username ? (
 							<Flex
 								flexDir={{ base: 'row', sm: 'column' }}
 								align="flex-end"
