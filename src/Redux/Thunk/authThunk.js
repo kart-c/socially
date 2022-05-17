@@ -20,7 +20,3 @@ export const signup = createAsyncThunk('auth/signup', async (user, { rejectWithV
 		return rejectWithValue({ status: error.response.status, data: error.response.data });
 	}
 });
-
-// export const editProfile = createAsyncThunk('auth/editProfile', async ({ user, token }) => {
-
-// });
