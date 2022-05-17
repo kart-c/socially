@@ -17,7 +17,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { followUser } from 'Redux/Slice';
-import { follow } from 'Redux/Thunk';
+import { follow, unfollow } from 'Redux/Thunk';
 
 const Profile = () => {
 	const { users } = useSelector((state) => state.users);
@@ -28,8 +28,6 @@ const Profile = () => {
 	const { username } = useParams();
 	const [userPosts, setUserPosts] = useState([]);
 	const dispatch = useDispatch();
-
-	console.log(loggedInUser);
 
 	useEffect(() => {
 		const getUser = async () => {
@@ -72,6 +70,14 @@ const Profile = () => {
 	const followHandler = async () => {
 		const currentUser = users.find((item) => item.username === username);
 		const response = await dispatch(follow({ token, _id: currentUser._id }));
+		if (response.payload.status === 200) {
+			dispatch(followUser(response.payload.data.user));
+		}
+	};
+
+	const unfollowHandler = async () => {
+		const currentUser = users.find((item) => item.username === username);
+		const response = await dispatch(unfollow({ token, _id: currentUser._id }));
 		if (response.payload.status === 200) {
 			dispatch(followUser(response.payload.data.user));
 		}
@@ -154,7 +160,7 @@ const Profile = () => {
 					{loggedInUser.username !== username ? (
 						loggedInUser.following.some((item) => item.username === username) ? (
 							<Flex justifyContent="center" pb="6" borderBottom="1px solid" borderColor="gray.200">
-								<Button>Unfollow</Button>
+								<Button onClick={unfollowHandler}>Unfollow</Button>
 							</Flex>
 						) : (
 							<Flex justifyContent="center" pb="6" borderBottom="1px solid" borderColor="gray.200">

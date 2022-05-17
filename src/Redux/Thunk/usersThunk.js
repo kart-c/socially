@@ -24,3 +24,21 @@ export const follow = createAsyncThunk(
 		}
 	}
 );
+
+export const unfollow = createAsyncThunk(
+	'users/follow',
+	async ({ token, _id }, { rejectWithValue }) => {
+		try {
+			const response = await axios.post(
+				`/api/users/unfollow/${_id}`,
+				{},
+				{
+					headers: { authorization: token },
+				}
+			);
+			return { data: response.data, status: response.status };
+		} catch (error) {
+			return rejectWithValue({ status: error.response.status, data: error.response.data });
+		}
+	}
+);

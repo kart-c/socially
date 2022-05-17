@@ -14,6 +14,9 @@ const authSlice = createSlice({
 		followUser: (state, action) => {
 			state.user = action.payload;
 		},
+		unfollowUser: (state, action) => {
+			state.user = action.payload;
+		},
 	},
 	extraReducers: {
 		[login.pending]: (state, action) => {
