@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Avatar, Button, Flex, HStack, Text, VStack } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUsers } from 'Redux/Thunk';
+import { Loader } from 'Components';
 
 const RightAside = () => {
 	const [unfollowedUsers, setUnfollowedUsers] = useState([]);
 	const dispatch = useDispatch();
-	const { users } = useSelector((state) => state.users);
+	const { users, isLoading } = useSelector((state) => state.users);
 	const { user } = useSelector((state) => state.auth);
 
 	useEffect(() => {
@@ -29,11 +30,17 @@ const RightAside = () => {
 			borderRadius="lg"
 			align="flex-start"
 			h="max-content"
+			maxH="calc(100vh - 48px)"
 			position="sticky"
 			top="6"
 			display={{ base: 'none', myMd: 'flex' }}
+			w="300px"
+			overflowY="auto"
+			minW="max-content"
 		>
-			{unfollowedUsers.length > 0 ? (
+			{isLoading ? (
+				<Loader />
+			) : unfollowedUsers.length > 0 ? (
 				<>
 					<Text m="4">People you may know</Text>
 					{unfollowedUsers.map((user) => (
