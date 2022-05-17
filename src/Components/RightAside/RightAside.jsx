@@ -4,10 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { follow, getUsers } from 'Redux/Thunk';
 import { Loader } from 'Components';
 import { followUser } from 'Redux/Slice';
+import { useNavigate } from 'react-router-dom';
 
 const RightAside = () => {
 	const [unfollowedUsers, setUnfollowedUsers] = useState([]);
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	const { users, isLoading } = useSelector((state) => state.users);
 	const { token, user } = useSelector((state) => state.auth);
 
@@ -73,9 +75,20 @@ const RightAside = () => {
 							}}
 						>
 							<HStack>
-								<Avatar name="Master Oogway" src="https://" size="sm" />
+								<Avatar
+									name="Master Oogway"
+									src="https://"
+									size="sm"
+									cursor="pointer"
+									onClick={() => navigate(`/profile/${unFollowUser.username}`)}
+								/>
 								<VStack align="flex-start" spacing="0" ml="2">
-									<Text as="span" fontSize="16px">
+									<Text
+										as="span"
+										fontSize="16px"
+										cursor="pointer"
+										onClick={() => navigate(`/profile/${unFollowUser.username}`)}
+									>
 										{`${unFollowUser.firstName} ${unFollowUser.lastName}`}
 									</Text>
 									<Text as="span" fontSize="14px" color="gray.300">

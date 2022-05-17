@@ -18,10 +18,12 @@ import { FaEllipsisV } from 'react-icons/fa';
 import { MdOutlineBookmarkBorder, MdOutlineBookmark } from 'react-icons/md';
 import { Comment } from 'Components';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const Post = ({ content, likes, username, firstName, lastName, profilePic, comments }) => {
-	const { user } = useSelector((state) => state.auth);
 	const [img, setImg] = useState();
+	const navigate = useNavigate();
+	const { user } = useSelector((state) => state.auth);
 
 	useEffect(() => {
 		if (username === user.username) {
@@ -32,10 +34,21 @@ const Post = ({ content, likes, username, firstName, lastName, profilePic, comme
 	return (
 		<Box as="article" p="4" borderBottom="1px solid" borderColor="gray.200" position="relative">
 			<Flex gap="3">
-				<Avatar name={`${firstName} ${lastName}`} src={img || profilePic}></Avatar>
+				<Avatar
+					name={`${firstName} ${lastName}`}
+					src={img || profilePic}
+					cursor="pointer"
+					onClick={() => navigate(`/profile/${username}`)}
+				/>
 				<Flex mt="2" gap="3" flexDir="column">
 					<Flex w="100%" justify="space-between">
-						<Heading as="h3" fontWeight="700" fontSize="16">
+						<Heading
+							as="h3"
+							fontWeight="700"
+							fontSize="16"
+							cursor="pointer"
+							onClick={() => navigate(`/profile/${username}`)}
+						>
 							{`${firstName}  ${lastName}`}{' '}
 							<Text as="span" fontWeight="400" fontSize="14" color="gray.300">
 								@{username}
