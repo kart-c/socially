@@ -17,8 +17,11 @@ const RightAside = () => {
 
 	useEffect(() => {
 		const removeCurrUser = users.filter((item) => item.username !== user.username);
-		setUnfollowedUsers(removeCurrUser);
-	}, [users, user.username]);
+		const filterUsers = removeCurrUser.filter((userToFilter) =>
+			user.following.every((item) => item.username !== userToFilter.username)
+		);
+		setUnfollowedUsers(filterUsers);
+	}, [users, user.username, user.following]);
 
 	return (
 		<VStack
