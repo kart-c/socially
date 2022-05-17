@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	Avatar,
 	Box,
@@ -7,7 +7,6 @@ import {
 	IconButton,
 	Text,
 	Tooltip,
-	Image,
 	Input,
 	HStack,
 	Button,
@@ -18,12 +17,22 @@ import { FaEllipsisV } from 'react-icons/fa';
 // eslint-disable-next-line
 import { MdOutlineBookmarkBorder, MdOutlineBookmark } from 'react-icons/md';
 import { Comment } from 'Components';
+import { useSelector } from 'react-redux';
 
-const Post = ({ content, likes, username, img, firstName, lastName, profilePic, comments }) => {
+const Post = ({ content, likes, username, firstName, lastName, profilePic, comments }) => {
+	const { user } = useSelector((state) => state.auth);
+	const [img, setImg] = useState();
+
+	useEffect(() => {
+		if (username === user.username) {
+			setImg(user?.profilePic);
+		}
+	}, [user, username]);
+
 	return (
 		<Box as="article" p="4" borderBottom="1px solid" borderColor="gray.200" position="relative">
 			<Flex gap="3">
-				<Avatar name={`${firstName} ${lastName}`} src={profilePic}></Avatar>
+				<Avatar name={`${firstName} ${lastName}`} src={img || profilePic}></Avatar>
 				<Flex mt="2" gap="3" flexDir="column">
 					<Flex w="100%" justify="space-between">
 						<Heading as="h3" fontWeight="700" fontSize="16">
@@ -44,11 +53,6 @@ const Post = ({ content, likes, username, img, firstName, lastName, profilePic, 
 						/>
 					</Flex>
 					<Text>{content}</Text>
-					{img ? (
-						<Box w="full" h="300">
-							<Image src={img} alt="placeholder" w="full" h="full" objectFit="cover" />
-						</Box>
-					) : null}
 				</Flex>
 			</Flex>
 			<Flex ml="60px" mt="4" w="calc(100% - 60px)">
@@ -108,7 +112,7 @@ const Post = ({ content, likes, username, img, firstName, lastName, profilePic, 
 				</Button>
 			</HStack>
 			{comments?.length > 0
-				? comments.map((comment) => <Comment key={comment._id} {...comment} />)
+				? comments.map((comment) => <Comment key={comment._id} {...comment} img={img} />)
 				: null}
 		</Box>
 	);
