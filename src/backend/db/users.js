@@ -68,8 +68,9 @@ export const users = [
 		username: 'wizard',
 		password: 'gandalfthewhite',
 		bio: 'All we have to do is decide what to do with the time that is given to us.',
-		link: 'https://res.cloudinary.com/obi-wan/image/upload/v1652698930/Socially/Profiles/gandalf.jpg',
-		profilePic: '',
+		link: '',
+		profilePic:
+			'https://res.cloudinary.com/obi-wan/image/upload/v1652698930/Socially/Profiles/gandalf.jpg',
 		createdAt: formatDate(),
 		bookmarks: [],
 		updatedAt: formatDate(),
