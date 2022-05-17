@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Avatar, Box, Flex, Text } from '@chakra-ui/react';
 import { FiPlusCircle } from 'react-icons/fi';
 import { Loader, PgWrapper, Post } from 'Components';
@@ -8,12 +8,23 @@ import { getAllPosts } from 'Redux/Thunk';
 const Home = ({ onOpen }) => {
 	const dispatch = useDispatch();
 	const { isLoading } = useSelector((state) => state.users);
+	const { user: loggedInUser } = useSelector((state) => state.auth);
 	const { posts, isLoading: postLoading } = useSelector((state) => state.posts);
+	const [followedPosts, setFollowedPosts] = useState([]);
 
 	useEffect(() => {
 		const getPosts = async () => await dispatch(getAllPosts());
 		getPosts();
 	}, [dispatch]);
+
+	useEffect(() => {
+		const currentUserPosts = posts.filter((user) => user.username === loggedInUser.username);
+		const userPosts = posts.filter((post) =>
+			loggedInUser.following.every((item) => item.username === post.username)
+		);
+		setFollowedPosts(currentUserPosts.concat(userPosts));
+	}, [loggedInUser, posts]);
+
 	return (
 		<>
 			<PgWrapper>
@@ -42,8 +53,8 @@ const Home = ({ onOpen }) => {
 						</Flex>
 					</Box>
 				)}
-				{posts?.length > 0 ? (
-					posts.map((post) => <Post key={post._id} {...post} />)
+				{followedPosts?.length > 0 ? (
+					followedPosts.map((post) => <Post key={post._id} {...post} />)
 				) : (
 					<div>No posts</div>
 				)}
