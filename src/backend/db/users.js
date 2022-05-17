@@ -1,4 +1,3 @@
-import { v4 as uuid } from 'uuid';
 import { formatDate } from '../utils/authUtils';
 /**
  * User Database can be added here.
@@ -18,7 +17,7 @@ export const users = [
 			'https://res.cloudinary.com/obi-wan/image/upload/v1652687739/Socially/Profiles/avataaars_jhvh1w.png',
 		following: [
 			{
-				_id: uuid(),
+				_id: 'f7b5f617-a4be-41eb-9ce9-e6a59b05b065',
 				firstName: 'Gandalf',
 				lastName: 'Grey',
 				username: 'wizard',
@@ -28,7 +27,7 @@ export const users = [
 		],
 		followers: [
 			{
-				_id: uuid(),
+				_id: 'e2d77e00-f2b3-4dd3-a38b-b276a45c1f79',
 				firstName: 'Smeagol',
 				lastName: 'Smeagol',
 				username: 'gollum',
@@ -53,7 +52,7 @@ export const users = [
 		following: [],
 		followers: [
 			{
-				_id: uuid(),
+				_id: 'bf6d24fe-1dc4-4322-b35f-a5553d7b8d66',
 				firstName: 'Bruce',
 				lastName: 'Wayne',
 				username: 'not_batman',
@@ -77,7 +76,7 @@ export const users = [
 			'https://res.cloudinary.com/obi-wan/image/upload/v1652698572/Socially/Profiles/bilbo.jpg',
 		following: [
 			{
-				_id: uuid(),
+				_id: 'f7b5f617-a4be-41eb-9ce9-e6a59b05b065',
 				firstName: 'Gandalf',
 				lastName: 'Grey',
 				username: 'wizard',
@@ -102,7 +101,7 @@ export const users = [
 			'https://res.cloudinary.com/obi-wan/image/upload/v1652698709/Socially/Profiles/gollum.jpg',
 		following: [
 			{
-				_id: uuid(),
+				_id: '5bc70fce-51ee-432e-8906-2794bd07540e',
 				firstName: 'Adarsh',
 				lastName: 'Balika',
 				username: 'adarshbalika',
@@ -129,7 +128,7 @@ export const users = [
 		following: [],
 		followers: [
 			{
-				_id: uuid(),
+				_id: '5bc70fce-51ee-432e-8906-2794bd07540e',
 				firstName: 'Adarsh',
 				lastName: 'Balika',
 				username: 'adarshbalika',
@@ -137,7 +136,7 @@ export const users = [
 					'https://res.cloudinary.com/obi-wan/image/upload/v1652687739/Socially/Profiles/avataaars_jhvh1w.png',
 			},
 			{
-				_id: uuid(),
+				_id: '4f41732c-f426-4156-a2c9-53ee437a70f7',
 				firstName: 'Bilbo',
 				lastName: 'Baggins',
 				username: 'hobbit',
@@ -176,7 +175,7 @@ export const users = [
 			'https://res.cloudinary.com/obi-wan/image/upload/v1652699201/Socially/Profiles/Bruce.jpg',
 		following: [
 			{
-				_id: uuid(),
+				_id: 'bef48613-66a7-4bf3-8733-2d574df0f3f9',
 				firstName: 'Kartik',
 				lastName: 'Choudhary',
 				username: 'kart_c11',
