@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Avatar, Box, Flex, Text } from '@chakra-ui/react';
 import { FiPlusCircle } from 'react-icons/fi';
 import { Loader, PgWrapper, Post } from 'Components';
@@ -10,20 +10,17 @@ const Home = ({ onOpen }) => {
 	const { isLoading } = useSelector((state) => state.users);
 	const { user: loggedInUser } = useSelector((state) => state.auth);
 	const { posts, isLoading: postLoading } = useSelector((state) => state.posts);
-	const [followedPosts, setFollowedPosts] = useState([]);
 
 	useEffect(() => {
 		const getPosts = async () => await dispatch(getAllPosts());
 		getPosts();
 	}, [dispatch]);
 
-	useEffect(() => {
-		const currentUserPosts = posts.filter((user) => user.username === loggedInUser.username);
-		const userPosts = posts.filter((post) =>
-			loggedInUser.following.every((item) => item.username === post.username)
-		);
-		setFollowedPosts(currentUserPosts.concat(userPosts));
-	}, [loggedInUser, posts]);
+	const followedPosts = posts.filter(
+		(item) =>
+			loggedInUser.username === item.username ||
+			loggedInUser.following.some((follower) => follower.username === item.username)
+	);
 
 	return (
 		<>
