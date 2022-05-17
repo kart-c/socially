@@ -18,37 +18,49 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 
 const Profile = () => {
+	const { users } = useSelector((state) => state.users);
 	const { user } = useSelector((state) => state.auth);
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const [userObj, setUserObj] = useState();
 	const { username } = useParams();
 	const [userPosts, setUserPosts] = useState([]);
-
-	const getUser = async () => {
-		const response = await axios.get(`/api/users/${user._id}`);
-		setUserObj(response.data.user);
-	};
-
-	const getUserPosts = async () => {
-		const response = await axios.get(`/api/posts/user/${username}`);
-		setUserPosts(response.data.posts);
-	};
-
-	console.log(userPosts);
+	const [userData, setUserData] = useState({
+		bio: '',
+		website: '',
+		avatar: '',
+	});
 
 	useEffect(() => {
+		const getUser = async () => {
+			const user = users.find((item) => item.username === username);
+			if (user) {
+				const response = await axios.get(`/api/users/${user?._id}`);
+				setUserObj(response.data.user);
+			}
+		};
 		getUser();
-	}, []);
+	}, [username, users]);
 
 	useEffect(() => {
+		const getUserPosts = async () => {
+			const response = await axios.get(`/api/posts/user/${username}`);
+			setUserPosts(response.data.posts);
+		};
 		getUserPosts();
-	}, []);
+	}, [username]);
 
 	return (
 		<PgWrapper>
 			{userObj?.username ? (
 				<>
-					<ProfileModal isOpen={isOpen} onClose={onClose} />
+					<ProfileModal
+						isOpen={isOpen}
+						onClose={onClose}
+						userData={userData}
+						setUserData={setUserData}
+						defaultAvatar={userObj.profilePic}
+						name={`${userObj.firstName} ${userObj.lastName}`}
+					/>
 					<Flex
 						p="4"
 						align="flex-start"
@@ -59,7 +71,7 @@ const Profile = () => {
 					>
 						<Avatar
 							name={`${userObj.firstName} ${userObj.lastName}`}
-							src={user.profilePic}
+							src={userObj.profilePic}
 							size="lg"
 						/>
 						<VStack align="flex-start">
@@ -67,38 +79,45 @@ const Profile = () => {
 								{`${userObj.firstName} ${userObj.lastName}`}
 							</Heading>
 							<Text as="span" color="gray.300" fontSize="14px">
-								@{user.username}
+								@{userObj.username}
 							</Text>
-							<Text>{user.bio}</Text>
+							<Text>{userObj.bio}</Text>
 							<Flex gap="4">
 								<Text as="span">0 Posts</Text>
-								<Text as="span">{user.followers.length} Followers</Text>
-								<Text as="span">{user.following.length} Following</Text>
+								<Text as="span">{userObj.followers.length} Followers</Text>
+								<Text as="span">{userObj.following.length} Following</Text>
 							</Flex>
-							<Link href={user.link} isExternal color="brand.500" fontSize="14px">
-								{user.link}
+							<Link href={userObj.link} isExternal color="brand.500" fontSize="14px">
+								{userObj.link}
 							</Link>
 						</VStack>
-						<Flex
-							flexDir={{ base: 'row', sm: 'column' }}
-							align="flex-end"
-							gap="4"
-							ml="auto"
-							w={{ base: '100%', sm: 'auto' }}
-						>
-							<Button variant="outline" border="2px solid" borderColor="brand.500" onClick={onOpen}>
-								Edit
-							</Button>
-							<Tooltip label="Logout">
-								<IconButton
-									icon={<MdLogout />}
-									aria-label="Logout"
+						{user.username === username ? (
+							<Flex
+								flexDir={{ base: 'row', sm: 'column' }}
+								align="flex-end"
+								gap="4"
+								ml="auto"
+								w={{ base: '100%', sm: 'auto' }}
+							>
+								<Button
+									variant="outline"
 									border="2px solid"
 									borderColor="brand.500"
-									variant="outline"
-								/>
-							</Tooltip>
-						</Flex>
+									onClick={onOpen}
+								>
+									Edit
+								</Button>
+								<Tooltip label="Logout">
+									<IconButton
+										icon={<MdLogout />}
+										aria-label="Logout"
+										border="2px solid"
+										borderColor="brand.500"
+										variant="outline"
+									/>
+								</Tooltip>
+							</Flex>
+						) : null}
 					</Flex>
 					{userPosts.length > 0 ? userPosts.map((post) => <Post {...post} key={post._id} />) : null}
 				</>
