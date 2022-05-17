@@ -102,7 +102,7 @@ const Profile = () => {
 							</Text>
 							<Text>{userObj.bio}</Text>
 							<Flex gap="4">
-								<Text as="span">0 Posts</Text>
+								<Text as="span">{userPosts.length} Posts</Text>
 								<Text as="span">{userObj.followers.length} Followers</Text>
 								<Text as="span">{userObj.following.length} Following</Text>
 							</Flex>
