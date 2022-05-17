@@ -5,8 +5,6 @@ import { useSelector } from 'react-redux';
 const Explore = () => {
 	const { posts, isLoading } = useSelector((state) => state.posts);
 
-	console.log(posts, isLoading);
-
 	return (
 		<PgWrapper>
 			{isLoading && <Loader />}

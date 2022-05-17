@@ -24,7 +24,7 @@ function App() {
 				<Route path="/signup" element={<Signup />} />
 				<Route path="/explore" element={<Explore />} />
 				<Route path="/bookmark" element={<Bookmark />} />
-				<Route path="/profile" element={<Profile />} />
+				<Route path="/profile/:username" element={<Profile />} />
 			</Routes>
 			{pathname === '/' || pathname === '/signup' ? null : <RightAside />}
 		</Container>

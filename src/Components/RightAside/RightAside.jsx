@@ -9,8 +9,6 @@ const RightAside = () => {
 	const { users } = useSelector((state) => state.users);
 	const { user } = useSelector((state) => state.auth);
 
-	console.log('right aside');
-
 	useEffect(() => {
 		const getAllUsers = async () => await dispatch(getUsers());
 		getAllUsers();

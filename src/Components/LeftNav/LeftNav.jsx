@@ -1,8 +1,12 @@
 import { Button, Flex, Heading, Text } from '@chakra-ui/react';
 import { Link, NavLink } from 'react-router-dom';
 import { FiHome, FiHash, FiBookmark, FiUser, FiPlusCircle } from 'react-icons/fi';
+import { useSelector } from 'react-redux';
 
 const LeftNav = ({ onOpen }) => {
+	const {
+		user: { username },
+	} = useSelector((state) => state.auth);
 	const activeLink = ({ isActive }) => (isActive ? { fontWeight: '700' } : { fontWeight: '400' });
 
 	return (
@@ -127,7 +131,7 @@ const LeftNav = ({ onOpen }) => {
 			<Flex
 				as={NavLink}
 				style={activeLink}
-				to="/profile"
+				to={`/profile/${username}`}
 				align="center"
 				fontSize="20"
 				pl="4"
