@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Avatar, Button, Flex, HStack, Text, VStack } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUsers } from 'Redux/Thunk';
+import { follow, getUsers } from 'Redux/Thunk';
 import { Loader } from 'Components';
+import { followUser } from 'Redux/Slice';
 
 const RightAside = () => {
 	const [unfollowedUsers, setUnfollowedUsers] = useState([]);
 	const dispatch = useDispatch();
 	const { users, isLoading } = useSelector((state) => state.users);
-	const { user } = useSelector((state) => state.auth);
+	const { token, user } = useSelector((state) => state.auth);
 
 	useEffect(() => {
 		const getAllUsers = async () => await dispatch(getUsers());
@@ -22,6 +23,13 @@ const RightAside = () => {
 		);
 		setUnfollowedUsers(filterUsers);
 	}, [users, user.username, user.following]);
+
+	const followHandler = async (_id) => {
+		const response = await dispatch(follow({ token, _id }));
+		if (response.payload.status === 200) {
+			dispatch(followUser(response.payload.data.user));
+		}
+	};
 
 	return (
 		<VStack
@@ -46,9 +54,9 @@ const RightAside = () => {
 			) : unfollowedUsers.length > 0 ? (
 				<>
 					<Text m="4">People you may know</Text>
-					{unfollowedUsers.map((user) => (
+					{unfollowedUsers.map((unFollowUser) => (
 						<Flex
-							key={user._id}
+							key={unFollowUser._id}
 							w="full"
 							borderBottom="1px solid"
 							borderColor="gray.200"
@@ -68,14 +76,20 @@ const RightAside = () => {
 								<Avatar name="Master Oogway" src="https://" size="sm" />
 								<VStack align="flex-start" spacing="0" ml="2">
 									<Text as="span" fontSize="16px">
-										{`${user.firstName} ${user.lastName}`}
+										{`${unFollowUser.firstName} ${unFollowUser.lastName}`}
 									</Text>
 									<Text as="span" fontSize="14px" color="gray.300">
-										@{user.username}
+										@{unFollowUser.username}
 									</Text>
 								</VStack>
 							</HStack>
-							<Button variant="brand" m="0" ml={{ base: '0', lg: 'auto' }} size="sm">
+							<Button
+								variant="brand"
+								m="0"
+								ml={{ base: '0', lg: 'auto' }}
+								size="sm"
+								onClick={() => followHandler(unFollowUser._id)}
+							>
 								Follow
 							</Button>
 						</Flex>
