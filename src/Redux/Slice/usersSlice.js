@@ -1,4 +1,4 @@
-import { createSlice, current } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { editProfile, getUsers } from 'Redux/Thunk';
 
 const initialState = {
@@ -26,11 +26,9 @@ const usersSlice = createSlice({
 		},
 		[editProfile.fulfilled]: (state, { payload }) => {
 			state.isLoading = false;
-			console.log('payload', payload);
 			state.users = state.users.map((user) =>
 				user.username === payload.data.user.username ? payload.data.user : user
 			);
-			console.log(current(state));
 		},
 		[editProfile.rejected]: (state, action) => {
 			state.isLoading = false;
