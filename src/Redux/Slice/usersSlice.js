@@ -3,7 +3,7 @@ import { getUsers, follow, unfollow } from 'Redux/Thunk';
 
 const initialState = {
 	users: [],
-	isLoading: false,
+	status: 'idle',
 };
 
 const usersSlice = createSlice({
@@ -12,18 +12,16 @@ const usersSlice = createSlice({
 	reducers: {},
 	extraReducers: {
 		[getUsers.pending]: (state, action) => {
-			state.isLoading = true;
+			state.status = 'pending';
 		},
 		[getUsers.fulfilled]: (state, { payload }) => {
 			state.users = payload.data.users;
-			state.isLoading = false;
+			state.status = 'success';
 		},
 		[getUsers.rejected]: (state, action) => {
-			state.isLoading = false;
+			state.status = 'failed';
 		},
-		[follow.pending]: (state, action) => {
-			state.isLoading = true;
-		},
+		[follow.pending]: (state, action) => {},
 		[follow.fulfilled]: (state, { payload }) => {
 			const {
 				data: { followUser },
@@ -36,14 +34,11 @@ const usersSlice = createSlice({
 					? user
 					: item
 			);
-			state.isLoading = false;
 		},
 		[follow.rejected]: (state, action) => {
-			state.isLoading = false;
+			console.error(action);
 		},
-		[unfollow.pending]: (state, action) => {
-			state.isLoading = true;
-		},
+		[unfollow.pending]: (state, action) => {},
 		[unfollow.fulfilled]: (state, { payload }) => {
 			const {
 				data: { followUser },
@@ -56,10 +51,9 @@ const usersSlice = createSlice({
 					? user
 					: item
 			);
-			state.isLoading = false;
 		},
 		[unfollow.rejected]: (state, action) => {
-			state.isLoading = false;
+			console.error(action);
 		},
 	},
 });
