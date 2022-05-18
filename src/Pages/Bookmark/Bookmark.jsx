@@ -4,8 +4,8 @@ import React from 'react';
 const Bookmark = () => {
 	return (
 		<PgWrapper>
-			<Post />
-			<Post />
+			{/* <Post />
+			<Post /> */}
 		</PgWrapper>
 	);
 };
