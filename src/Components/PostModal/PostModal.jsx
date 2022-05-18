@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
 	Button,
 	Flex,
@@ -12,10 +12,12 @@ import {
 	ModalHeader,
 	ModalOverlay,
 	Textarea,
+	Text,
 } from '@chakra-ui/react';
 import { BiImage } from 'react-icons/bi';
 
 const PostModal = ({ onClose, isOpen }) => {
+	const [postData, setPostData] = useState({ content: '' });
 	return (
 		<>
 			<Modal onClose={onClose} isOpen={isOpen} isCentered>
@@ -27,6 +29,8 @@ const PostModal = ({ onClose, isOpen }) => {
 						<Textarea
 							resize="none"
 							rows="6"
+							value={postData.content}
+							onChange={(e) => setPostData((prev) => ({ ...prev, content: e.target.value }))}
 							maxLength="200"
 							placeholder="How are you feeling today"
 						></Textarea>
@@ -45,6 +49,7 @@ const PostModal = ({ onClose, isOpen }) => {
 								<BiImage fontSize="32px" />
 							</FormLabel>
 						</Flex>
+						<Text mr="auto">{postData.content.length} / 200</Text>
 						<Button onClick={onClose} variant="brand" mr="4">
 							Post
 						</Button>
