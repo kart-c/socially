@@ -58,7 +58,7 @@ const ProfileModal = ({ onClose, isOpen, name, defaultdata }) => {
 		try {
 			const response = await dispatch(editProfile({ userData, token }));
 			if (response.payload.status === 201) {
-				setUserData(response.payload.data.user);
+				setUserData({ ...response.payload.data.user, profilePic: '' });
 			}
 		} catch (error) {
 			console.error(error);
