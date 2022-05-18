@@ -10,3 +10,19 @@ export const getAllPosts = createAsyncThunk('posts/all', async (post, { rejectWi
 		return rejectWithValue({ status: error.response.status, data: error.response.data });
 	}
 });
+
+export const newPost = createAsyncThunk(
+	'posts/new',
+	async ({ post, token }, { rejectWithValue }) => {
+		try {
+			const response = await axios.post(
+				'/api/posts',
+				{ postData: post },
+				{ headers: { authorization: token } }
+			);
+			return { data: response.data, status: response.status };
+		} catch (error) {
+			return rejectWithValue({ status: error.response.status, data: error.response.data });
+		}
+	}
+);
