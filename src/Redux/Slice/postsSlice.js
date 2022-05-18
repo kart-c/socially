@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getAllPosts, newPost } from 'Redux/Thunk';
+import { deletePost, getAllPosts, newPost } from 'Redux/Thunk';
 import { editPost } from 'Redux/Thunk';
 
 const initialState = {
@@ -60,6 +60,14 @@ const postsSlice = createSlice({
 			console.error(action);
 			state.postData.content = '';
 			state.postData.isEdited = false;
+		},
+		[deletePost.pending]: (state, action) => {},
+		[deletePost.fulfilled]: (state, { payload }) => {
+			console.log(payload);
+			state.posts = payload.data.posts;
+		},
+		[deletePost.rejected]: (state, action) => {
+			console.error(action);
 		},
 	},
 });

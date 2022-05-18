@@ -26,6 +26,7 @@ import { Comment } from 'Components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { postBeingEdited } from 'Redux/Slice';
+import { deletePost } from 'Redux/Thunk';
 
 const Post = ({
 	content,
@@ -39,16 +40,17 @@ const Post = ({
 	_id,
 }) => {
 	const navigate = useNavigate();
-	const { user } = useSelector((state) => state.auth);
+	const { user, token } = useSelector((state) => state.auth);
 	const dispatch = useDispatch();
 
 	const editHandler = async () => {
 		const response = await dispatch(postBeingEdited({ content, _id }));
-		console.log(response);
 		if (response.payload) {
 			onOpen();
 		}
 	};
+
+	const deleteHandler = () => dispatch(deletePost({ _id, token }));
 
 	return (
 		<Box as="article" p="4" borderBottom="1px solid" borderColor="gray.200" position="relative">
@@ -94,7 +96,12 @@ const Post = ({
 											<Button variant="basic" fontSize="14px" onClick={editHandler}>
 												Edit
 											</Button>
-											<Button variant="basic" fontSize="14px" color="red.600">
+											<Button
+												variant="basic"
+												fontSize="14px"
+												color="red.600"
+												onClick={deleteHandler}
+											>
 												Delete
 											</Button>
 										</VStack>
