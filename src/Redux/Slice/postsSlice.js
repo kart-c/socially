@@ -3,7 +3,7 @@ import { getAllPosts } from 'Redux/Thunk';
 
 const initialState = {
 	posts: [],
-	isLoading: false,
+	status: 'idle',
 };
 
 const postsSlice = createSlice({
@@ -12,14 +12,14 @@ const postsSlice = createSlice({
 	reducers: {},
 	extraReducers: {
 		[getAllPosts.pending]: (state, action) => {
-			state.isLoading = true;
+			state.status = 'pending';
 		},
 		[getAllPosts.fulfilled]: (state, { payload }) => {
-			state.isLoading = false;
+			state.status = 'success';
 			state.posts = payload.data.posts;
 		},
 		[getAllPosts.rejected]: (state, action) => {
-			state.isLoading = false;
+			state.status = 'failed';
 			console.error(action);
 		},
 	},
