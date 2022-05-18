@@ -22,9 +22,9 @@ function App() {
 				<Route path="/home" element={<Home onOpen={onOpen} />} />
 				<Route path="/" element={<Login />} />
 				<Route path="/signup" element={<Signup />} />
-				<Route path="/explore" element={<Explore />} />
-				<Route path="/bookmark" element={<Bookmark />} />
-				<Route path="/profile/:username" element={<Profile />} />
+				<Route path="/explore" element={<Explore onOpen={onOpen} />} />
+				<Route path="/bookmark" element={<Bookmark onOpen={onOpen} />} />
+				<Route path="/profile/:username" element={<Profile onOpen={onOpen} isOpen={isOpen} />} />
 			</Routes>
 			{pathname === '/' || pathname === '/signup' ? null : <RightAside />}
 		</Container>

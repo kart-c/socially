@@ -10,6 +10,12 @@ import {
 	Input,
 	HStack,
 	Button,
+	Popover,
+	PopoverTrigger,
+	PopoverContent,
+	PopoverArrow,
+	PopoverBody,
+	VStack,
 } from '@chakra-ui/react';
 // eslint-disable-next-line
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
@@ -17,19 +23,34 @@ import { FaEllipsisV } from 'react-icons/fa';
 // eslint-disable-next-line
 import { MdOutlineBookmarkBorder, MdOutlineBookmark } from 'react-icons/md';
 import { Comment } from 'Components';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { postBeingEdited } from 'Redux/Slice';
+import { deletePost } from 'Redux/Thunk';
 
-const Post = ({ content, likes, username, firstName, lastName, profilePic, comments }) => {
-	// const [img, setImg] = useState();
+const Post = ({
+	content,
+	likes,
+	username,
+	firstName,
+	lastName,
+	profilePic,
+	comments,
+	onOpen,
+	_id,
+}) => {
 	const navigate = useNavigate();
-	const { user } = useSelector((state) => state.auth);
+	const { user, token } = useSelector((state) => state.auth);
+	const dispatch = useDispatch();
 
-	// useEffect(() => {
-	// 	if (username === user.username) {
-	// 		setImg(user?.profilePic);
-	// 	}
-	// }, [user, username]);
+	const editHandler = async () => {
+		const response = await dispatch(postBeingEdited({ content, _id }));
+		if (response.payload) {
+			onOpen();
+		}
+	};
+
+	const deleteHandler = () => dispatch(deletePost({ _id, token }));
 
 	return (
 		<Box as="article" p="4" borderBottom="1px solid" borderColor="gray.200" position="relative">
@@ -55,19 +76,41 @@ const Post = ({ content, likes, username, firstName, lastName, profilePic, comme
 							</Text>
 						</Heading>
 						{user.username === username && (
-							<IconButton
-								position="absolute"
-								right="3"
-								top="3"
-								borderRadius="full"
-								aria-label="options"
-								icon={<FaEllipsisV />}
-								justifySelf="flex-end"
-								variant={'basic'}
-							/>
+							<Popover>
+								<PopoverTrigger>
+									<IconButton
+										position="absolute"
+										right="3"
+										top="3"
+										borderRadius="full"
+										aria-label="options"
+										icon={<FaEllipsisV />}
+										justifySelf="flex-end"
+										variant={'basic'}
+									/>
+								</PopoverTrigger>
+								<PopoverContent w="max-content">
+									<PopoverArrow />
+									<PopoverBody>
+										<VStack>
+											<Button variant="basic" fontSize="14px" onClick={editHandler}>
+												Edit
+											</Button>
+											<Button
+												variant="basic"
+												fontSize="14px"
+												color="red.600"
+												onClick={deleteHandler}
+											>
+												Delete
+											</Button>
+										</VStack>
+									</PopoverBody>
+								</PopoverContent>
+							</Popover>
 						)}
 					</Flex>
-					<Text>{content}</Text>
+					<Text wordBreak="break-word">{content}</Text>
 				</Flex>
 			</Flex>
 			<Flex ml="60px" mt="4" w="calc(100% - 60px)">

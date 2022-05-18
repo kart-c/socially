@@ -51,7 +51,9 @@ const Home = ({ onOpen }) => {
 							</Flex>
 						</Box>
 						{followedPosts?.length > 0 ? (
-							followedPosts.map((post) => <Post key={post._id} {...post} />)
+							[...followedPosts]
+								.reverse()
+								.map((post) => <Post key={post._id} {...post} onOpen={onOpen} />)
 						) : (
 							<Box textAlign="center" mt="16">
 								Follow some accounts to see posts

@@ -3,7 +3,7 @@ import { Loader, PgWrapper, Post } from 'Components';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllPosts } from 'Redux/Thunk';
 
-const Explore = () => {
+const Explore = ({ onOpen }) => {
 	const dispatch = useDispatch();
 	const { posts, status } = useSelector((state) => state.posts);
 
@@ -17,7 +17,9 @@ const Explore = () => {
 	return (
 		<PgWrapper>
 			{status === 'idle' ? <Loader /> : null}
-			{posts?.length > 0 ? posts.map((post) => <Post key={post._id} {...post} />) : null}
+			{posts?.length > 0
+				? [...posts].reverse().map((post) => <Post key={post._id} {...post} onOpen={onOpen} />)
+				: null}
 		</PgWrapper>
 	);
 };

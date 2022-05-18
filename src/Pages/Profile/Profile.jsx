@@ -20,8 +20,9 @@ import { followUser } from 'Redux/Slice';
 import { follow, unfollow } from 'Redux/Thunk';
 import { getUser } from 'Utils/getUser';
 
-const Profile = () => {
+const Profile = ({ onOpen: onOpenPost, isOpen: isOpenPost }) => {
 	const { users } = useSelector((state) => state.users);
+	const { posts } = useSelector((state) => state.posts);
 	const { user: loggedInUser, status, token } = useSelector((state) => state.auth);
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const [userObj, setUserObj] = useState();
@@ -48,7 +49,7 @@ const Profile = () => {
 		} catch (error) {
 			console.error(error);
 		}
-	}, [username]);
+	}, [username, isOpenPost, posts]);
 
 	const followHandler = async () => {
 		const currentUser = users.find((item) => item.username === username);
@@ -146,7 +147,11 @@ const Profile = () => {
 							</Flex>
 						)
 					) : null}
-					{userPosts.length > 0 ? userPosts.map((post) => <Post {...post} key={post._id} />) : null}
+					{userPosts.length > 0
+						? [...userPosts]
+								.reverse()
+								.map((post) => <Post {...post} key={post._id} onOpen={onOpenPost} />)
+						: null}
 				</>
 			) : null}
 		</PgWrapper>
