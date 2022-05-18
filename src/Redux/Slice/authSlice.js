@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { editProfile, login, signup } from 'Redux/Thunk';
+import { bookmark, editProfile, login, signup } from 'Redux/Thunk';
 
 const initialState = {
 	user: JSON.parse(localStorage.getItem('user')) || null,
@@ -56,6 +56,16 @@ const authSlice = createSlice({
 		[editProfile.rejected]: (state, action) => {
 			state.btnStatus = 'failed';
 			console.error(action);
+		},
+		[bookmark.pending]: (state, action) => {
+			state.bookmarkLoading = true;
+		},
+		[bookmark.fulfilled]: (state, { payload }) => {
+			state.bookmarkLoading = false;
+			state.user.bookmarks = payload.data.bookmarks;
+		},
+		[bookmark.rejected]: (state, action) => {
+			state.bookmarkLoading = false;
 		},
 	},
 });

@@ -26,7 +26,7 @@ import { Comment } from 'Components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { postBeingEdited } from 'Redux/Slice';
-import { deletePost, dislike, likePost } from 'Redux/Thunk';
+import { deletePost, dislike, likePost, bookmark } from 'Redux/Thunk';
 
 const Post = ({
 	content,
@@ -40,7 +40,7 @@ const Post = ({
 	_id,
 }) => {
 	const navigate = useNavigate();
-	const { user, token } = useSelector((state) => state.auth);
+	const { user, token, bookmarkLoading } = useSelector((state) => state.auth);
 	const { likeLoading } = useSelector((state) => state.posts);
 	const dispatch = useDispatch();
 
@@ -153,25 +153,41 @@ const Post = ({
 						</Box>
 					</Tooltip>
 				)}
-				{/* <Tooltip label="Bookmark">
-					<IconButton
-						aria-label="Bookmark"
-						color="brand.500"
-						icon={<MdOutlineBookmark fontSize="20px" />}
-						borderRadius="full"
-						variant="brandIcon"
-					/>
-				</Tooltip> */}
-				<Tooltip label="Bookmark">
-					<IconButton
-						display="flex"
-						ml="auto"
-						aria-label="Bookmark"
-						icon={<MdOutlineBookmarkBorder fontSize="20px" />}
-						borderRadius="full"
-						variant="brandIcon"
-					/>
-				</Tooltip>
+				{user.bookmarks.some((post) => post.username === username) ? (
+					<Tooltip label="Delete Bookmark">
+						<IconButton
+							display="flex"
+							ml="auto"
+							aria-label="Delete Bookmark"
+							color="brand.500"
+							icon={<MdOutlineBookmark fontSize="20px" />}
+							borderRadius="full"
+							variant="brandIcon"
+							disabled={bookmarkLoading}
+							_disabled={{
+								opacity: 1,
+								cursor: 'pointer',
+							}}
+						/>
+					</Tooltip>
+				) : (
+					<Tooltip label="Bookmark">
+						<IconButton
+							display="flex"
+							ml="auto"
+							aria-label="Bookmark"
+							icon={<MdOutlineBookmarkBorder fontSize="20px" />}
+							borderRadius="full"
+							variant="brandIcon"
+							disabled={bookmarkLoading}
+							_disabled={{
+								opacity: 1,
+								cursor: 'pointer',
+							}}
+							onClick={() => dispatch(bookmark({ _id, token }))}
+						/>
+					</Tooltip>
+				)}
 			</Flex>
 			<HStack mt="1" gap="2" position="relative">
 				<Avatar
