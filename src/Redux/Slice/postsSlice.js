@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getAllPosts, newPost } from 'Redux/Thunk';
+import { editPost } from 'Redux/Thunk';
 
 const initialState = {
 	posts: [],
@@ -13,7 +14,8 @@ const postsSlice = createSlice({
 	reducers: {
 		postBeingEdited: (state, action) => {
 			state.postData.isEdited = true;
-			state.postData.content = action.payload;
+			state.postData.content = action.payload.content;
+			state.postId = action.payload._id;
 		},
 		inputHandler: (state, action) => {
 			state.postData.content = action.payload;
@@ -42,6 +44,20 @@ const postsSlice = createSlice({
 			state.posts = payload.data.posts;
 		},
 		[newPost.rejected]: (state, action) => {
+			state.status = 'failed';
+			console.error(action);
+			state.postData.content = '';
+			state.postData.isEdited = false;
+		},
+		[editPost.pending]: (state, action) => {},
+		[editPost.fulfilled]: (state, { payload }) => {
+			console.log(payload);
+			state.status = 'success';
+			state.postData.content = '';
+			state.postData.isEdited = false;
+			state.posts = payload.data.posts;
+		},
+		[editPost.rejected]: (state, action) => {
 			state.status = 'failed';
 			console.error(action);
 			state.postData.content = '';
