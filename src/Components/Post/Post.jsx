@@ -27,13 +27,23 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { postBeingEdited } from 'Redux/Slice';
 
-const Post = ({ content, likes, username, firstName, lastName, profilePic, comments, onOpen }) => {
+const Post = ({
+	content,
+	likes,
+	username,
+	firstName,
+	lastName,
+	profilePic,
+	comments,
+	onOpen,
+	_id,
+}) => {
 	const navigate = useNavigate();
 	const { user } = useSelector((state) => state.auth);
 	const dispatch = useDispatch();
 
 	const editHandler = async () => {
-		const response = await dispatch(postBeingEdited(content));
+		const response = await dispatch(postBeingEdited({ content, _id }));
 		console.log(response);
 		if (response.payload) {
 			onOpen();

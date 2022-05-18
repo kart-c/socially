@@ -16,19 +16,27 @@ import {
 } from '@chakra-ui/react';
 import { BiImage } from 'react-icons/bi';
 import { useDispatch, useSelector } from 'react-redux';
-import { newPost } from 'Redux/Thunk';
+import { editPost, newPost } from 'Redux/Thunk';
 import { inputHandler, closeModal } from 'Redux/Slice';
 
 const PostModal = ({ onClose, isOpen }) => {
-	const { postData } = useSelector((state) => state.posts);
+	const { postData, postId } = useSelector((state) => state.posts);
 
 	const { token } = useSelector((state) => state.auth);
 	const dispatch = useDispatch();
 
-	const newPostHandler = async () => {
+	const postModalHandler = async () => {
 		if (postData.content.trim()) {
-			await dispatch(newPost({ post: postData, token }));
+			if (postData.isEdited) {
+				console.log('is editing');
+				await dispatch(editPost({ post: postData, token, _id: postId }));
+			} else {
+				console.log('new post');
+				await dispatch(newPost({ post: postData, token }));
+			}
 			onClose();
+		} else {
+			// PUT A ALERT
 		}
 	};
 
@@ -60,6 +68,7 @@ const PostModal = ({ onClose, isOpen }) => {
 							<FormLabel cursor="pointer">
 								<Input
 									type="file"
+									accept="image/*,video/*"
 									position="absolute"
 									opacity="0"
 									bgColor="red.100"
@@ -70,7 +79,7 @@ const PostModal = ({ onClose, isOpen }) => {
 							</FormLabel>
 						</Flex>
 						<Text mr="auto">{postData.content.length} / 200</Text>
-						<Button onClick={newPostHandler} variant="brand" mr="4">
+						<Button onClick={postModalHandler} variant="brand" mr="4">
 							Post
 						</Button>
 						<Button onClick={cancelHandler}>Cancel</Button>
