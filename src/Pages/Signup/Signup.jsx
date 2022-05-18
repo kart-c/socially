@@ -40,6 +40,8 @@ const Signup = () => {
 			e.preventDefault();
 			const { payload } = await dispatch(signup(user));
 			if (payload?.status === 201) {
+				localStorage.setItem('token', payload.data.encodedToken);
+				localStorage.setItem('user', JSON.stringify(payload.data.foundUser));
 				navigate('/home');
 			}
 		}
