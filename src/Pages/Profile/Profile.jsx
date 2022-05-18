@@ -148,7 +148,9 @@ const Profile = ({ onOpen: onOpenPost, isOpen: isOpenPost }) => {
 						)
 					) : null}
 					{userPosts.length > 0
-						? userPosts.map((post) => <Post {...post} key={post._id} onOpen={onOpenPost} />)
+						? [...userPosts]
+								.reverse()
+								.map((post) => <Post {...post} key={post._id} onOpen={onOpenPost} />)
 						: null}
 				</>
 			) : null}

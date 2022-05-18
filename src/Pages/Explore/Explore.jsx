@@ -18,7 +18,7 @@ const Explore = ({ onOpen }) => {
 		<PgWrapper>
 			{status === 'idle' ? <Loader /> : null}
 			{posts?.length > 0
-				? posts.map((post) => <Post key={post._id} {...post} onOpen={onOpen} />)
+				? [...posts].reverse().map((post) => <Post key={post._id} {...post} onOpen={onOpen} />)
 				: null}
 		</PgWrapper>
 	);
