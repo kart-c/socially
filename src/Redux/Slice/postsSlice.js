@@ -49,7 +49,6 @@ const postsSlice = createSlice({
 		},
 		[editPost.pending]: (state, action) => {},
 		[editPost.fulfilled]: (state, { payload }) => {
-			console.log(payload);
 			state.status = 'success';
 			state.postData.content = '';
 			state.postData.isEdited = false;
@@ -63,7 +62,6 @@ const postsSlice = createSlice({
 		},
 		[deletePost.pending]: (state, action) => {},
 		[deletePost.fulfilled]: (state, { payload }) => {
-			console.log(payload);
 			state.posts = payload.data.posts;
 		},
 		[deletePost.rejected]: (state, action) => {
