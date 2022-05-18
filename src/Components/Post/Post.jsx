@@ -26,7 +26,7 @@ import { Comment } from 'Components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { postBeingEdited } from 'Redux/Slice';
-import { deletePost, dislike, likePost, bookmark } from 'Redux/Thunk';
+import { deletePost, dislike, likePost, bookmark, removeBookmark } from 'Redux/Thunk';
 
 const Post = ({
 	content,
@@ -153,7 +153,7 @@ const Post = ({
 						</Box>
 					</Tooltip>
 				)}
-				{user.bookmarks.some((post) => post.username === username) ? (
+				{user.bookmarks.some((post) => post._id === _id) ? (
 					<Tooltip label="Delete Bookmark">
 						<IconButton
 							display="flex"
@@ -168,6 +168,7 @@ const Post = ({
 								opacity: 1,
 								cursor: 'pointer',
 							}}
+							onClick={() => dispatch(removeBookmark({ _id, token }))}
 						/>
 					</Tooltip>
 				) : (
