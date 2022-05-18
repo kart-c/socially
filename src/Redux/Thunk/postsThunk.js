@@ -26,3 +26,19 @@ export const newPost = createAsyncThunk(
 		}
 	}
 );
+
+export const editPost = createAsyncThunk(
+	'posts/edit',
+	async ({ _id, post, token }, { rejectWithValue }) => {
+		try {
+			const response = await axios.post(
+				`/api/posts/edit/${_id}`,
+				{ postData: post },
+				{ headers: { authorization: token } }
+			);
+			return { data: response.data, status: response.status };
+		} catch (error) {
+			return rejectWithValue({ status: error.response.status, data: error.response.data });
+		}
+	}
+);
