@@ -1,18 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Loader, PgWrapper, Post } from 'Components';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllPosts } from 'Redux/Thunk';
 
 const Explore = () => {
-	const { posts, isLoading } = useSelector((state) => state.posts);
+	const dispatch = useDispatch();
+	const { posts, status } = useSelector((state) => state.posts);
+
+	useEffect(() => {
+		if (status === 'idle') {
+			const getPosts = async () => await dispatch(getAllPosts());
+			getPosts();
+		}
+	}, [dispatch, status]);
 
 	return (
 		<PgWrapper>
-			{isLoading && <Loader />}
-			{posts?.length > 0 ? (
-				posts.map((post) => <Post key={post._id} {...post} />)
-			) : (
-				<div>No posts to show</div>
-			)}
+			{status === 'idle' ? <Loader /> : null}
+			{posts?.length > 0 ? posts.map((post) => <Post key={post._id} {...post} />) : null}
 		</PgWrapper>
 	);
 };
