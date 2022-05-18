@@ -10,13 +10,15 @@ const RightAside = () => {
 	const [unfollowedUsers, setUnfollowedUsers] = useState([]);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const { users, isLoading } = useSelector((state) => state.users);
+	const { users, status } = useSelector((state) => state.users);
 	const { token, user } = useSelector((state) => state.auth);
 
 	useEffect(() => {
-		const getAllUsers = async () => await dispatch(getUsers());
-		getAllUsers();
-	}, [dispatch]);
+		if (status === 'idle') {
+			const getAllUsers = async () => await dispatch(getUsers());
+			getAllUsers();
+		}
+	}, [dispatch, status]);
 
 	useEffect(() => {
 		const removeCurrUser = users.filter((item) => item.username !== user.username);
@@ -51,9 +53,9 @@ const RightAside = () => {
 			overflowY="auto"
 			minW="max-content"
 		>
-			{isLoading ? (
-				<Loader />
-			) : unfollowedUsers.length > 0 ? (
+			{status === 'pending' ? <Loader /> : null}
+
+			{status === 'success' && unfollowedUsers.length > 0 ? (
 				<>
 					<Text m="4">People you may know</Text>
 					{unfollowedUsers.map((unFollowUser) => (
