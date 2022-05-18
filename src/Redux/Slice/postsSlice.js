@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getAllPosts } from 'Redux/Thunk';
+import { getAllPosts, newPost } from 'Redux/Thunk';
 
 const initialState = {
 	posts: [],
@@ -19,6 +19,15 @@ const postsSlice = createSlice({
 			state.posts = payload.data.posts;
 		},
 		[getAllPosts.rejected]: (state, action) => {
+			state.status = 'failed';
+			console.error(action);
+		},
+		[newPost.pending]: (state, action) => {},
+		[newPost.fulfilled]: (state, { payload }) => {
+			state.status = 'success';
+			state.posts = payload.data.posts;
+		},
+		[newPost.rejected]: (state, action) => {
 			state.status = 'failed';
 			console.error(action);
 		},
