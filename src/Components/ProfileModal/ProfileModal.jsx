@@ -58,11 +58,12 @@ const ProfileModal = ({ onClose, isOpen, name, defaultdata }) => {
 		try {
 			const response = await dispatch(editProfile({ userData, token }));
 			if (response.payload.status === 201) {
-				onClose();
 				setUserData(response.payload.data.user);
 			}
 		} catch (error) {
 			console.error(error);
+		} finally {
+			onClose();
 		}
 	};
 
