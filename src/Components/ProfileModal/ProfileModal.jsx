@@ -18,17 +18,20 @@ import {
 import { AiFillCamera } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import { editProfile } from 'Redux/Thunk';
-import { Loader } from 'Components';
+import { saveToCloudinary } from 'Utils/saveToCloudinary';
+import { btnLoading } from 'Redux/Slice';
 
-const ProfileModal = ({ onClose, isOpen, name, defaultdata, setProfileUpdate }) => {
+const ProfileModal = ({ onClose, isOpen, name, defaultdata }) => {
 	const [userData, setUserData] = useState({
-		bio: defaultdata.userBio,
-		link: defaultdata.userLink,
-		profilePic: defaultdata.profile,
+		bio: defaultdata.bio,
+		link: defaultdata.link,
+		profilePic: '',
+		uploadedPic: {},
 	});
-	const [loading, setLoading] = useState(false);
 	const dispatch = useDispatch();
-	const { token, isLoading } = useSelector((state) => state.auth);
+	const { token, btnStatus } = useSelector((state) => state.auth);
+
+	let reader = new FileReader();
 
 	const inputHandler = (e) => {
 		const {
@@ -38,46 +41,70 @@ const ProfileModal = ({ onClose, isOpen, name, defaultdata, setProfileUpdate }) 
 		setUserData((prev) => ({ ...prev, [name]: value }));
 	};
 
-	const cloudinaryHandler = async (e) => {
-		setLoading(true);
+	const profilePicHandler = (e) => {
+		reader.readAsDataURL(e.target.files[0]);
+		reader.onload = () => {
+			if (reader.readyState === 2) {
+				setUserData((prev) => ({
+					...prev,
+					profilePic: reader.result,
+					uploadedPic: e.target.files[0],
+				}));
+			}
+		};
+	};
+
+	const updateUserWithPic = async (userData) => {
 		try {
-			const data = new FormData();
-			data.append('file', e);
-			data.append('upload_preset', 'zet3aa3f');
-			await fetch('https://api.cloudinary.com/v1_1/obi-wan/image/upload', {
-				method: 'POST',
-				body: data,
-			})
-				.then((res) => res.json())
-				.then((data) => {
-					setUserData((prev) => ({ ...prev, profilePic: data.url }));
-				})
-				.catch((error) => console.error(error));
+			const response = await dispatch(editProfile({ userData, token }));
+			if (response.payload.status === 201) {
+				onClose();
+				setUserData(response.payload.data.user);
+			}
 		} catch (error) {
-			console.error('error', error);
-		} finally {
-			setLoading(false);
+			console.error(error);
 		}
 	};
 
-	const updateHandler = (e) => {
+	const updateHandler = async (e) => {
 		e.preventDefault();
+		try {
+			if (!userData.profilePic) {
+				const response = await dispatch(
+					editProfile({ userData: { ...userData, profilePic: defaultdata.profilePic }, token })
+				);
+				if (response.payload.status) {
+					setUserData({ ...response.payload.data.user, profilePic: '' });
+					onClose();
+				}
+			} else {
+				dispatch(btnLoading());
+				await saveToCloudinary({
+					profilePic: userData.profilePic,
+					defaultdata,
+					updateUserWithPic,
+				});
+			}
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	const closeHandler = () => {
+		setUserData(defaultdata);
 		onClose();
-		// setProfileUpdate((prev) => !prev);
-		dispatch(editProfile({ userData, token }));
 	};
 
 	return (
 		<>
-			{isLoading && <Loader />}
-			<Modal onClose={loading ? null : onClose} isOpen={isOpen} isCentered>
-				<ModalOverlay />
+			<Modal onClose={btnStatus === 'loading' ? null : onClose} isOpen={isOpen} isCentered>
+				<ModalOverlay onClose={btnStatus === 'loading' ? null : onClose} />
 				<ModalContent as="form">
 					<ModalBody p="4" display="flex" flexDir="column" gap="3">
 						<HStack gap="6">
 							<Text as="span">Avatar</Text>
 							<Box position="relative">
-								<Avatar name={name} src={userData.profilePic} size="lg" />
+								<Avatar name={name} src={userData.profilePic || defaultdata.profilePic} size="lg" />
 								<FormLabel
 									cursor="pointer"
 									position="absolute"
@@ -90,6 +117,7 @@ const ProfileModal = ({ onClose, isOpen, name, defaultdata, setProfileUpdate }) 
 								>
 									<Input
 										type="file"
+										accept="image/*"
 										opacity="0"
 										bgColor="red.100"
 										p="0"
@@ -97,7 +125,7 @@ const ProfileModal = ({ onClose, isOpen, name, defaultdata, setProfileUpdate }) 
 										position="absolute"
 										left="0"
 										bottom="-5px"
-										onChange={(e) => cloudinaryHandler(e.target.files[0])}
+										onChange={profilePicHandler}
 									/>
 									<AiFillCamera />
 								</FormLabel>
@@ -129,10 +157,15 @@ const ProfileModal = ({ onClose, isOpen, name, defaultdata, setProfileUpdate }) 
 						</Flex>
 					</ModalBody>
 					<ModalFooter gap="4">
-						<Button onClick={updateHandler} variant="brand" type="submit" isLoading={loading}>
+						<Button
+							onClick={updateHandler}
+							variant="brand"
+							type="submit"
+							isLoading={btnStatus === 'loading'}
+						>
 							Update
 						</Button>
-						<Button onClick={onClose} type="button">
+						<Button onClick={closeHandler} type="button" isDisabled={btnStatus === 'loading'}>
 							Cancel
 						</Button>
 					</ModalFooter>

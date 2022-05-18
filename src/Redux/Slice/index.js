@@ -1,1 +1,1 @@
-export { followUser } from './authSlice';
+export { followUser, unfollowUser, btnLoading } from './authSlice';
