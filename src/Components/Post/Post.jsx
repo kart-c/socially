@@ -26,7 +26,7 @@ import { Comment } from 'Components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { postBeingEdited } from 'Redux/Slice';
-import { deletePost, likePost } from 'Redux/Thunk';
+import { deletePost, dislike, likePost } from 'Redux/Thunk';
 
 const Post = ({
 	content,
@@ -50,8 +50,6 @@ const Post = ({
 			onOpen();
 		}
 	};
-
-	console.log(likes);
 
 	const deleteHandler = () => dispatch(deletePost({ _id, token }));
 
@@ -120,7 +118,6 @@ const Post = ({
 				{likes.likedBy.some((like) => like.username === user.username) ? (
 					<Tooltip label="Unlike">
 						<Box>
-							{console.log('likes')}
 							<IconButton
 								aria-label="Unlike"
 								color="red.200"
@@ -132,6 +129,7 @@ const Post = ({
 									opacity: 1,
 									cursor: 'pointer',
 								}}
+								onClick={() => dispatch(dislike({ _id, token }))}
 							/>
 							{likes.likeCount ? likes.likeCount : null}
 						</Box>
@@ -139,9 +137,7 @@ const Post = ({
 				) : (
 					<Tooltip label="Like">
 						<Box display="flex" alignItems="center">
-							{console.log('not likes')}
 							<IconButton
-								onClick={() => dispatch(likePost({ _id, token }))}
 								aria-label="Like"
 								icon={<AiOutlineHeart fontSize="20px" />}
 								borderRadius="full"
@@ -151,6 +147,7 @@ const Post = ({
 									opacity: 1,
 									cursor: 'pointer',
 								}}
+								onClick={() => dispatch(likePost({ _id, token }))}
 							/>
 							{likes.likeCount ? likes.likeCount : null}
 						</Box>
