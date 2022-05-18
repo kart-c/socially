@@ -17,10 +17,8 @@ import {
 	PopoverBody,
 	VStack,
 } from '@chakra-ui/react';
-// eslint-disable-next-line
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { FaEllipsisV } from 'react-icons/fa';
-// eslint-disable-next-line
 import { MdOutlineBookmarkBorder, MdOutlineBookmark } from 'react-icons/md';
 import { Comment } from 'Components';
 import { useDispatch, useSelector } from 'react-redux';
