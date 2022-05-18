@@ -17,10 +17,8 @@ const postsSlice = createSlice({
 			state.postData.content = action.payload.content;
 			state.postId = action.payload._id;
 		},
-		inputHandler: (state, action) => {
-			state.postData.content = action.payload;
-		},
 		closeModal: (state, action) => {
+			state.postData.isEdited = false;
 			state.postData.content = '';
 		},
 	},

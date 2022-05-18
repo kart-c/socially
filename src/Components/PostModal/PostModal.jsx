@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import {
 	Button,
 	Flex,
@@ -17,22 +17,24 @@ import {
 import { BiImage } from 'react-icons/bi';
 import { useDispatch, useSelector } from 'react-redux';
 import { editPost, newPost } from 'Redux/Thunk';
-import { inputHandler, closeModal } from 'Redux/Slice';
+import { closeModal } from 'Redux/Slice';
 
 const PostModal = ({ onClose, isOpen }) => {
 	const { postData, postId } = useSelector((state) => state.posts);
+	const [length, setLength] = useState(0);
+	const postRef = useRef();
 
 	const { token } = useSelector((state) => state.auth);
 	const dispatch = useDispatch();
 
 	const postModalHandler = async () => {
-		if (postData.content.trim()) {
+		if (postRef.current.value.trim()) {
 			if (postData.isEdited) {
-				console.log('is editing');
-				await dispatch(editPost({ post: postData, token, _id: postId }));
+				await dispatch(
+					editPost({ post: { postData, content: postRef.current.value }, token, _id: postId })
+				);
 			} else {
-				console.log('new post');
-				await dispatch(newPost({ post: postData, token }));
+				await dispatch(newPost({ post: { ...postData, content: postRef.current.value }, token }));
 			}
 			onClose();
 		} else {
@@ -56,8 +58,9 @@ const PostModal = ({ onClose, isOpen }) => {
 						<Textarea
 							resize="none"
 							rows="6"
-							value={postData.content}
-							onChange={(e) => dispatch(inputHandler(e.target.value))}
+							ref={postRef}
+							defaultValue={postData.isEdited ? postData.content : ''}
+							onChange={(e) => setLength(e.target.value.length)}
 							maxLength="200"
 							placeholder="How are you feeling today"
 							autoFocus
@@ -78,7 +81,7 @@ const PostModal = ({ onClose, isOpen }) => {
 								<BiImage fontSize="32px" />
 							</FormLabel>
 						</Flex>
-						<Text mr="auto">{postData.content.length} / 200</Text>
+						<Text mr="auto">{length} / 200</Text>
 						<Button onClick={postModalHandler} variant="brand" mr="4">
 							Post
 						</Button>
