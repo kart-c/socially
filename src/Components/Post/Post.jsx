@@ -27,7 +27,6 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 const Post = ({ content, likes, username, firstName, lastName, profilePic, comments }) => {
-	// const [img, setImg] = useState();
 	const navigate = useNavigate();
 	const { user } = useSelector((state) => state.auth);
 
