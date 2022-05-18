@@ -4,12 +4,24 @@ import { getAllPosts, newPost } from 'Redux/Thunk';
 const initialState = {
 	posts: [],
 	status: 'idle',
+	postData: { content: '', isEdited: false },
 };
 
 const postsSlice = createSlice({
 	name: 'posts',
 	initialState,
-	reducers: {},
+	reducers: {
+		postBeingEdited: (state, action) => {
+			state.postData.isEdited = true;
+			state.postData.content = action.payload;
+		},
+		inputHandler: (state, action) => {
+			state.postData.content = action.payload;
+		},
+		closeModal: (state, action) => {
+			state.postData.content = '';
+		},
+	},
 	extraReducers: {
 		[getAllPosts.pending]: (state, action) => {
 			state.status = 'pending';
@@ -25,13 +37,19 @@ const postsSlice = createSlice({
 		[newPost.pending]: (state, action) => {},
 		[newPost.fulfilled]: (state, { payload }) => {
 			state.status = 'success';
+			state.postData.content = '';
+			state.postData.isEdited = false;
 			state.posts = payload.data.posts;
 		},
 		[newPost.rejected]: (state, action) => {
 			state.status = 'failed';
 			console.error(action);
+			state.postData.content = '';
+			state.postData.isEdited = false;
 		},
 	},
 });
+
+export const { postBeingEdited, inputHandler, closeModal } = postsSlice.actions;
 
 export default postsSlice.reducer;
