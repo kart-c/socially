@@ -1,24 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Avatar, Box, Heading, HStack, IconButton, Text } from '@chakra-ui/react';
 import { FaEllipsisV } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 
-const Comment = ({ firstName, lastName, profilePic, text, username, _id, img }) => {
-	const [commentImg, setCommentImg] = useState();
+const Comment = ({ firstName, lastName, profilePic, text, username }) => {
 	const { user } = useSelector((state) => state.auth);
 
-	useEffect(() => {
-		if (username === user.username) {
-			setCommentImg(img);
-		}
-	}, [img, user.username, username]);
+	// useEffect(() => {
+	// 	if (username === user.username) {
+	// 		setCommentImg(img);
+	// 	}
+	// }, [img, user.username, username]);
 
 	return (
 		<>
 			<HStack mt="3" gap="2" align="flex-start">
 				<Avatar
 					name={`${firstName} ${lastName}`}
-					src={commentImg || profilePic}
+					src={username === user.username ? user.profilePic : profilePic}
 					size="sm"
 					fontSize="10px"
 				/>
