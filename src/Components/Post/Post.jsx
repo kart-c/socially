@@ -23,12 +23,22 @@ import { FaEllipsisV } from 'react-icons/fa';
 // eslint-disable-next-line
 import { MdOutlineBookmarkBorder, MdOutlineBookmark } from 'react-icons/md';
 import { Comment } from 'Components';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { postBeingEdited } from 'Redux/Slice';
 
-const Post = ({ content, likes, username, firstName, lastName, profilePic, comments }) => {
+const Post = ({ content, likes, username, firstName, lastName, profilePic, comments, onOpen }) => {
 	const navigate = useNavigate();
 	const { user } = useSelector((state) => state.auth);
+	const dispatch = useDispatch();
+
+	const editHandler = async () => {
+		const response = await dispatch(postBeingEdited(content));
+		console.log(response);
+		if (response.payload) {
+			onOpen();
+		}
+	};
 
 	return (
 		<Box as="article" p="4" borderBottom="1px solid" borderColor="gray.200" position="relative">
@@ -71,7 +81,7 @@ const Post = ({ content, likes, username, firstName, lastName, profilePic, comme
 									<PopoverArrow />
 									<PopoverBody>
 										<VStack>
-											<Button variant="basic" fontSize="14px">
+											<Button variant="basic" fontSize="14px" onClick={editHandler}>
 												Edit
 											</Button>
 											<Button variant="basic" fontSize="14px" color="red.600">

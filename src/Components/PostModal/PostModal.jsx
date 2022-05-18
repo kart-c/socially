@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
 	Button,
 	Flex,
@@ -17,22 +17,23 @@ import {
 import { BiImage } from 'react-icons/bi';
 import { useDispatch, useSelector } from 'react-redux';
 import { newPost } from 'Redux/Thunk';
+import { inputHandler, closeModal } from 'Redux/Slice';
 
 const PostModal = ({ onClose, isOpen }) => {
-	const [postData, setPostData] = useState({ content: '' });
+	const { postData } = useSelector((state) => state.posts);
+
 	const { token } = useSelector((state) => state.auth);
 	const dispatch = useDispatch();
 
 	const newPostHandler = async () => {
 		if (postData.content.trim()) {
 			await dispatch(newPost({ post: postData, token }));
-			setPostData({ ...postData, content: '' });
 			onClose();
 		}
 	};
 
 	const cancelHandler = () => {
-		setPostData({ ...postData, content: '' });
+		dispatch(closeModal());
 		onClose();
 	};
 
@@ -48,7 +49,7 @@ const PostModal = ({ onClose, isOpen }) => {
 							resize="none"
 							rows="6"
 							value={postData.content}
-							onChange={(e) => setPostData((prev) => ({ ...prev, content: e.target.value }))}
+							onChange={(e) => dispatch(inputHandler(e.target.value))}
 							maxLength="200"
 							placeholder="How are you feeling today"
 							autoFocus
