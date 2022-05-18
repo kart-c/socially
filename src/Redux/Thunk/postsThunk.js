@@ -56,3 +56,21 @@ export const deletePost = createAsyncThunk(
 		}
 	}
 );
+
+export const likePost = createAsyncThunk(
+	'posts/like',
+	async ({ _id, token }, { rejectWithValue }) => {
+		try {
+			const response = await axios.post(
+				`/api/posts/like/${_id}`,
+				{},
+				{
+					headers: { authorization: token },
+				}
+			);
+			return { data: response.data, status: response.status };
+		} catch (error) {
+			return rejectWithValue({ status: error.response.status, data: error.response.data });
+		}
+	}
+);
