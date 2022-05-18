@@ -110,7 +110,7 @@ const Post = ({
 							</Popover>
 						)}
 					</Flex>
-					<Text>{content}</Text>
+					<Text wordBreak="break-word">{content}</Text>
 				</Flex>
 			</Flex>
 			<Flex ml="60px" mt="4" w="calc(100% - 60px)">
