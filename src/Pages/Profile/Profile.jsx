@@ -22,6 +22,7 @@ import { getUser } from 'Utils/getUser';
 
 const Profile = ({ onOpen: onOpenPost, isOpen: isOpenPost }) => {
 	const { users } = useSelector((state) => state.users);
+	const { posts } = useSelector((state) => state.posts);
 	const { user: loggedInUser, status, token } = useSelector((state) => state.auth);
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const [userObj, setUserObj] = useState();
@@ -48,7 +49,7 @@ const Profile = ({ onOpen: onOpenPost, isOpen: isOpenPost }) => {
 		} catch (error) {
 			console.error(error);
 		}
-	}, [username, isOpenPost]);
+	}, [username, isOpenPost, posts]);
 
 	const followHandler = async () => {
 		const currentUser = users.find((item) => item.username === username);
