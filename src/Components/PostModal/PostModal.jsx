@@ -15,12 +15,30 @@ import {
 	Text,
 } from '@chakra-ui/react';
 import { BiImage } from 'react-icons/bi';
+import { useDispatch, useSelector } from 'react-redux';
+import { newPost } from 'Redux/Thunk';
 
 const PostModal = ({ onClose, isOpen }) => {
 	const [postData, setPostData] = useState({ content: '' });
+	const { token } = useSelector((state) => state.auth);
+	const dispatch = useDispatch();
+
+	const newPostHandler = async () => {
+		if (postData.content.trim()) {
+			await dispatch(newPost({ post: postData, token }));
+			setPostData({ ...postData, content: '' });
+			onClose();
+		}
+	};
+
+	const cancelHandler = () => {
+		setPostData({ ...postData, content: '' });
+		onClose();
+	};
+
 	return (
 		<>
-			<Modal onClose={onClose} isOpen={isOpen} isCentered>
+			<Modal onClose={cancelHandler} isOpen={isOpen} isCentered>
 				<ModalOverlay />
 				<ModalContent>
 					<ModalHeader>Add New Post</ModalHeader>
@@ -33,6 +51,7 @@ const PostModal = ({ onClose, isOpen }) => {
 							onChange={(e) => setPostData((prev) => ({ ...prev, content: e.target.value }))}
 							maxLength="200"
 							placeholder="How are you feeling today"
+							autoFocus
 						></Textarea>
 					</ModalBody>
 					<ModalFooter>
@@ -50,10 +69,10 @@ const PostModal = ({ onClose, isOpen }) => {
 							</FormLabel>
 						</Flex>
 						<Text mr="auto">{postData.content.length} / 200</Text>
-						<Button onClick={onClose} variant="brand" mr="4">
+						<Button onClick={newPostHandler} variant="brand" mr="4">
 							Post
 						</Button>
-						<Button onClick={onClose}>Close</Button>
+						<Button onClick={cancelHandler}>Cancel</Button>
 					</ModalFooter>
 				</ModalContent>
 			</Modal>
