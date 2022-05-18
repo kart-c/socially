@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
 	Avatar,
 	Box,
@@ -21,22 +21,22 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 const Post = ({ content, likes, username, firstName, lastName, profilePic, comments }) => {
-	const [img, setImg] = useState();
+	// const [img, setImg] = useState();
 	const navigate = useNavigate();
 	const { user } = useSelector((state) => state.auth);
 
-	useEffect(() => {
-		if (username === user.username) {
-			setImg(user?.profilePic);
-		}
-	}, [user, username]);
+	// useEffect(() => {
+	// 	if (username === user.username) {
+	// 		setImg(user?.profilePic);
+	// 	}
+	// }, [user, username]);
 
 	return (
 		<Box as="article" p="4" borderBottom="1px solid" borderColor="gray.200" position="relative">
 			<Flex gap="3">
 				<Avatar
 					name={`${firstName} ${lastName}`}
-					src={img || profilePic}
+					src={user.username === username ? user.profilePic : profilePic}
 					cursor="pointer"
 					onClick={() => navigate(`/profile/${username}`)}
 				/>
@@ -54,16 +54,18 @@ const Post = ({ content, likes, username, firstName, lastName, profilePic, comme
 								@{username}
 							</Text>
 						</Heading>
-						<IconButton
-							position="absolute"
-							right="3"
-							top="3"
-							borderRadius="full"
-							aria-label="options"
-							icon={<FaEllipsisV />}
-							justifySelf="flex-end"
-							variant={'basic'}
-						/>
+						{user.username === username && (
+							<IconButton
+								position="absolute"
+								right="3"
+								top="3"
+								borderRadius="full"
+								aria-label="options"
+								icon={<FaEllipsisV />}
+								justifySelf="flex-end"
+								variant={'basic'}
+							/>
+						)}
 					</Flex>
 					<Text>{content}</Text>
 				</Flex>
@@ -110,7 +112,11 @@ const Post = ({ content, likes, username, firstName, lastName, profilePic, comme
 				</Tooltip>
 			</Flex>
 			<HStack mt="1" gap="2" position="relative">
-				<Avatar name={`${firstName}  ${lastName}`} src={profilePic} size="sm" />
+				<Avatar
+					name={`${firstName}  ${lastName}`}
+					src={user.username === username ? user.profilePic : user.profilePic}
+					size="sm"
+				/>
 				<Input type="text" placeholder="Comment . . ." pr="14" />
 				<Button
 					variant="basic"
@@ -125,7 +131,7 @@ const Post = ({ content, likes, username, firstName, lastName, profilePic, comme
 				</Button>
 			</HStack>
 			{comments?.length > 0
-				? comments.map((comment) => <Comment key={comment._id} {...comment} img={img} />)
+				? comments.map((comment) => <Comment key={comment._id} {...comment} />)
 				: null}
 		</Box>
 	);

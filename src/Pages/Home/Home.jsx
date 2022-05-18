@@ -7,14 +7,15 @@ import { getAllPosts } from 'Redux/Thunk';
 
 const Home = ({ onOpen }) => {
 	const dispatch = useDispatch();
-	const { isLoading } = useSelector((state) => state.users);
 	const { user: loggedInUser } = useSelector((state) => state.auth);
-	const { posts, isLoading: postLoading } = useSelector((state) => state.posts);
+	const { posts, status } = useSelector((state) => state.posts);
 
 	useEffect(() => {
-		const getPosts = async () => await dispatch(getAllPosts());
-		getPosts();
-	}, [dispatch]);
+		if (status === 'idle') {
+			const getPosts = async () => await dispatch(getAllPosts());
+			getPosts();
+		}
+	}, [dispatch, status]);
 
 	const followedPosts = posts.filter(
 		(item) =>
@@ -25,36 +26,39 @@ const Home = ({ onOpen }) => {
 	return (
 		<>
 			<PgWrapper>
-				{isLoading || postLoading ? (
-					<Loader />
-				) : (
-					<Box px="4" pb="4" borderBottom="1px solid" borderColor="gray.200">
-						<Text as="h2" fontWeight="700" mb="2.5">
-							Home
-						</Text>
-						<Flex gap="3" align="flex-end">
-							<Avatar name="Kartik Choudhary" src="https://" />
-							<Text
-								fontSize="lg"
-								mb="1"
-								color="gray.300"
-								cursor="text"
-								flexGrow="1"
-								onClick={onOpen}
-							>
-								What's Happening?
+				{status === 'pending' ? <Loader /> : null}
+				{status === 'success' ? (
+					<>
+						<Box px="4" pb="4" borderBottom="1px solid" borderColor="gray.200">
+							<Text as="h2" fontWeight="700" mb="2.5">
+								Home
 							</Text>
-							<Box color="brand.500" bgColor="#fff" mb="1.5" cursor="pointer" onClick={onOpen}>
-								<FiPlusCircle fontSize="24px" />
+							<Flex gap="3" align="flex-end">
+								<Avatar name="Kartik Choudhary" src="https://" />
+								<Text
+									fontSize="lg"
+									mb="1"
+									color="gray.300"
+									cursor="text"
+									flexGrow="1"
+									onClick={onOpen}
+								>
+									What's Happening?
+								</Text>
+								<Box color="brand.500" bgColor="#fff" mb="1.5" cursor="pointer" onClick={onOpen}>
+									<FiPlusCircle fontSize="24px" />
+								</Box>
+							</Flex>
+						</Box>
+						{followedPosts?.length > 0 ? (
+							followedPosts.map((post) => <Post key={post._id} {...post} />)
+						) : (
+							<Box textAlign="center" mt="16">
+								Follow some accounts to see posts
 							</Box>
-						</Flex>
-					</Box>
-				)}
-				{followedPosts?.length > 0 ? (
-					followedPosts.map((post) => <Post key={post._id} {...post} />)
-				) : (
-					<div>No posts</div>
-				)}
+						)}
+					</>
+				) : null}
 			</PgWrapper>
 		</>
 	);

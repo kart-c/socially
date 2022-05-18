@@ -56,6 +56,9 @@ export const theme = extendTheme(
 						color: '#fff',
 						_hover: {
 							backgroundColor: 'brand.400',
+							_disabled: {
+								backgroundColor: 'brand.400',
+							},
 						},
 						_active: {
 							backgroundColor: 'brand.200',

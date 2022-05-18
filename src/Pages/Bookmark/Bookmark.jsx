@@ -1,11 +1,12 @@
+// eslint-disable-next-line no-unused-vars
 import { PgWrapper, Post } from 'Components';
 import React from 'react';
 
 const Bookmark = () => {
 	return (
 		<PgWrapper>
-			<Post />
-			<Post />
+			{/* <Post />
+			<Post /> */}
 		</PgWrapper>
 	);
 };

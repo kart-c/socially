@@ -18,11 +18,11 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { followUser } from 'Redux/Slice';
 import { follow, unfollow } from 'Redux/Thunk';
+import { getUser } from 'Utils/getUser';
 
 const Profile = () => {
 	const { users } = useSelector((state) => state.users);
-	const { user: loggedInUser, isLoading, token } = useSelector((state) => state.auth);
-	const [profileLoading, setProfileLoading] = useState(false);
+	const { user: loggedInUser, status, token } = useSelector((state) => state.auth);
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const [userObj, setUserObj] = useState();
 	const { username } = useParams();
@@ -30,41 +30,24 @@ const Profile = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		const getUser = async () => {
+		if (loggedInUser.username === username) {
+			getUser(loggedInUser._id, setUserObj);
+		} else {
 			const currentUser = users.find((item) => item.username === username);
-			if (currentUser) {
-				if (loggedInUser.username === username) {
-					try {
-						setProfileLoading(true);
-						const response = await axios.get(`/api/users/${loggedInUser?._id}`);
-						if (response.status === 200) setUserObj(response.data.user);
-					} catch (error) {
-						console.error('error', error);
-					} finally {
-						setProfileLoading(false);
-					}
-				} else {
-					try {
-						setProfileLoading(true);
-						const response = await axios.get(`/api/users/${currentUser?._id}`);
-						if (response.status === 200) setUserObj(response.data.user);
-					} catch (error) {
-						console.error('error', error);
-					} finally {
-						setProfileLoading(false);
-					}
-				}
-			}
-		};
-		getUser();
-	}, [username, users, loggedInUser]);
+			getUser(currentUser._id, setUserObj);
+		}
+	}, [loggedInUser._id, loggedInUser.username, username, users, loggedInUser]);
 
 	useEffect(() => {
-		const getUserPosts = async () => {
-			const response = await axios.get(`/api/posts/user/${username}`);
-			if (response.status === 200) setUserPosts(response.data.posts);
-		};
-		getUserPosts();
+		try {
+			const getUserPosts = async () => {
+				const response = await axios.get(`/api/posts/user/${username}`);
+				if (response.status === 200) setUserPosts(response.data.posts);
+			};
+			getUserPosts();
+		} catch (error) {
+			console.error(error);
+		}
 	}, [username]);
 
 	const followHandler = async () => {
@@ -85,18 +68,13 @@ const Profile = () => {
 
 	return (
 		<PgWrapper>
-			{isLoading || profileLoading ? (
-				<Loader />
-			) : userObj?.username ? (
+			{status === 'pending' ? <Loader /> : null}
+			{userObj?.username ? (
 				<>
 					<ProfileModal
 						isOpen={isOpen}
 						onClose={onClose}
-						defaultdata={{
-							profile: userObj.profilePic,
-							userBio: userObj.bio,
-							userLink: userObj.link,
-						}}
+						defaultdata={userObj}
 						name={`${userObj.firstName} ${userObj.lastName}`}
 					/>
 					<Flex
