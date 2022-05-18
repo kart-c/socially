@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import { PgWrapper, Post } from 'Components';
 import React from 'react';
 
