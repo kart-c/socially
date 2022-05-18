@@ -1,9 +1,6 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
 	Button,
-	Flex,
-	FormLabel,
-	Input,
 	Modal,
 	ModalBody,
 	ModalCloseButton,
@@ -14,7 +11,6 @@ import {
 	Textarea,
 	Text,
 } from '@chakra-ui/react';
-import { BiImage } from 'react-icons/bi';
 import { useDispatch, useSelector } from 'react-redux';
 import { editPost, newPost } from 'Redux/Thunk';
 import { closeModal } from 'Redux/Slice';
@@ -27,6 +23,12 @@ const PostModal = ({ onClose, isOpen }) => {
 	const { token } = useSelector((state) => state.auth);
 	const dispatch = useDispatch();
 
+	useEffect(() => {
+		if (postData.isEdited) {
+			setLength(postData.content.length);
+		}
+	}, [postData.content.length, postData.isEdited]);
+
 	const postModalHandler = async () => {
 		if (postRef.current.value.trim()) {
 			if (postData.isEdited) {
@@ -36,6 +38,7 @@ const PostModal = ({ onClose, isOpen }) => {
 			} else {
 				await dispatch(newPost({ post: { ...postData, content: postRef.current.value }, token }));
 			}
+			setLength(0);
 			onClose();
 		} else {
 			// PUT A ALERT
@@ -44,6 +47,7 @@ const PostModal = ({ onClose, isOpen }) => {
 
 	const cancelHandler = () => {
 		dispatch(closeModal());
+		setLength(0);
 		onClose();
 	};
 
@@ -67,20 +71,6 @@ const PostModal = ({ onClose, isOpen }) => {
 						></Textarea>
 					</ModalBody>
 					<ModalFooter>
-						<Flex position="relative" align="center" mr="auto">
-							<FormLabel cursor="pointer">
-								<Input
-									type="file"
-									accept="image/*,video/*"
-									position="absolute"
-									opacity="0"
-									bgColor="red.100"
-									p="0"
-									visibility="hidden"
-								/>
-								<BiImage fontSize="32px" />
-							</FormLabel>
-						</Flex>
 						<Text mr="auto">{length} / 200</Text>
 						<Button onClick={postModalHandler} variant="brand" mr="4">
 							Post
