@@ -1,5 +1,16 @@
 import React from 'react';
-import { Avatar, Box, Heading, HStack, IconButton, Text } from '@chakra-ui/react';
+import {
+	Avatar,
+	Box,
+	Heading,
+	HStack,
+	Button,
+	Menu,
+	MenuButton,
+	MenuItem,
+	MenuList,
+	Text,
+} from '@chakra-ui/react';
 import { FaEllipsisV } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 
@@ -30,19 +41,23 @@ const Comment = ({ firstName, lastName, profilePic, text, username }) => {
 					</Heading>
 					<Text>{text}</Text>
 					{user?.username === username ? (
-						<IconButton
-							position="absolute"
-							right="0"
-							top="1"
-							bgColor="transparent"
-							_active={{
-								opacity: '0.7',
-							}}
-							borderRadius="full"
-							aria-label="options"
-							icon={<FaEllipsisV fontSize="14px" />}
-							justifySelf="flex-end"
-						/>
+						<Menu>
+							<MenuButton
+								as={Button}
+								rightIcon={<FaEllipsisV />}
+								bgColor="transparent"
+								position="absolute"
+								right="3"
+								top="3"
+								borderRadius="full"
+								pl="1"
+								pr="3"
+							/>
+							<MenuList minW="max-content" px="2">
+								<MenuItem>Edit</MenuItem>
+								<MenuItem>Delete</MenuItem>
+							</MenuList>
+						</Menu>
 					) : null}
 				</Box>
 			</HStack>
