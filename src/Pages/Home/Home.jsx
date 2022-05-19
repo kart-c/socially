@@ -1,11 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Avatar, Box, Flex, Text } from '@chakra-ui/react';
 import { FiPlusCircle } from 'react-icons/fi';
-import { Loader, PgWrapper, Post } from 'Components';
+import { Loader, PgWrapper, Post, SortContainer } from 'Components';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllPosts } from 'Redux/Thunk';
+import { sortByTrending } from 'Utils/sortByTrending';
 
 const Home = ({ onOpen }) => {
+	const [trending, setTrending] = useState(false);
 	const dispatch = useDispatch();
 	const { user: loggedInUser } = useSelector((state) => state.auth);
 	const { posts, status } = useSelector((state) => state.posts);
@@ -22,6 +24,8 @@ const Home = ({ onOpen }) => {
 			loggedInUser.username === item.username ||
 			loggedInUser.following.some((follower) => follower.username === item.username)
 	);
+
+	const trendingSort = sortByTrending(followedPosts, trending);
 
 	return (
 		<>
@@ -50,10 +54,11 @@ const Home = ({ onOpen }) => {
 								</Box>
 							</Flex>
 						</Box>
-						{followedPosts?.length > 0 ? (
-							[...followedPosts]
-								.reverse()
-								.map((post) => <Post key={post._id} {...post} onOpen={onOpen} />)
+						{followedPosts.length > 1 && (
+							<SortContainer setTrending={setTrending} trending={trending} />
+						)}
+						{trendingSort?.length > 0 ? (
+							[...trendingSort].map((post) => <Post key={post._id} {...post} onOpen={onOpen} />)
 						) : (
 							<Box textAlign="center" mt="16">
 								Follow some accounts to see posts
