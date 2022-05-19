@@ -6,5 +6,5 @@ export const sortByTrending = (posts, trending) => {
 				b.comments.length -
 				parseInt(a.likes.likeCount + a.comments.length)
 		);
-	} else return posts.reverse();
+	} else return [...posts].reverse();
 };
