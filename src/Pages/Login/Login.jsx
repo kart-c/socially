@@ -48,7 +48,6 @@ const Login = () => {
 				if (user.rememberMe) {
 					localStorage.setItem('token', payload.data.encodedToken);
 					localStorage.setItem('user', JSON.stringify(payload.data.foundUser));
-					console.log(location);
 					navigate(location?.state?.from || '/home', { replace: true });
 				}
 			}
