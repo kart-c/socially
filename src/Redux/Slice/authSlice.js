@@ -20,6 +20,10 @@ const authSlice = createSlice({
 		btnLoading: (state, action) => {
 			state.btnStatus = 'loading';
 		},
+		logout: (state, action) => {
+			state.user = null;
+			state.token = null;
+		},
 	},
 	extraReducers: {
 		[login.pending]: (state, action) => {
@@ -80,6 +84,6 @@ const authSlice = createSlice({
 	},
 });
 
-export const { followUser, unfollowUser, btnLoading } = authSlice.actions;
+export const { followUser, unfollowUser, btnLoading, logout } = authSlice.actions;
 
 export default authSlice.reducer;
