@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
 	Avatar,
 	Box,
@@ -10,12 +10,19 @@ import {
 	MenuItem,
 	MenuList,
 	Text,
+	Textarea,
+	ButtonGroup,
 } from '@chakra-ui/react';
 import { FaEllipsisV } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 
 const Comment = ({ firstName, lastName, profilePic, text, username }) => {
+	const [comment, setComment] = useState({ editable: false, content: '' });
 	const { user } = useSelector((state) => state.auth);
+
+	const editHandler = () => {
+		setComment((prev) => ({ ...prev, editable: true, content: text }));
+	};
 
 	return (
 		<>
@@ -39,8 +46,19 @@ const Comment = ({ firstName, lastName, profilePic, text, username }) => {
 							@{username}
 						</Text>
 					</Heading>
-					<Text>{text}</Text>
-					{user?.username === username ? (
+					{comment.editable ? (
+						<Textarea
+							row="3"
+							resize="none"
+							bgColor="gray.100"
+							value={comment.content}
+							onChange={(e) => setComment((prev) => ({ ...prev, content: e.target.value }))}
+							autoFocus
+						/>
+					) : (
+						<Text>{text}</Text>
+					)}
+					{user?.username === username && !comment.editable ? (
 						<Menu>
 							<MenuButton
 								as={Button}
@@ -54,10 +72,24 @@ const Comment = ({ firstName, lastName, profilePic, text, username }) => {
 								pr="3"
 							/>
 							<MenuList minW="max-content" px="2">
-								<MenuItem>Edit</MenuItem>
+								<MenuItem onClick={editHandler}>Edit</MenuItem>
 								<MenuItem>Delete</MenuItem>
 							</MenuList>
 						</Menu>
+					) : null}
+					{comment.editable ? (
+						<ButtonGroup mt="3" fontSize="12px">
+							<Button variant="brand" fontSize="14px">
+								Update
+							</Button>
+							<Button
+								colorScheme="red"
+								fontSize="14px"
+								onClick={() => setComment({ ...comment, content: '', editable: false })}
+							>
+								Cancel
+							</Button>
+						</ButtonGroup>
 					) : null}
 				</Box>
 			</HStack>
