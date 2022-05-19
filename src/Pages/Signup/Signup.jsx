@@ -42,7 +42,7 @@ const Signup = () => {
 			const { payload } = await dispatch(signup(user));
 			if (payload?.status === 201) {
 				localStorage.setItem('token', payload.data.encodedToken);
-				localStorage.setItem('user', JSON.stringify(payload.data.foundUser));
+				localStorage.setItem('user', JSON.stringify(payload.data.createdUser));
 				navigate(location?.state?.from || '/home', { replace: true });
 			}
 		}
