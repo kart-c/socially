@@ -11,7 +11,7 @@ import {
 	SimpleGrid,
 	Text,
 } from '@chakra-ui/react';
-import { Link as ReachLink, useNavigate } from 'react-router-dom';
+import { Link as ReachLink, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { signup } from 'Redux/Thunk';
 
@@ -26,6 +26,7 @@ const Signup = () => {
 	const { isLoading } = useSelector((state) => state.auth);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const location = useLocation();
 
 	const inputHandler = (e) => {
 		const {
@@ -42,7 +43,7 @@ const Signup = () => {
 			if (payload?.status === 201) {
 				localStorage.setItem('token', payload.data.encodedToken);
 				localStorage.setItem('user', JSON.stringify(payload.data.foundUser));
-				navigate('/home');
+				navigate(location?.state?.from || '/home', { replace: true });
 			}
 		}
 	};
@@ -94,7 +95,7 @@ const Signup = () => {
 						<FormControl>
 							<FormLabel my="3">Password</FormLabel>
 							<Input
-								type="text"
+								type="password"
 								placeholder="********"
 								value={user.password}
 								name="password"
