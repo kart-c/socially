@@ -38,3 +38,39 @@ export const editProfile = createAsyncThunk(
 		}
 	}
 );
+
+export const bookmark = createAsyncThunk(
+	'users/bookmark',
+	async ({ _id, token }, { rejectWithValue }) => {
+		try {
+			const response = await axios.post(
+				`/api/users/bookmark/${_id}`,
+				{},
+				{
+					headers: { authorization: token },
+				}
+			);
+			return { data: response.data, status: response.status };
+		} catch (error) {
+			return rejectWithValue({ status: error.response.status, data: error.response.data });
+		}
+	}
+);
+
+export const removeBookmark = createAsyncThunk(
+	'users/remove-bookmark',
+	async ({ _id, token }, { rejectWithValue }) => {
+		try {
+			const response = await axios.post(
+				`/api/users/remove-bookmark/${_id}`,
+				{},
+				{
+					headers: { authorization: token },
+				}
+			);
+			return { data: response.data, status: response.status };
+		} catch (error) {
+			return rejectWithValue({ status: error.response.status, data: error.response.data });
+		}
+	}
+);

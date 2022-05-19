@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { deletePost, getAllPosts, newPost } from 'Redux/Thunk';
+import { deletePost, dislike, getAllPosts, likePost, newPost } from 'Redux/Thunk';
 import { editPost } from 'Redux/Thunk';
 
 const initialState = {
@@ -49,7 +49,6 @@ const postsSlice = createSlice({
 		},
 		[editPost.pending]: (state, action) => {},
 		[editPost.fulfilled]: (state, { payload }) => {
-			console.log(payload);
 			state.status = 'success';
 			state.postData.content = '';
 			state.postData.isEdited = false;
@@ -63,10 +62,31 @@ const postsSlice = createSlice({
 		},
 		[deletePost.pending]: (state, action) => {},
 		[deletePost.fulfilled]: (state, { payload }) => {
-			console.log(payload);
 			state.posts = payload.data.posts;
 		},
 		[deletePost.rejected]: (state, action) => {
+			console.error(action);
+		},
+		[likePost.pending]: (state, action) => {
+			state.likeLoading = true;
+		},
+		[likePost.fulfilled]: (state, { payload }) => {
+			state.likeLoading = false;
+			state.posts = payload.data.posts;
+		},
+		[likePost.rejected]: (state, action) => {
+			state.likeLoading = false;
+			console.error(action);
+		},
+		[dislike.pending]: (state, action) => {
+			state.likeLoading = true;
+		},
+		[dislike.fulfilled]: (state, { payload }) => {
+			state.likeLoading = false;
+			state.posts = payload.data.posts;
+		},
+		[dislike.rejected]: (state, action) => {
+			state.likeLoading = false;
 			console.error(action);
 		},
 	},
