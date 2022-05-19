@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	Button,
 	Checkbox,
@@ -10,15 +10,20 @@ import {
 	Link,
 	Text,
 } from '@chakra-ui/react';
-import { Link as ReachLink, useNavigate } from 'react-router-dom';
+import { Link as ReachLink, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from 'Redux/Thunk';
 
 const Login = () => {
 	const [user, setUser] = useState({ username: '', password: '', rememberMe: false });
 	const dispatch = useDispatch();
-	const { isLoading } = useSelector((state) => state.auth);
+	const { token, isLoading } = useSelector((state) => state.auth);
 	const navigate = useNavigate();
+	const location = useLocation();
+
+	useEffect(() => {
+		token && navigate('/home');
+	}, [token, navigate]);
 
 	const inputHandler = (e) => {
 		const {
@@ -43,7 +48,8 @@ const Login = () => {
 				if (user.rememberMe) {
 					localStorage.setItem('token', payload.data.encodedToken);
 					localStorage.setItem('user', JSON.stringify(payload.data.foundUser));
-					navigate('/home');
+					console.log(location);
+					navigate(location?.state?.from || '/home', { replace: true });
 				}
 			}
 		}
