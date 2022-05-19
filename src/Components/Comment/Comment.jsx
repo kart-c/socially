@@ -14,14 +14,29 @@ import {
 	ButtonGroup,
 } from '@chakra-ui/react';
 import { FaEllipsisV } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { editComment } from 'Redux/Thunk';
 
-const Comment = ({ firstName, lastName, profilePic, text, username }) => {
+const Comment = ({ firstName, lastName, profilePic, text, username, _id, postId }) => {
 	const [comment, setComment] = useState({ editable: false, content: '' });
-	const { user } = useSelector((state) => state.auth);
+	const { user, token } = useSelector((state) => state.auth);
+	const dispatch = useDispatch();
 
 	const editHandler = () => {
 		setComment((prev) => ({ ...prev, editable: true, content: text }));
+	};
+
+	const updateComment = async () => {
+		if (!(comment.content === text)) {
+			const response = await dispatch(
+				editComment({ postId, commentId: _id, commentData: comment.content, token })
+			);
+			if (response.payload.status === 201) {
+				setComment({ ...comment, content: '', editable: false });
+			}
+		} else {
+			setComment({ ...comment, content: '', editable: false });
+		}
 	};
 
 	return (
@@ -79,7 +94,12 @@ const Comment = ({ firstName, lastName, profilePic, text, username }) => {
 					) : null}
 					{comment.editable ? (
 						<ButtonGroup mt="3" fontSize="12px">
-							<Button variant="brand" fontSize="14px">
+							<Button
+								variant="brand"
+								fontSize="14px"
+								onClick={updateComment}
+								disabled={!comment.content.length}
+							>
 								Update
 							</Button>
 							<Button

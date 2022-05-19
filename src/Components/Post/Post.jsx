@@ -208,7 +208,7 @@ const Post = ({
 				</Button>
 			</HStack>
 			{comments?.length > 0
-				? comments.map((comment) => <Comment key={comment._id} {...comment} />)
+				? comments.map((comment) => <Comment key={comment._id} {...comment} postId={_id} />)
 				: null}
 		</Box>
 	);
