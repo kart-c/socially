@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
 	Avatar,
 	Box,
@@ -10,12 +10,10 @@ import {
 	Input,
 	HStack,
 	Button,
-	Popover,
-	PopoverTrigger,
-	PopoverContent,
-	PopoverArrow,
-	PopoverBody,
-	VStack,
+	Menu,
+	MenuButton,
+	MenuList,
+	MenuItem,
 } from '@chakra-ui/react';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { FaEllipsisV } from 'react-icons/fa';
@@ -24,7 +22,7 @@ import { Comment } from 'Components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { postBeingEdited } from 'Redux/Slice';
-import { deletePost, dislike, likePost, bookmark, removeBookmark } from 'Redux/Thunk';
+import { deletePost, dislike, likePost, bookmark, removeBookmark, newComment } from 'Redux/Thunk';
 
 const Post = ({
 	content,
@@ -37,6 +35,7 @@ const Post = ({
 	onOpen,
 	_id,
 }) => {
+	const [commentInput, setCommentInput] = useState('');
 	const navigate = useNavigate();
 	const { user, token, bookmarkLoading } = useSelector((state) => state.auth);
 	const { likeLoading } = useSelector((state) => state.posts);
@@ -50,6 +49,11 @@ const Post = ({
 	};
 
 	const deleteHandler = () => dispatch(deletePost({ _id, token }));
+
+	const newCommentHandler = () => {
+		dispatch(newComment({ _id, token, commentData: commentInput }));
+		setCommentInput('');
+	};
 
 	return (
 		<Box as="article" p="4" borderBottom="1px solid" borderColor="gray.200" position="relative">
@@ -75,38 +79,23 @@ const Post = ({
 							</Text>
 						</Heading>
 						{user.username === username && (
-							<Popover>
-								<PopoverTrigger>
-									<IconButton
-										position="absolute"
-										right="3"
-										top="3"
-										borderRadius="full"
-										aria-label="options"
-										icon={<FaEllipsisV />}
-										justifySelf="flex-end"
-										variant={'basic'}
-									/>
-								</PopoverTrigger>
-								<PopoverContent w="max-content">
-									<PopoverArrow />
-									<PopoverBody>
-										<VStack>
-											<Button variant="basic" fontSize="14px" onClick={editHandler}>
-												Edit
-											</Button>
-											<Button
-												variant="basic"
-												fontSize="14px"
-												color="red.600"
-												onClick={deleteHandler}
-											>
-												Delete
-											</Button>
-										</VStack>
-									</PopoverBody>
-								</PopoverContent>
-							</Popover>
+							<Menu>
+								<MenuButton
+									as={Button}
+									rightIcon={<FaEllipsisV m="0" />}
+									position="absolute"
+									right="3"
+									top="3"
+									borderRadius="full"
+									variant={'basic'}
+									pl="1"
+									pr="3"
+								/>
+								<MenuList minW="max-content" px="2">
+									<MenuItem onClick={editHandler}>Edit</MenuItem>
+									<MenuItem onClick={deleteHandler}>Delete</MenuItem>
+								</MenuList>
+							</Menu>
 						)}
 					</Flex>
 					<Text wordBreak="break-word">{content}</Text>
@@ -194,7 +183,13 @@ const Post = ({
 					src={user.username === username ? user.profilePic : user.profilePic}
 					size="sm"
 				/>
-				<Input type="text" placeholder="Comment . . ." pr="14" />
+				<Input
+					type="text"
+					placeholder="Comment . . ."
+					pr="14"
+					value={commentInput}
+					onChange={(e) => setCommentInput(e.target.value)}
+				/>
 				<Button
 					variant="basic"
 					color="brand.500"
@@ -203,12 +198,17 @@ const Post = ({
 					right="2.5"
 					h="auto"
 					zIndex="1"
+					disabled={!commentInput}
+					_disabled={{
+						opacity: 0.6,
+					}}
+					onClick={newCommentHandler}
 				>
 					Post
 				</Button>
 			</HStack>
 			{comments?.length > 0
-				? comments.map((comment) => <Comment key={comment._id} {...comment} />)
+				? comments.map((comment) => <Comment key={comment._id} {...comment} postId={_id} />)
 				: null}
 		</Box>
 	);

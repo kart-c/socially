@@ -1,16 +1,45 @@
-import React from 'react';
-import { Avatar, Box, Heading, HStack, IconButton, Text } from '@chakra-ui/react';
+import React, { useState } from 'react';
+import {
+	Avatar,
+	Box,
+	Heading,
+	HStack,
+	Button,
+	Menu,
+	MenuButton,
+	MenuItem,
+	MenuList,
+	Text,
+	Textarea,
+	ButtonGroup,
+} from '@chakra-ui/react';
 import { FaEllipsisV } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteComment, editComment } from 'Redux/Thunk';
 
-const Comment = ({ firstName, lastName, profilePic, text, username }) => {
-	const { user } = useSelector((state) => state.auth);
+const Comment = ({ firstName, lastName, profilePic, text, username, _id, postId }) => {
+	const [comment, setComment] = useState({ editable: false, content: '' });
+	const { user, token } = useSelector((state) => state.auth);
+	const dispatch = useDispatch();
 
-	// useEffect(() => {
-	// 	if (username === user.username) {
-	// 		setCommentImg(img);
-	// 	}
-	// }, [img, user.username, username]);
+	const editHandler = () => {
+		setComment((prev) => ({ ...prev, editable: true, content: text }));
+	};
+
+	const updateComment = async () => {
+		if (!(comment.content === text)) {
+			const response = await dispatch(
+				editComment({ postId, commentId: _id, commentData: comment.content, token })
+			);
+			if (response.payload.status === 201) {
+				setComment({ ...comment, content: '', editable: false });
+			}
+		} else {
+			setComment({ ...comment, content: '', editable: false });
+		}
+	};
+
+	const deleteHandler = () => dispatch(deleteComment({ postId, commentId: _id, token }));
 
 	return (
 		<>
@@ -34,21 +63,57 @@ const Comment = ({ firstName, lastName, profilePic, text, username }) => {
 							@{username}
 						</Text>
 					</Heading>
-					<Text>{text}</Text>
-					{user?.username === username ? (
-						<IconButton
-							position="absolute"
-							right="0"
-							top="1"
-							bgColor="transparent"
-							_active={{
-								opacity: '0.7',
-							}}
-							borderRadius="full"
-							aria-label="options"
-							icon={<FaEllipsisV fontSize="14px" />}
-							justifySelf="flex-end"
+					{comment.editable ? (
+						<Textarea
+							row="3"
+							resize="none"
+							bgColor="gray.100"
+							value={comment.content}
+							onChange={(e) => setComment((prev) => ({ ...prev, content: e.target.value }))}
+							autoFocus
 						/>
+					) : (
+						<Text>{text}</Text>
+					)}
+					{user?.username === username && !comment.editable ? (
+						<Menu>
+							<MenuButton
+								as={Button}
+								rightIcon={<FaEllipsisV />}
+								bgColor="transparent"
+								position="absolute"
+								right="3"
+								top="3"
+								borderRadius="full"
+								pl="1"
+								pr="3"
+							/>
+							<MenuList minW="max-content" px="2">
+								<MenuItem onClick={editHandler}>Edit</MenuItem>
+								<MenuItem color="red.700" onClick={deleteHandler}>
+									Delete
+								</MenuItem>
+							</MenuList>
+						</Menu>
+					) : null}
+					{comment.editable ? (
+						<ButtonGroup mt="3" fontSize="12px">
+							<Button
+								variant="brand"
+								fontSize="14px"
+								onClick={updateComment}
+								disabled={!comment.content.length}
+							>
+								Update
+							</Button>
+							<Button
+								colorScheme="red"
+								fontSize="14px"
+								onClick={() => setComment({ ...comment, content: '', editable: false })}
+							>
+								Cancel
+							</Button>
+						</ButtonGroup>
 					) : null}
 				</Box>
 			</HStack>

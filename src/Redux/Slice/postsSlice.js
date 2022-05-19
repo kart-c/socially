@@ -1,5 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { deletePost, dislike, getAllPosts, likePost, newPost } from 'Redux/Thunk';
+import {
+	deleteComment,
+	deletePost,
+	dislike,
+	editComment,
+	getAllPosts,
+	likePost,
+	newComment,
+	newPost,
+} from 'Redux/Thunk';
 import { editPost } from 'Redux/Thunk';
 
 const initialState = {
@@ -87,6 +96,33 @@ const postsSlice = createSlice({
 		},
 		[dislike.rejected]: (state, action) => {
 			state.likeLoading = false;
+			console.error(action);
+		},
+		[newComment.pending]: (state, action) => {},
+		[newComment.fulfilled]: (state, { payload }) => {
+			state.posts = state.posts.map((post) =>
+				post._id === payload.postId ? { ...post, comments: payload.data.comments } : post
+			);
+		},
+		[newComment.rejected]: (state, action) => {
+			console.error(action);
+		},
+		[editComment.pending]: (state, action) => {},
+		[editComment.fulfilled]: (state, { payload }) => {
+			state.posts = state.posts.map((post) =>
+				post._id === payload.postId ? { ...post, comments: payload.data.comments } : post
+			);
+		},
+		[editComment.rejected]: (state, action) => {
+			console.error(action);
+		},
+		[deleteComment.pending]: (state, action) => {},
+		[deleteComment.fulfilled]: (state, { payload }) => {
+			state.posts = state.posts.map((post) =>
+				post._id === payload.postId ? { ...post, comments: payload.data.comments } : post
+			);
+		},
+		[deleteComment.rejected]: (state, action) => {
 			console.error(action);
 		},
 	},
