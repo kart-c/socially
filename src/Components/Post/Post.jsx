@@ -10,12 +10,10 @@ import {
 	Input,
 	HStack,
 	Button,
-	Popover,
-	PopoverTrigger,
-	PopoverContent,
-	PopoverArrow,
-	PopoverBody,
-	VStack,
+	Menu,
+	MenuButton,
+	MenuList,
+	MenuItem,
 } from '@chakra-ui/react';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { FaEllipsisV } from 'react-icons/fa';
@@ -75,38 +73,23 @@ const Post = ({
 							</Text>
 						</Heading>
 						{user.username === username && (
-							<Popover>
-								<PopoverTrigger>
-									<IconButton
-										position="absolute"
-										right="3"
-										top="3"
-										borderRadius="full"
-										aria-label="options"
-										icon={<FaEllipsisV />}
-										justifySelf="flex-end"
-										variant={'basic'}
-									/>
-								</PopoverTrigger>
-								<PopoverContent w="max-content">
-									<PopoverArrow />
-									<PopoverBody>
-										<VStack>
-											<Button variant="basic" fontSize="14px" onClick={editHandler}>
-												Edit
-											</Button>
-											<Button
-												variant="basic"
-												fontSize="14px"
-												color="red.600"
-												onClick={deleteHandler}
-											>
-												Delete
-											</Button>
-										</VStack>
-									</PopoverBody>
-								</PopoverContent>
-							</Popover>
+							<Menu>
+								<MenuButton
+									as={Button}
+									rightIcon={<FaEllipsisV m="0" />}
+									position="absolute"
+									right="3"
+									top="3"
+									borderRadius="full"
+									variant={'basic'}
+									pl="1"
+									pr="3"
+								/>
+								<MenuList minW="max-content" px="2">
+									<MenuItem onClick={editHandler}>Edit</MenuItem>
+									<MenuItem onClick={deleteHandler}>Delete</MenuItem>
+								</MenuList>
+							</Menu>
 						)}
 					</Flex>
 					<Text wordBreak="break-word">{content}</Text>
