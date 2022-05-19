@@ -132,3 +132,21 @@ export const editComment = createAsyncThunk(
 		}
 	}
 );
+
+export const deleteComment = createAsyncThunk(
+	'posts/deleteComment',
+	async ({ postId, commentId, token }, { rejectWithValue }) => {
+		try {
+			const response = await axios.post(
+				`/api/comments/delete/${postId}/${commentId}`,
+				{},
+				{
+					headers: { authorization: token },
+				}
+			);
+			return { data: response.data, status: response.status, postId };
+		} catch (error) {
+			return rejectWithValue({ status: error.response.status, data: error.response.data });
+		}
+	}
+);

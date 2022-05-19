@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
+	deleteComment,
 	deletePost,
 	dislike,
 	editComment,
@@ -113,6 +114,15 @@ const postsSlice = createSlice({
 			);
 		},
 		[editComment.rejected]: (state, action) => {
+			console.error(action);
+		},
+		[deleteComment.pending]: (state, action) => {},
+		[deleteComment.fulfilled]: (state, { payload }) => {
+			state.posts = state.posts.map((post) =>
+				post._id === payload.postId ? { ...post, comments: payload.data.comments } : post
+			);
+		},
+		[deleteComment.rejected]: (state, action) => {
 			console.error(action);
 		},
 	},

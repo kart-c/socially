@@ -15,7 +15,7 @@ import {
 } from '@chakra-ui/react';
 import { FaEllipsisV } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
-import { editComment } from 'Redux/Thunk';
+import { deleteComment, editComment } from 'Redux/Thunk';
 
 const Comment = ({ firstName, lastName, profilePic, text, username, _id, postId }) => {
 	const [comment, setComment] = useState({ editable: false, content: '' });
@@ -38,6 +38,8 @@ const Comment = ({ firstName, lastName, profilePic, text, username, _id, postId 
 			setComment({ ...comment, content: '', editable: false });
 		}
 	};
+
+	const deleteHandler = () => dispatch(deleteComment({ postId, commentId: _id, token }));
 
 	return (
 		<>
@@ -88,7 +90,9 @@ const Comment = ({ firstName, lastName, profilePic, text, username, _id, postId 
 							/>
 							<MenuList minW="max-content" px="2">
 								<MenuItem onClick={editHandler}>Edit</MenuItem>
-								<MenuItem>Delete</MenuItem>
+								<MenuItem color="red.700" onClick={deleteHandler}>
+									Delete
+								</MenuItem>
 							</MenuList>
 						</Menu>
 					) : null}
