@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
 	Avatar,
 	Box,
@@ -22,7 +22,7 @@ import { Comment } from 'Components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { postBeingEdited } from 'Redux/Slice';
-import { deletePost, dislike, likePost, bookmark, removeBookmark } from 'Redux/Thunk';
+import { deletePost, dislike, likePost, bookmark, removeBookmark, newComment } from 'Redux/Thunk';
 
 const Post = ({
 	content,
@@ -35,6 +35,7 @@ const Post = ({
 	onOpen,
 	_id,
 }) => {
+	const [commentInput, setCommentInput] = useState('');
 	const navigate = useNavigate();
 	const { user, token, bookmarkLoading } = useSelector((state) => state.auth);
 	const { likeLoading } = useSelector((state) => state.posts);
@@ -48,6 +49,11 @@ const Post = ({
 	};
 
 	const deleteHandler = () => dispatch(deletePost({ _id, token }));
+
+	const newCommentHandler = () => {
+		dispatch(newComment({ _id, token, commentData: commentInput }));
+		setCommentInput('');
+	};
 
 	return (
 		<Box as="article" p="4" borderBottom="1px solid" borderColor="gray.200" position="relative">
@@ -177,7 +183,13 @@ const Post = ({
 					src={user.username === username ? user.profilePic : user.profilePic}
 					size="sm"
 				/>
-				<Input type="text" placeholder="Comment . . ." pr="14" />
+				<Input
+					type="text"
+					placeholder="Comment . . ."
+					pr="14"
+					value={commentInput}
+					onChange={(e) => setCommentInput(e.target.value)}
+				/>
 				<Button
 					variant="basic"
 					color="brand.500"
@@ -186,6 +198,11 @@ const Post = ({
 					right="2.5"
 					h="auto"
 					zIndex="1"
+					disabled={!commentInput}
+					_disabled={{
+						opacity: 0.6,
+					}}
+					onClick={newCommentHandler}
 				>
 					Post
 				</Button>

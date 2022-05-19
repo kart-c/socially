@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { deletePost, dislike, getAllPosts, likePost, newPost } from 'Redux/Thunk';
+import { deletePost, dislike, getAllPosts, likePost, newComment, newPost } from 'Redux/Thunk';
 import { editPost } from 'Redux/Thunk';
 
 const initialState = {
@@ -87,6 +87,15 @@ const postsSlice = createSlice({
 		},
 		[dislike.rejected]: (state, action) => {
 			state.likeLoading = false;
+			console.error(action);
+		},
+		[newComment.pending]: (state, action) => {},
+		[newComment.fulfilled]: (state, { payload }) => {
+			state.posts = state.posts.map((post) =>
+				post._id === payload.postId ? { ...post, comments: payload.data.comments } : post
+			);
+		},
+		[newComment.rejected]: (state, action) => {
 			console.error(action);
 		},
 	},

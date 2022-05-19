@@ -92,3 +92,23 @@ export const dislike = createAsyncThunk(
 		}
 	}
 );
+
+export const newComment = createAsyncThunk(
+	'posts/newCommet',
+	async ({ _id, token, commentData }, { rejectWithValue }) => {
+		try {
+			const response = await axios.post(
+				`/api/comments/add/${_id}`,
+				{
+					commentData,
+				},
+				{
+					headers: { authorization: token },
+				}
+			);
+			return { data: response.data, status: response.status, postId: _id };
+		} catch (error) {
+			return rejectWithValue({ status: error.response.status, data: error.response.data });
+		}
+	}
+);
