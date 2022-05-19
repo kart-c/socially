@@ -34,6 +34,7 @@ const Post = ({
 	comments,
 	onOpen,
 	_id,
+	createdAt,
 }) => {
 	const [commentInput, setCommentInput] = useState('');
 	const navigate = useNavigate();
@@ -53,6 +54,13 @@ const Post = ({
 	const newCommentHandler = () => {
 		dispatch(newComment({ _id, token, commentData: commentInput }));
 		setCommentInput('');
+	};
+
+	const getDate = (createdAt) => {
+		const date = new Date(createdAt).toLocaleString('en-In', { day: '2-digit' });
+		const month = new Date(createdAt).toLocaleString('en-In', { month: 'short' });
+		const year = new Date(createdAt).getFullYear();
+		return `${date} ${month} ${year}`;
 	};
 
 	return (
@@ -136,7 +144,7 @@ const Post = ({
 								}}
 								onClick={() => dispatch(likePost({ _id, token }))}
 							/>
-							{likes.likeCount ? likes.likeCount : null}
+							{likes.likeCount ? `${likes.likeCount} likes` : null}
 						</Box>
 					</Tooltip>
 				)}
@@ -177,6 +185,9 @@ const Post = ({
 					</Tooltip>
 				)}
 			</Flex>
+			<Box textAlign="right" fontSize="sm" mb="2" color="gray.300">
+				{getDate(createdAt)}
+			</Box>
 			<HStack mt="1" gap="2" position="relative">
 				<Avatar
 					name={`${firstName}  ${lastName}`}
