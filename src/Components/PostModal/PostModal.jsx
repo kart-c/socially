@@ -13,6 +13,7 @@ import {
 	Flex,
 	FormLabel,
 	Input,
+	useToast,
 } from '@chakra-ui/react';
 import { BiImage } from 'react-icons/bi';
 import { AiOutlineClose } from 'react-icons/ai';
@@ -29,8 +30,8 @@ const PostModal = ({ onClose, isOpen }) => {
 	const { token } = useSelector((state) => state.auth);
 	const dispatch = useDispatch();
 	const [media, setMedia] = useState();
+	const toast = useToast();
 	let reader = new FileReader();
-
 	const currentPost = posts.find((post) => post._id === postId);
 
 	useEffect(() => {
@@ -108,7 +109,13 @@ const PostModal = ({ onClose, isOpen }) => {
 				}
 			}
 		} else {
-			// PUT A ALERT
+			toast({
+				status: 'error',
+				duration: 5000,
+				title: 'Post content cannot empty',
+				position: 'bottom-right',
+				isClosable: true,
+			});
 		}
 	};
 
@@ -131,7 +138,13 @@ const PostModal = ({ onClose, isOpen }) => {
 					}
 				};
 			} else {
-				alert('file too big');
+				toast({
+					status: 'error',
+					duration: 5000,
+					title: 'File size should be below 5MB',
+					position: 'bottom-right',
+					isClosable: true,
+				});
 				reader.abort();
 				setMedia('');
 			}
