@@ -14,6 +14,7 @@ import {
 	MenuButton,
 	MenuList,
 	MenuItem,
+	Image,
 } from '@chakra-ui/react';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { FaEllipsisV } from 'react-icons/fa';
@@ -35,12 +36,15 @@ const Post = ({
 	onOpen,
 	_id,
 	createdAt,
+	media,
 }) => {
 	const [commentInput, setCommentInput] = useState('');
 	const navigate = useNavigate();
 	const { user, token, bookmarkLoading } = useSelector((state) => state.auth);
 	const { likeLoading } = useSelector((state) => state.posts);
 	const dispatch = useDispatch();
+
+	const imgFormats = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 
 	const editHandler = async () => {
 		const response = await dispatch(postBeingEdited({ content, _id }));
@@ -107,6 +111,16 @@ const Post = ({
 						)}
 					</Flex>
 					<Text wordBreak="break-word">{content}</Text>
+					{media ? (
+						imgFormats.some((img) => media.includes(img)) ? (
+							<Image src={media} w="full" h="full" objectFit="cover" />
+						) : (
+							<video controls w="full" h="full">
+								<source src={media} />
+								Sorry, your browser doesn't support embedded videos.
+							</video>
+						)
+					) : null}
 				</Flex>
 			</Flex>
 			<Flex ml="60px" mt="4" w="calc(100% - 60px)">

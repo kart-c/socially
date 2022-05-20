@@ -15,17 +15,20 @@ import {
 	Input,
 } from '@chakra-ui/react';
 import { BiImage } from 'react-icons/bi';
+import { AiOutlineClose } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import { editPost, newPost } from 'Redux/Thunk';
 import { closeModal } from 'Redux/Slice';
+import { saveMediaToCloudinary } from 'Utils/saveToCloudinary';
 
 const PostModal = ({ onClose, isOpen }) => {
 	const { postData, postId } = useSelector((state) => state.posts);
 	const [length, setLength] = useState(0);
 	const postRef = useRef();
-
 	const { token } = useSelector((state) => state.auth);
 	const dispatch = useDispatch();
+	const [media, setMedia] = useState();
+	let reader = new FileReader();
 
 	useEffect(() => {
 		if (postData.isEdited) {
@@ -36,14 +39,60 @@ const PostModal = ({ onClose, isOpen }) => {
 	const postModalHandler = async () => {
 		if (postRef.current.value.trim()) {
 			if (postData.isEdited) {
-				await dispatch(
-					editPost({ post: { postData, content: postRef.current.value }, token, _id: postId })
-				);
+				if (media) {
+					const postHandler = async (media) => {
+						const response = await dispatch(
+							editPost({
+								post: { postData, content: postRef.current.value, media },
+								token,
+								_id: postId,
+							})
+						);
+						if (response.payload.status) {
+							setLength(0);
+							setMedia('');
+							onClose();
+						}
+					};
+					await saveMediaToCloudinary(media, postHandler);
+				} else {
+					const response = await dispatch(
+						editPost({
+							post: { postData, content: postRef.current.value, media: '' },
+							token,
+							_id: postId,
+						})
+					);
+					if (response.payload.status) {
+						setLength(0);
+						setMedia('');
+						onClose();
+					}
+				}
 			} else {
-				await dispatch(newPost({ post: { ...postData, content: postRef.current.value }, token }));
+				if (media) {
+					const postHandler = async (media) => {
+						const response = await dispatch(
+							newPost({ post: { ...postData, content: postRef.current.value, media }, token })
+						);
+						if (response.payload.status) {
+							setLength(0);
+							setMedia('');
+							onClose();
+						}
+					};
+					await saveMediaToCloudinary(media, postHandler);
+				} else {
+					const response = await dispatch(
+						newPost({ post: { ...postData, content: postRef.current.value, media: '' }, token })
+					);
+					if (response.payload.status) {
+						setLength(0);
+						setMedia('');
+						onClose();
+					}
+				}
 			}
-			setLength(0);
-			onClose();
 		} else {
 			// PUT A ALERT
 		}
@@ -53,6 +102,23 @@ const PostModal = ({ onClose, isOpen }) => {
 		dispatch(closeModal());
 		setLength(0);
 		onClose();
+	};
+
+	const mediaHandler = (e) => {
+		reader.readAsDataURL(e.target.files[0]);
+		reader.onprogress = () => {
+			if (e.target.files[0].size < 5000000) {
+				reader.onload = () => {
+					if (reader.readyState === 2) {
+						setMedia(reader.result);
+					}
+				};
+			} else {
+				alert('file too big');
+				reader.abort();
+				setMedia('');
+			}
+		};
 	};
 
 	return (
@@ -76,7 +142,7 @@ const PostModal = ({ onClose, isOpen }) => {
 					</ModalBody>
 					<ModalFooter>
 						<Flex position="relative" align="center" mr="auto">
-							<FormLabel cursor="pointer">
+							<FormLabel cursor="pointer" mb="0" mr="2">
 								<Input
 									type="file"
 									position="absolute"
@@ -84,12 +150,22 @@ const PostModal = ({ onClose, isOpen }) => {
 									bgColor="red.100"
 									p="0"
 									visibility="hidden"
+									onChange={mediaHandler}
 								/>
 								<BiImage fontSize="32px" />
 							</FormLabel>
+							{media && (
+								<Button
+									rightIcon={<AiOutlineClose fontSize="16px" />}
+									size="sm"
+									onClick={() => setMedia('')}
+								>
+									Remove
+								</Button>
+							)}
 						</Flex>
 						<Text mr="auto">{length} / 200</Text>
-						<Button onClick={postModalHandler} variant="brand" mr="4">
+						<Button onClick={postModalHandler} variant="brand" mr="2">
 							Post
 						</Button>
 						<Button onClick={cancelHandler}>Cancel</Button>
