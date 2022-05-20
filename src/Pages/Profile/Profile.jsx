@@ -16,7 +16,7 @@ import { Loader, PgWrapper, Post, ProfileModal } from 'Components';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { followUser } from 'Redux/Slice';
+import { followUser, logout } from 'Redux/Slice';
 import { follow, unfollow } from 'Redux/Thunk';
 import { getUser } from 'Utils/getUser';
 
@@ -65,6 +65,11 @@ const Profile = ({ onOpen: onOpenPost, isOpen: isOpenPost }) => {
 		if (response.payload.status === 200) {
 			dispatch(followUser(response.payload.data.user));
 		}
+	};
+
+	const logoutHandler = async () => {
+		await dispatch(logout());
+		localStorage.clear();
 	};
 
 	return (
@@ -131,6 +136,7 @@ const Profile = ({ onOpen: onOpenPost, isOpen: isOpenPost }) => {
 										border="2px solid"
 										borderColor="brand.500"
 										variant="outline"
+										onClick={logoutHandler}
 									/>
 								</Tooltip>
 							</Flex>

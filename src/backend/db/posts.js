@@ -18,7 +18,7 @@ export const posts = [
 		firstName: 'Bilbo',
 		lastName: 'Baggins',
 		username: 'hobbit',
-		createdAt: formatDate(),
+		createdAt: new Date('01/19/2015'),
 		updatedAt: formatDate(),
 		profilePic:
 			'https://res.cloudinary.com/obi-wan/image/upload/v1652698572/Socially/Profiles/bilbo.jpg',
@@ -93,7 +93,7 @@ export const posts = [
 				},
 			},
 		],
-		createdAt: formatDate(),
+		createdAt: new Date('04/22/2021'),
 		updatedAt: formatDate(),
 	},
 	{
@@ -107,7 +107,7 @@ export const posts = [
 		firstName: 'Obiwan',
 		lastName: 'Kenobi',
 		username: 'ben',
-		createdAt: formatDate(),
+		createdAt: new Date('11/24/2021'),
 		updatedAt: formatDate(),
 		profilePic:
 			'https://res.cloudinary.com/obi-wan/image/upload/v1652699372/Socially/Profiles/kenobi.png',
@@ -151,7 +151,7 @@ export const posts = [
 		firstName: 'Gandalf',
 		lastName: 'Grey',
 		username: 'wizard',
-		createdAt: formatDate(),
+		createdAt: new Date('03/15/2002'),
 		updatedAt: formatDate(),
 		profilePic:
 			'https://res.cloudinary.com/obi-wan/image/upload/v1652698930/Socially/Profiles/gandalf.jpg',
@@ -168,7 +168,7 @@ export const posts = [
 		firstName: 'Adarsh',
 		lastName: 'Balika',
 		username: 'adarshbalika',
-		createdAt: formatDate(),
+		createdAt: new Date('04/03/2022'),
 		updatedAt: formatDate(),
 		profilePic:
 			'https://res.cloudinary.com/obi-wan/image/upload/v1652687739/Socially/Profiles/avataaars_jhvh1w.png',
@@ -199,7 +199,7 @@ export const posts = [
 		firstName: 'Gandalf',
 		lastName: 'Grey',
 		username: 'wizard',
-		createdAt: formatDate(),
+		createdAt: new Date('06/12/2004'),
 		updatedAt: formatDate(),
 		profilePic:
 			'https://res.cloudinary.com/obi-wan/image/upload/v1652698930/Socially/Profiles/gandalf.jpg',
@@ -231,7 +231,7 @@ export const posts = [
 		firstName: 'Smeagol',
 		lastName: 'Smeogol',
 		username: 'gollum',
-		createdAt: formatDate(),
+		createdAt: new Date('10/20/2007'),
 		updatedAt: formatDate(),
 		profilePic:
 			'https://res.cloudinary.com/obi-wan/image/upload/v1652698709/Socially/Profiles/gollum.jpg',

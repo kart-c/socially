@@ -57,6 +57,7 @@ export function makeServer({ environment = 'development' } = {}) {
 		routes() {
 			// Allow external URL
 			this.passthrough('https://api.cloudinary.com/v1_1/obi-wan/image/upload');
+			this.passthrough('https://api.cloudinary.com/v1_1/obi-wan/video/upload');
 
 			this.namespace = 'api';
 			// auth routes (public)

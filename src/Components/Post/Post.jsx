@@ -14,6 +14,7 @@ import {
 	MenuButton,
 	MenuList,
 	MenuItem,
+	Image,
 } from '@chakra-ui/react';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { FaEllipsisV } from 'react-icons/fa';
@@ -34,12 +35,16 @@ const Post = ({
 	comments,
 	onOpen,
 	_id,
+	createdAt,
+	media,
 }) => {
 	const [commentInput, setCommentInput] = useState('');
 	const navigate = useNavigate();
 	const { user, token, bookmarkLoading } = useSelector((state) => state.auth);
 	const { likeLoading } = useSelector((state) => state.posts);
 	const dispatch = useDispatch();
+
+	const imgFormats = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 
 	const editHandler = async () => {
 		const response = await dispatch(postBeingEdited({ content, _id }));
@@ -53,6 +58,13 @@ const Post = ({
 	const newCommentHandler = () => {
 		dispatch(newComment({ _id, token, commentData: commentInput }));
 		setCommentInput('');
+	};
+
+	const getDate = (createdAt) => {
+		const date = new Date(createdAt).toLocaleString('en-In', { day: '2-digit' });
+		const month = new Date(createdAt).toLocaleString('en-In', { month: 'short' });
+		const year = new Date(createdAt).getFullYear();
+		return `${date} ${month} ${year}`;
 	};
 
 	return (
@@ -99,6 +111,16 @@ const Post = ({
 						)}
 					</Flex>
 					<Text wordBreak="break-word">{content}</Text>
+					{media ? (
+						imgFormats.some((img) => media.includes(img)) ? (
+							<Image src={media} w="full" h="full" objectFit="cover" />
+						) : (
+							<video controls w="full" h="full">
+								<source src={media} />
+								Sorry, your browser doesn't support embedded videos.
+							</video>
+						)
+					) : null}
 				</Flex>
 			</Flex>
 			<Flex ml="60px" mt="4" w="calc(100% - 60px)">
@@ -136,7 +158,7 @@ const Post = ({
 								}}
 								onClick={() => dispatch(likePost({ _id, token }))}
 							/>
-							{likes.likeCount ? likes.likeCount : null}
+							{likes.likeCount ? `${likes.likeCount} likes` : null}
 						</Box>
 					</Tooltip>
 				)}
@@ -177,6 +199,9 @@ const Post = ({
 					</Tooltip>
 				)}
 			</Flex>
+			<Box textAlign="right" fontSize="sm" mb="2" color="gray.300">
+				{getDate(createdAt)}
+			</Box>
 			<HStack mt="1" gap="2" position="relative">
 				<Avatar
 					name={`${firstName}  ${lastName}`}
