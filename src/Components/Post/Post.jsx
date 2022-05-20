@@ -68,7 +68,20 @@ const Post = ({
 	};
 
 	return (
-		<Box as="article" p="4" borderBottom="1px solid" borderColor="gray.200" position="relative">
+		<Box
+			as="article"
+			p="4"
+			borderBottom="1px solid"
+			borderColor="gray.200"
+			position="relative"
+			py="6"
+			_last={{
+				pb: {
+					md: '6',
+					base: '16',
+				},
+			}}
+		>
 			<Flex gap="3">
 				<Avatar
 					name={`${firstName} ${lastName}`}
