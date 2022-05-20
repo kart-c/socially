@@ -73,7 +73,7 @@ const Comment = ({ firstName, lastName, profilePic, text, username, _id, postId 
 							autoFocus
 						/>
 					) : (
-						<Text>{text}</Text>
+						<Text wordBreak="break-word">{text}</Text>
 					)}
 					{user?.username === username && !comment.editable ? (
 						<Menu>
