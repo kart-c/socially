@@ -24,7 +24,7 @@ export const signupHandler = function (schema, request) {
 				422,
 				{},
 				{
-					errors: ['Unprocessable Entity. Username Already Exists.'],
+					errors: ['Username Already Exists.'],
 				}
 			);
 		}
@@ -73,7 +73,7 @@ export const loginHandler = function (schema, request) {
 				404,
 				{},
 				{
-					errors: ['The username you entered is not Registered. Not Found error'],
+					errors: ['The credentials you entered are invalid. Please try again.'],
 				}
 			);
 		}
@@ -85,7 +85,7 @@ export const loginHandler = function (schema, request) {
 			401,
 			{},
 			{
-				errors: ['The credentials you entered are invalid. Unauthorized access error.'],
+				errors: ['The credentials you entered are invalid. Please try again.'],
 			}
 		);
 	} catch (error) {
