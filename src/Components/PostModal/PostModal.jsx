@@ -22,7 +22,7 @@ import { closeModal } from 'Redux/Slice';
 import { saveMediaToCloudinary } from 'Utils/saveToCloudinary';
 
 const PostModal = ({ onClose, isOpen }) => {
-	const { postData, postId } = useSelector((state) => state.posts);
+	const { postData, postId, posts } = useSelector((state) => state.posts);
 	const [length, setLength] = useState(0);
 	const postRef = useRef();
 	const { token } = useSelector((state) => state.auth);
@@ -30,11 +30,19 @@ const PostModal = ({ onClose, isOpen }) => {
 	const [media, setMedia] = useState();
 	let reader = new FileReader();
 
+	const currentPost = posts.find((post) => post._id === postId);
+
 	useEffect(() => {
 		if (postData.isEdited) {
 			setLength(postData.content.length);
 		}
-	}, [postData.content.length, postData.isEdited]);
+	}, [postData]);
+
+	useEffect(() => {
+		if (postData.isEdited) {
+			setMedia(currentPost.media);
+		}
+	}, [currentPost, postData.isEdited]);
 
 	const postModalHandler = async () => {
 		if (postRef.current.value.trim()) {
