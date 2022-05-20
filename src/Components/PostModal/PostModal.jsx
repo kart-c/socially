@@ -24,6 +24,7 @@ import { saveMediaToCloudinary } from 'Utils/saveToCloudinary';
 const PostModal = ({ onClose, isOpen }) => {
 	const { postData, postId, posts } = useSelector((state) => state.posts);
 	const [length, setLength] = useState(0);
+	const [loading, setLoading] = useState(false);
 	const postRef = useRef();
 	const { token } = useSelector((state) => state.auth);
 	const dispatch = useDispatch();
@@ -46,6 +47,7 @@ const PostModal = ({ onClose, isOpen }) => {
 
 	const postModalHandler = async () => {
 		if (postRef.current.value.trim()) {
+			setLoading(true);
 			if (postData.isEdited) {
 				if (media) {
 					const postHandler = async (media) => {
@@ -60,6 +62,7 @@ const PostModal = ({ onClose, isOpen }) => {
 							setLength(0);
 							setMedia('');
 							onClose();
+							setLoading(false);
 						}
 					};
 					await saveMediaToCloudinary(media, postHandler);
@@ -75,6 +78,7 @@ const PostModal = ({ onClose, isOpen }) => {
 						setLength(0);
 						setMedia('');
 						onClose();
+						setLoading(false);
 					}
 				}
 			} else {
@@ -87,6 +91,7 @@ const PostModal = ({ onClose, isOpen }) => {
 							setLength(0);
 							setMedia('');
 							onClose();
+							setLoading(false);
 						}
 					};
 					await saveMediaToCloudinary(media, postHandler);
@@ -98,6 +103,7 @@ const PostModal = ({ onClose, isOpen }) => {
 						setLength(0);
 						setMedia('');
 						onClose();
+						setLoading(false);
 					}
 				}
 			}
@@ -107,9 +113,12 @@ const PostModal = ({ onClose, isOpen }) => {
 	};
 
 	const cancelHandler = () => {
-		dispatch(closeModal());
-		setLength(0);
-		onClose();
+		if (!loading) {
+			dispatch(closeModal());
+			setMedia('');
+			setLength(0);
+			onClose();
+		}
 	};
 
 	const mediaHandler = (e) => {
@@ -173,7 +182,7 @@ const PostModal = ({ onClose, isOpen }) => {
 							)}
 						</Flex>
 						<Text mr="auto">{length} / 200</Text>
-						<Button onClick={postModalHandler} variant="brand" mr="2">
+						<Button onClick={postModalHandler} variant="brand" mr="2" isLoading={loading}>
 							Post
 						</Button>
 						<Button onClick={cancelHandler}>Cancel</Button>
