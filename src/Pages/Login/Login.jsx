@@ -9,6 +9,7 @@ import {
 	Input,
 	Link,
 	Text,
+	useToast,
 } from '@chakra-ui/react';
 import { Link as ReachLink, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,6 +21,7 @@ const Login = () => {
 	const { token, isLoading } = useSelector((state) => state.auth);
 	const navigate = useNavigate();
 	const location = useLocation();
+	const toast = useToast();
 
 	useEffect(() => {
 		token && navigate('/home');
@@ -49,7 +51,23 @@ const Login = () => {
 					localStorage.setItem('token', payload.data.encodedToken);
 					localStorage.setItem('user', JSON.stringify(payload.data.foundUser));
 					navigate(location?.state?.from || '/home', { replace: true });
+					toast({
+						status: 'success',
+						duration: 5000,
+						title: `Welcome back ${payload.data.foundUser.firstName}`,
+						position: 'bottom-right',
+						isClosable: true,
+					});
 				}
+			} else {
+				console.log(payload.data.errors[0]);
+				toast({
+					status: 'error',
+					duration: 5000,
+					title: payload.data.errors[0],
+					position: 'bottom-right',
+					isClosable: true,
+				});
 			}
 		}
 	};
