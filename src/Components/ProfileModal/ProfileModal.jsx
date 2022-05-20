@@ -14,6 +14,7 @@ import {
 	ModalOverlay,
 	Text,
 	Textarea,
+	useToast,
 } from '@chakra-ui/react';
 import { AiFillCamera } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
@@ -29,6 +30,7 @@ const ProfileModal = ({ onClose, isOpen, name, defaultdata }) => {
 		uploadedPic: {},
 	});
 	const dispatch = useDispatch();
+	const toast = useToast();
 	const { token, btnStatus } = useSelector((state) => state.auth);
 
 	let reader = new FileReader();
@@ -59,6 +61,13 @@ const ProfileModal = ({ onClose, isOpen, name, defaultdata }) => {
 			const response = await dispatch(editProfile({ userData, token }));
 			if (response.payload.status === 201) {
 				setUserData({ ...response.payload.data.user, profilePic: '' });
+				toast({
+					status: 'success',
+					duration: 5000,
+					title: 'Updated data successfully!',
+					position: 'bottom-right',
+					isClosable: true,
+				});
 			}
 		} catch (error) {
 			console.error(error);
@@ -77,6 +86,13 @@ const ProfileModal = ({ onClose, isOpen, name, defaultdata }) => {
 				if (response.payload.status) {
 					setUserData({ ...response.payload.data.user, profilePic: '' });
 					onClose();
+					toast({
+						status: 'success',
+						duration: 5000,
+						title: 'Updated data successfully!',
+						position: 'bottom-right',
+						isClosable: true,
+					});
 				}
 			} else {
 				dispatch(btnLoading());
