@@ -10,6 +10,7 @@ import {
 	Link,
 	SimpleGrid,
 	Text,
+	useToast,
 } from '@chakra-ui/react';
 import { Link as ReachLink, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -27,6 +28,7 @@ const Signup = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const location = useLocation();
+	const toast = useToast();
 
 	const inputHandler = (e) => {
 		const {
@@ -44,6 +46,21 @@ const Signup = () => {
 				localStorage.setItem('token', payload.data.encodedToken);
 				localStorage.setItem('user', JSON.stringify(payload.data.createdUser));
 				navigate(location?.state?.from || '/home', { replace: true });
+				toast({
+					status: 'success',
+					duration: 5000,
+					title: `Welcome ${payload.data.createdUser.firstName}`,
+					position: 'bottom-right',
+					isClosable: true,
+				});
+			} else {
+				toast({
+					status: 'error',
+					duration: 5000,
+					title: payload.data.errors[0],
+					position: 'bottom-right',
+					isClosable: true,
+				});
 			}
 		}
 	};
