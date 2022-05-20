@@ -115,7 +115,7 @@ const PostModal = ({ onClose, isOpen }) => {
 	const mediaHandler = (e) => {
 		reader.readAsDataURL(e.target.files[0]);
 		reader.onprogress = () => {
-			if (e.target.files[0].size < 5000000) {
+			if (e.target.files[0].size <= 5242880) {
 				reader.onload = () => {
 					if (reader.readyState === 2) {
 						setMedia(reader.result);
