@@ -60,7 +60,6 @@ const Login = () => {
 					});
 				}
 			} else {
-				console.log(payload.data.errors[0]);
 				toast({
 					status: 'error',
 					duration: 5000,
