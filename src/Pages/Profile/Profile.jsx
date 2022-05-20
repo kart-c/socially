@@ -9,6 +9,7 @@ import {
 	Text,
 	Tooltip,
 	useDisclosure,
+	useToast,
 	VStack,
 } from '@chakra-ui/react';
 import { MdLogout } from 'react-icons/md';
@@ -29,6 +30,7 @@ const Profile = ({ onOpen: onOpenPost, isOpen: isOpenPost }) => {
 	const { username } = useParams();
 	const [userPosts, setUserPosts] = useState([]);
 	const dispatch = useDispatch();
+	const toast = useToast();
 
 	useEffect(() => {
 		if (loggedInUser.username === username) {
@@ -68,6 +70,13 @@ const Profile = ({ onOpen: onOpenPost, isOpen: isOpenPost }) => {
 	};
 
 	const logoutHandler = async () => {
+		toast({
+			status: 'success',
+			duration: 5000,
+			title: 'Logged out successfully',
+			position: 'bottom-right',
+			isClosable: true,
+		});
 		await dispatch(logout());
 		localStorage.clear();
 	};
