@@ -1,70 +1,83 @@
-# Getting Started with Create React App
+# [Socially](https://socially-new.netlify.app/)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Socially is a social media app.
 
-## Available Scripts
+## How to run application locally?
 
-In the project directory, you can run:
+- Fork the project
+- Run npm install
+- Run npm start to run the project on your localhost
 
-### `yarn start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Currently Socially has following features
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- Authentication
+  - Login
+  - Signup
+  - Logout
+- Home Page - you can see posts from users that you are following
+- Explore Page - You can see posts from all users here
+- Post
+  - Create a new post
+  - Share image or video upto 5MB when creating a new post
+  - Edit an existing post
+  - Like a post
+  - Unlike a post
+- Bookmark
+  - Bookmark a post
+  - Remove a post from bookmarks
+- Follow
+  - Follow a user
+  - Unfollow a user
+- Profile
+  - View own or other user's profile
+  - Edit own profile
+    - Add a profile pic
+    - Add bio
+    - Add your own website link
+- Sort posts
+  - Sort posts by trending - Post with maximum likes and comments goes on top
+  - Sort by date added - oldest or newest
 
-### `yarn test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Build with
 
-### `yarn build`
+- React
+- React Router
+- [Mockbee](https://mockbee.netlify.app/) - for backend
+- [Chakra UI](https://chakra-ui.com/)
+- React Icons
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Folder Structure
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+- /public
+- /src
+  - /backend
+  - /Components
+  - /Pages
+  - /Redux
+  - /theme
+  - /Utils
+  - /App.css
+  - /App.js
+  - /index.js
+  - /server.js
+- /package-lock.json
+- /package.json
+```
 
-### `yarn eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Report an issue
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+If you would like to request a feature, or report a bug simple click [here](https://github.com/kart-c/socially/issues/new). If it is a bug request, a brief description of the bug is appreciated. If you can reproduce the bug and attach an image or a video, that would be really helpful.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Connect with me
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<a href="https://twitter.com/kart_c11"><img src="https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white"/></a>
+<a href="https://www.linkedin.com/in/kartikeya-choudhary-92881621a/"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white"/></a>
