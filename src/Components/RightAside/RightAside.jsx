@@ -78,8 +78,8 @@ const RightAside = () => {
 						>
 							<HStack>
 								<Avatar
-									name="Master Oogway"
-									src="https://"
+									name={`${unFollowUser.firstName} ${unFollowUser.lastName}`}
+									src={unFollowUser.profilePic}
 									size="sm"
 									cursor="pointer"
 									onClick={() => navigate(`/profile/${unFollowUser.username}`)}
