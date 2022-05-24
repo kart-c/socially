@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Loader, PgWrapper, Post, SortContainer } from 'Components';
+import { Loader, PgWrapper, Post, Search, SortContainer } from 'Components';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllPosts } from 'Redux/Thunk';
 import { sortByTrending } from 'Utils/sortByTrending';
@@ -25,6 +25,7 @@ const Explore = ({ onOpen }) => {
 	return (
 		<PgWrapper>
 			{status === 'idle' ? <Loader /> : null}
+			<Search />
 			{posts?.length > 0 ? (
 				<>
 					<SortContainer
