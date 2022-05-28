@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Avatar, Box, Flex, HStack, Input, Text } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { searchHandler } from 'Utils/searchHandler';
@@ -6,10 +6,24 @@ import { useNavigate } from 'react-router-dom';
 
 const Search = () => {
 	const [searchInput, setSearchInput] = useState('');
+	const [isDebouncing, setIsDebouncing] = useState(false);
+	const [searchResults, setSearchResults] = useState([]);
 	const { users } = useSelector((state) => state.users);
+	const timerRef = useRef();
 	const navigate = useNavigate();
 
-	const searchResults = searchHandler(users, searchInput.toLowerCase());
+	useEffect(() => {
+		clearTimeout(timerRef.current);
+		if (searchInput !== '') {
+			timerRef.current = setTimeout(() => {
+				const result = searchHandler(users, searchInput.toLowerCase());
+				setSearchResults(result);
+				setIsDebouncing(true);
+			}, 300);
+		}
+
+		return () => setIsDebouncing(false);
+	}, [searchInput, users]);
 
 	return (
 		<Box p="4" position="relative">
@@ -19,7 +33,7 @@ const Search = () => {
 				value={searchInput}
 				onChange={(e) => setSearchInput(e.target.value)}
 			/>
-			{searchInput ? (
+			{isDebouncing && searchInput ? (
 				searchResults.length > 0 ? (
 					<Flex
 						flexDir="column"
