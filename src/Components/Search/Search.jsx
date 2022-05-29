@@ -49,7 +49,7 @@ const Search = () => {
 						{searchResults.map((result) => (
 							<HStack
 								key={result._id}
-								minH="14"
+								minH="12"
 								px="4"
 								borderBottom="1px solid"
 								borderColor="gray.400"
