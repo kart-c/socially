@@ -44,16 +44,23 @@ const Search = () => {
 						bgColor="white"
 						maxH="40"
 						overflowY="auto"
+						border="1px solid"
 					>
 						{searchResults.map((result) => (
 							<HStack
 								key={result._id}
-								h="16"
-								border="1px solid"
+								minH="14"
+								px="4"
+								borderBottom="1px solid"
+								borderColor="gray.400"
 								cursor="pointer"
 								onClick={() => navigate(`/profile/${result.username}`)}
 							>
-								<Avatar src={result.profilePic} alt={result.firstName + ' ' + result.lastName} />
+								<Avatar
+									src={result.profilePic}
+									alt={result.firstName + ' ' + result.lastName}
+									size="sm"
+								/>
 								<Box>
 									<Text as="span">
 										{result.firstName} {result.lastName}{' '}
