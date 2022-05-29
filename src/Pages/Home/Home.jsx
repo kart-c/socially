@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Avatar, Box, Flex, Text } from '@chakra-ui/react';
 import { FiPlusCircle } from 'react-icons/fi';
-import { Loader, PgWrapper, Post, SortContainer } from 'Components';
+import { Loader, PgWrapper, Post, Search, SortContainer } from 'Components';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllPosts } from 'Redux/Thunk';
 import { sortByTrending } from 'Utils/sortByTrending';
@@ -58,6 +58,7 @@ const Home = ({ onOpen }) => {
 								</Box>
 							</Flex>
 						</Box>
+						<Search />
 						{followedPosts.length > 1 && (
 							<SortContainer
 								setTrending={setTrending}
