@@ -153,7 +153,7 @@ const Post = ({
 								}}
 								onClick={() => dispatch(dislike({ _id, token }))}
 							/>
-							{likes.likeCount ? likes.likeCount : null}
+							{likes.likeCount ? likes.likeCount + ' likes' : null}
 						</Box>
 					</Tooltip>
 				) : (
