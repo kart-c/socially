@@ -33,11 +33,12 @@ const Profile = ({ onOpen: onOpenPost, isOpen: isOpenPost }) => {
 	const toast = useToast();
 
 	useEffect(() => {
+		console.log('profile');
 		if (loggedInUser.username === username) {
 			getUser(loggedInUser._id, setUserObj);
 		} else {
 			const currentUser = users.find((item) => item.username === username);
-			getUser(currentUser._id, setUserObj);
+			if (currentUser) getUser(currentUser._id, setUserObj);
 		}
 	}, [loggedInUser._id, loggedInUser.username, username, users, loggedInUser]);
 
