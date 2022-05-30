@@ -23,10 +23,10 @@ const RightAside = () => {
 	useEffect(() => {
 		const removeCurrUser = users.filter((item) => item.username !== user.username);
 		const filterUsers = removeCurrUser.filter((userToFilter) =>
-			user.following.every((item) => item.username !== userToFilter.username)
+			userToFilter.followers.every((item) => item.username !== user.username)
 		);
 		setUnfollowedUsers(filterUsers);
-	}, [users, user.username, user.following]);
+	}, [users, user]);
 
 	const followHandler = async (_id) => {
 		const response = await dispatch(follow({ token, _id }));
