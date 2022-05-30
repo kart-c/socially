@@ -4,7 +4,7 @@ import { FiTrendingUp } from 'react-icons/fi';
 
 const SortContainer = ({ setTrending, trending, setSortBy, sortBy }) => {
 	return (
-		<HStack p="4" gap={{ base: '0', sm: '2' }} justifyContent="flex-end">
+		<HStack p="4" pb="0" gap={{ base: '0', sm: '2' }} justifyContent="flex-end">
 			<Button
 				rightIcon={<FiTrendingUp />}
 				variant={trending ? 'brand' : 'basic'}

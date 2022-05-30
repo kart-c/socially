@@ -69,7 +69,7 @@ const Profile = ({ onOpen: onOpenPost, isOpen: isOpenPost }) => {
 		}
 	};
 
-	const logoutHandler = async () => {
+	const logoutHandler = () => {
 		toast({
 			status: 'success',
 			duration: 5000,
@@ -77,7 +77,7 @@ const Profile = ({ onOpen: onOpenPost, isOpen: isOpenPost }) => {
 			position: 'bottom-right',
 			isClosable: true,
 		});
-		await dispatch(logout());
+		dispatch(logout());
 		localStorage.clear();
 	};
 
