@@ -22,13 +22,14 @@ import { follow, unfollow } from 'Redux/Thunk';
 import { getUser } from 'Utils/getUser';
 
 const Profile = ({ onOpen: onOpenPost, isOpen: isOpenPost }) => {
+	const [userPosts, setUserPosts] = useState([]);
+	const [userObj, setUserObj] = useState();
+	const [btnState, setBtnState] = useState();
 	const { users } = useSelector((state) => state.users);
 	const { posts } = useSelector((state) => state.posts);
 	const { user: loggedInUser, status, token } = useSelector((state) => state.auth);
 	const { isOpen, onOpen, onClose } = useDisclosure();
-	const [userObj, setUserObj] = useState();
 	const { username } = useParams();
-	const [userPosts, setUserPosts] = useState([]);
 	const dispatch = useDispatch();
 	const toast = useToast();
 
@@ -54,17 +55,21 @@ const Profile = ({ onOpen: onOpenPost, isOpen: isOpenPost }) => {
 	}, [username, isOpenPost, posts]);
 
 	const followHandler = async () => {
+		setBtnState(true);
 		const currentUser = users.find((item) => item.username === username);
 		const response = await dispatch(follow({ token, _id: currentUser._id }));
 		if (response.payload.status === 200) {
+			setBtnState(false);
 			dispatch(followUser(response.payload.data.user));
 		}
 	};
 
 	const unfollowHandler = async () => {
+		setBtnState(true);
 		const currentUser = users.find((item) => item.username === username);
 		const response = await dispatch(unfollow({ token, _id: currentUser._id }));
 		if (response.payload.status === 200) {
+			setBtnState(false);
 			dispatch(followUser(response.payload.data.user));
 		}
 	};
@@ -152,13 +157,17 @@ const Profile = ({ onOpen: onOpenPost, isOpen: isOpenPost }) => {
 						) : null}
 					</Flex>
 					{loggedInUser.username !== username ? (
-						loggedInUser.following.some((item) => item.username === username) ? (
+						userObj.followers.some((item) => item.username === loggedInUser.username) ? (
 							<Flex justifyContent="center" pb="6" borderBottom="1px solid" borderColor="gray.200">
-								<Button onClick={unfollowHandler}>Unfollow</Button>
+								<Button onClick={unfollowHandler} disabled={btnState} _disabled={{ opacity: 1 }}>
+									Unfollow
+								</Button>
 							</Flex>
 						) : (
 							<Flex justifyContent="center" pb="6" borderBottom="1px solid" borderColor="gray.200">
-								<Button onClick={followHandler}>Follow</Button>
+								<Button onClick={followHandler} disabled={btnState} _disabled={{ opacity: 1 }}>
+									Follow
+								</Button>
 							</Flex>
 						)
 					) : null}
