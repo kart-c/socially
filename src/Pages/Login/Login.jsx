@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
 	Button,
 	Checkbox,
@@ -6,6 +6,7 @@ import {
 	Flex,
 	FormControl,
 	FormLabel,
+	Heading,
 	Input,
 	Link,
 	Text,
@@ -18,13 +19,9 @@ import { login } from 'Redux/Thunk';
 const Login = () => {
 	const [user, setUser] = useState({ username: '', password: '', rememberMe: false });
 	const dispatch = useDispatch();
-	const { token, isLoading } = useSelector((state) => state.auth);
+	const { isLoading } = useSelector((state) => state.auth);
 	const navigate = useNavigate();
 	const toast = useToast();
-
-	useEffect(() => {
-		token && navigate('/home');
-	}, [token, navigate]);
 
 	const inputHandler = (e) => {
 		const {
@@ -72,8 +69,11 @@ const Login = () => {
 
 	return (
 		<>
-			<Container maxW={320}>
-				<Flex height="100vh" justifyContent="center" maxW="full" flexDir="column" as="form">
+			<Container>
+				<Heading as="h1" mt="32" mb="4" textAlign="center" color="brand.500" fontStyle="italic">
+					Socially! A place to meet all your friends
+				</Heading>
+				<Flex justifyContent="center" maxW={320} m="auto" flexDir="column" as="form">
 					<FormControl>
 						<FormLabel my="3">Username</FormLabel>
 						<Input
