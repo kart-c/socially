@@ -1,13 +1,16 @@
 import React from 'react';
 import { Box, Heading } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const PgWrapper = ({ children }) => {
+	const { user } = useSelector((state) => state.auth);
+
 	return (
 		<Box
 			as="section"
 			pt="6"
-			w="45%"
+			w={user.following.length === 7 ? '100%' : '45%'}
 			minHeight="100vh"
 			borderRight="1px solid"
 			borderLeft="1px solid"
