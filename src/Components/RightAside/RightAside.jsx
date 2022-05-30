@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 const RightAside = () => {
 	const [unfollowedUsers, setUnfollowedUsers] = useState([]);
+	const [btnStatus, setBtnStatus] = useState(false);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { users, status } = useSelector((state) => state.users);
@@ -29,8 +30,10 @@ const RightAside = () => {
 	}, [users, user]);
 
 	const followHandler = async (_id) => {
+		setBtnStatus(true);
 		const response = await dispatch(follow({ token, _id }));
 		if (response.payload.status === 200) {
+			setBtnStatus(false);
 			dispatch(followUser(response.payload.data.user));
 		}
 	};
@@ -104,6 +107,10 @@ const RightAside = () => {
 								ml={{ base: '0', lg: 'auto' }}
 								size="sm"
 								onClick={() => followHandler(unFollowUser._id)}
+								disabled={btnStatus}
+								_disabled={{
+									opacity: 1,
+								}}
 							>
 								Follow
 							</Button>
