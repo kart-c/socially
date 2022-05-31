@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const getUser = async (_id, setUserObj) => {
+export const getUser = async (_id, setUserObj, setLoader) => {
 	try {
 		const response = await axios.get(`/api/users/${_id}`);
 		if (response.status === 200) {
@@ -8,5 +8,7 @@ export const getUser = async (_id, setUserObj) => {
 		}
 	} catch (error) {
 		console.error(error);
+	} finally {
+		setLoader(false);
 	}
 };

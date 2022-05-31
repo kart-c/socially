@@ -25,28 +25,34 @@ const Profile = ({ onOpen: onOpenPost, isOpen: isOpenPost }) => {
 	const [userPosts, setUserPosts] = useState([]);
 	const [userObj, setUserObj] = useState();
 	const [btnState, setBtnState] = useState();
+	const [loader, setLoader] = useState(false);
 	const { users } = useSelector((state) => state.users);
 	const { posts } = useSelector((state) => state.posts);
-	const { user: loggedInUser, status, token } = useSelector((state) => state.auth);
+	const { user: loggedInUser, token } = useSelector((state) => state.auth);
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const { username } = useParams();
 	const dispatch = useDispatch();
 	const toast = useToast();
 
 	useEffect(() => {
+		setLoader(true);
 		if (loggedInUser.username === username) {
-			getUser(loggedInUser._id, setUserObj);
+			getUser(loggedInUser._id, setUserObj, setLoader);
 		} else {
 			const currentUser = users.find((item) => item.username === username);
-			if (currentUser) getUser(currentUser._id, setUserObj);
+			if (currentUser) getUser(currentUser._id, setUserObj, setLoader);
 		}
 	}, [loggedInUser._id, loggedInUser.username, username, users, loggedInUser]);
 
 	useEffect(() => {
+		setLoader(true);
 		try {
 			const getUserPosts = async () => {
 				const response = await axios.get(`/api/posts/user/${username}`);
-				if (response.status === 200) setUserPosts(response.data.posts);
+				if (response.status === 200) {
+					setUserPosts(response.data.posts);
+					setLoader(false);
+				}
 			};
 			getUserPosts();
 		} catch (error) {
@@ -88,7 +94,7 @@ const Profile = ({ onOpen: onOpenPost, isOpen: isOpenPost }) => {
 
 	return (
 		<PgWrapper>
-			{status === 'pending' ? <Loader /> : null}
+			{loader ? <Loader /> : null}
 			{userObj?.username ? (
 				<>
 					<ProfileModal
