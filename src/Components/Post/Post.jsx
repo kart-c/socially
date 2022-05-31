@@ -89,7 +89,7 @@ const Post = ({
 					cursor="pointer"
 					onClick={() => navigate(`/profile/${username}`)}
 				/>
-				<Flex mt="2" gap="3" flexDir="column">
+				<Flex gap="3" flexDir="column">
 					<Flex w="100%" justify="space-between">
 						<Heading
 							as="h3"
