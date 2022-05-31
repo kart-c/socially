@@ -42,7 +42,10 @@ const Home = ({ onOpen }) => {
 								Home
 							</Text>
 							<Flex gap="3" align="flex-end">
-								<Avatar name="Kartik Choudhary" src="https://" />
+								<Avatar
+									name={`${loggedInUser.firstName} ${loggedInUser.lastName}`}
+									src={loggedInUser.profilePic}
+								/>
 								<Text
 									fontSize="lg"
 									mb="1"

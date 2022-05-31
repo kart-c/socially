@@ -217,7 +217,7 @@ const Post = ({
 			</Box>
 			<HStack mt="1" gap="2" position="relative">
 				<Avatar
-					name={`${firstName}  ${lastName}`}
+					name={`${user.firstName}  ${user.lastName}`}
 					src={user.username === username ? user.profilePic : user.profilePic}
 					size="sm"
 				/>
