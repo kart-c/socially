@@ -139,7 +139,7 @@ const Post = ({
 			<Flex ml="60px" mt="4" w="calc(100% - 60px)">
 				{likes.likedBy.some((like) => like.username === user.username) ? (
 					<Tooltip label="Unlike">
-						<Box>
+						<Box display="flex" alignItems="center">
 							<IconButton
 								aria-label="Unlike"
 								color="red.200"
