@@ -33,8 +33,8 @@ const Login = () => {
 	const testUserHandler = () =>
 		setUser((prev) => ({
 			...prev,
-			username: 'adarshbalika',
-			password: 'adarshBalika123',
+			username: 'johndoe',
+			password: 'johndoe123',
 			rememberMe: true,
 		}));
 

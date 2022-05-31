@@ -7,12 +7,12 @@ import { formatDate } from '../utils/authUtils';
 export const users = [
 	{
 		_id: '5bc70fce-51ee-432e-8906-2794bd07540e',
-		firstName: 'Adarsh',
-		lastName: 'Balika',
-		username: 'adarshbalika',
-		password: 'adarshBalika123',
+		firstName: 'John',
+		lastName: 'Doe',
+		username: 'johndoe',
+		password: 'johndoe123',
 		bio: 'A novice web developer',
-		link: 'https://adarshbalika.netlify.app/',
+		link: 'https://johndoe.netlify.app/',
 		profilePic:
 			'https://res.cloudinary.com/obi-wan/image/upload/v1652687739/Socially/Profiles/avataaars_jhvh1w.png',
 		following: [
@@ -102,9 +102,9 @@ export const users = [
 		following: [
 			{
 				_id: '5bc70fce-51ee-432e-8906-2794bd07540e',
-				firstName: 'Adarsh',
-				lastName: 'Balika',
-				username: 'adarshbalika',
+				firstName: 'John',
+				lastName: 'Doe',
+				username: 'johndoe',
 				profilePic:
 					'https://res.cloudinary.com/obi-wan/image/upload/v1652687739/Socially/Profiles/avataaars_jhvh1w.png',
 			},
@@ -129,9 +129,9 @@ export const users = [
 		followers: [
 			{
 				_id: '5bc70fce-51ee-432e-8906-2794bd07540e',
-				firstName: 'Adarsh',
-				lastName: 'Balika',
-				username: 'adarshbalika',
+				firstName: 'John',
+				lastName: 'Doe',
+				username: 'johndoe',
 				profilePic:
 					'https://res.cloudinary.com/obi-wan/image/upload/v1652687739/Socially/Profiles/avataaars_jhvh1w.png',
 			},
