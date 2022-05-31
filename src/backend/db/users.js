@@ -48,7 +48,7 @@ export const users = [
 		bio: 'A novice web developer',
 		link: 'https://github.com/kart-c',
 		profilePic:
-			'https://res.cloudinary.com/obi-wan/image/upload/v1652687739/Socially/Profiles/avataaars_jhvh1w.png',
+			'https://res.cloudinary.com/obi-wan/image/upload/v1652698709/Socially/Profiles/kartik.jpg',
 		following: [],
 		followers: [
 			{
