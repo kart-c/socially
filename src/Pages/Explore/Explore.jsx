@@ -72,15 +72,11 @@ const Explore = ({ onOpen }) => {
 					))}
 				</>
 			) : null}
-			{loadPosts ? (
-				<Box mb="4">
-					<Loader height="100px" />
-				</Box>
-			) : null}
-			<Box w="100%" ref={intersectionRef} h="40px"></Box>
+			{loadPosts ? <Loader height="80px" /> : null}
+			<Box w="100%" ref={intersectionRef} h={pageEnd ? '0' : '40px'} mt="10"></Box>
 			{!pgLoading && pageEnd ? (
-				<Text mb="4" pb={{ base: '16', mySm: '0' }} textAlign="center">
-					Page End !
+				<Text mb="8" pb={{ base: '16', mySm: '0' }} textAlign="center">
+					No more Posts !
 				</Text>
 			) : null}
 		</PgWrapper>
