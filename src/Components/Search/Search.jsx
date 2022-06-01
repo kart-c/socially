@@ -54,6 +54,9 @@ const Search = () => {
 								borderBottom="1px solid"
 								borderColor="gray.400"
 								cursor="pointer"
+								_last={{
+									borderBottom: '0',
+								}}
 								onClick={() => navigate(`/profile/${result.username}`)}
 							>
 								<Avatar
