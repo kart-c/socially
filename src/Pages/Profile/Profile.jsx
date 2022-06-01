@@ -195,13 +195,26 @@ const Profile = ({ onOpen: onOpenPost, isOpen: isOpenPost }) => {
 					{loggedInUser.username !== username ? (
 						userObj.followers.some((item) => item.username === loggedInUser.username) ? (
 							<Flex justifyContent="center" pb="6" borderBottom="1px solid" borderColor="gray.200">
-								<Button onClick={unfollowHandler} disabled={btnState} _disabled={{ opacity: 1 }}>
+								<Button
+									onClick={unfollowHandler}
+									disabled={btnState}
+									variant="basic"
+									border="2px solid"
+									color="brand.500"
+									bgColor="#fff"
+									_disabled={{ opacity: 1 }}
+								>
 									Unfollow
 								</Button>
 							</Flex>
 						) : (
 							<Flex justifyContent="center" pb="6" borderBottom="1px solid" borderColor="gray.200">
-								<Button onClick={followHandler} disabled={btnState} _disabled={{ opacity: 1 }}>
+								<Button
+									onClick={followHandler}
+									disabled={btnState}
+									_disabled={{ opacity: 1 }}
+									variant="brand"
+								>
 									Follow
 								</Button>
 							</Flex>
