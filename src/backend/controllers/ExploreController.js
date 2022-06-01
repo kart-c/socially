@@ -11,6 +11,6 @@ import { Response } from 'miragejs';
 
 export const getExplorePostsHandler = function (schema, request) {
 	const { pgNumber } = request.params;
-	const posts = this.db.posts.slice(0, pgNumber * 4);
+	const posts = this.db.posts.slice(0, pgNumber * 3);
 	return new Response(200, {}, { posts });
 };
