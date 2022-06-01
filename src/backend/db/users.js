@@ -12,7 +12,7 @@ export const users = [
 		username: 'johndoe',
 		password: 'johndoe123',
 		bio: 'A novice web developer',
-		link: 'https://johndoe.netlify.app/',
+		link: 'https://www.google.co.in/',
 		profilePic:
 			'https://res.cloudinary.com/obi-wan/image/upload/v1652687739/Socially/Profiles/avataaars_jhvh1w.png',
 		following: [
