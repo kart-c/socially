@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import {
 	Button,
 	Checkbox,
+	Container,
 	Flex,
 	FormControl,
 	FormLabel,
 	GridItem,
+	Heading,
 	Input,
 	Link,
 	SimpleGrid,
@@ -42,8 +44,6 @@ const Signup = () => {
 			e.preventDefault();
 			const { payload } = await dispatch(signup(user));
 			if (payload?.status === 201) {
-				localStorage.setItem('token', payload.data.encodedToken);
-				localStorage.setItem('user', JSON.stringify(payload.data.createdUser));
 				navigate('/home');
 				toast({
 					status: 'success',
@@ -66,88 +66,93 @@ const Signup = () => {
 
 	return (
 		<>
-			<Flex h="100vh" justify="center" align="center" as="form">
-				<SimpleGrid columnGap="2" columns="2" maxW={320}>
-					<GridItem colSpan="1">
-						<FormControl>
-							<FormLabel my="3">Firstname</FormLabel>
-							<Input
-								type="text"
-								placeholder="John"
-								value={user.firstName}
-								name="firstName"
-								onChange={inputHandler}
+			<Container>
+				<Heading as="h1" mt="32" mb="4" textAlign="center" color="brand.500" fontStyle="italic">
+					Socially! A place to meet all your friends
+				</Heading>
+				<Flex justify="center" align="center" as="form">
+					<SimpleGrid columnGap="2" columns="2" maxW={320}>
+						<GridItem colSpan="1">
+							<FormControl>
+								<FormLabel my="3">Firstname</FormLabel>
+								<Input
+									type="text"
+									placeholder="John"
+									value={user.firstName}
+									name="firstName"
+									onChange={inputHandler}
+									required
+								/>
+							</FormControl>
+						</GridItem>
+						<GridItem colSpan="1">
+							<FormControl>
+								<FormLabel my="3">Lastname</FormLabel>
+								<Input
+									type="text"
+									placeholder="Doe"
+									value={user.lastName}
+									name="lastName"
+									onChange={inputHandler}
+									required
+								/>
+							</FormControl>
+						</GridItem>
+						<GridItem colSpan="2">
+							<FormControl>
+								<FormLabel my="3">Username</FormLabel>
+								<Input
+									type="text"
+									placeholder="Oogway"
+									value={user.username}
+									name="username"
+									onChange={inputHandler}
+									required
+								/>
+							</FormControl>
+						</GridItem>
+						<GridItem colSpan="2">
+							<FormControl>
+								<FormLabel my="3">Password</FormLabel>
+								<Input
+									type="password"
+									placeholder="********"
+									value={user.password}
+									name="password"
+									onChange={inputHandler}
+									required
+								/>
+							</FormControl>
+							<Checkbox
+								type="checkbox"
+								alignSelf="flex-start"
+								my="3"
+								isChecked={user.checkbox}
+								onChange={() => setUser((prev) => ({ ...prev, checkbox: !prev.checkbox }))}
 								required
-							/>
-						</FormControl>
-					</GridItem>
-					<GridItem colSpan="1">
-						<FormControl>
-							<FormLabel my="3">Lastname</FormLabel>
-							<Input
-								type="text"
-								placeholder="Doe"
-								value={user.lastName}
-								name="lastName"
-								onChange={inputHandler}
-								required
-							/>
-						</FormControl>
-					</GridItem>
-					<GridItem colSpan="2">
-						<FormControl>
-							<FormLabel my="3">Username</FormLabel>
-							<Input
-								type="text"
-								placeholder="Oogway"
-								value={user.username}
-								name="username"
-								onChange={inputHandler}
-								required
-							/>
-						</FormControl>
-					</GridItem>
-					<GridItem colSpan="2">
-						<FormControl>
-							<FormLabel my="3">Password</FormLabel>
-							<Input
-								type="password"
-								placeholder="********"
-								value={user.password}
-								name="password"
-								onChange={inputHandler}
-								required
-							/>
-						</FormControl>
-						<Checkbox
-							type="checkbox"
-							alignSelf="flex-start"
-							my="3"
-							isChecked={user.checkbox}
-							onChange={() => setUser((prev) => ({ ...prev, checkbox: !prev.checkbox }))}
-							required
-						>
-							Accept Terms And Conditions
-						</Checkbox>
-						<Button
-							w="full"
-							mb="4"
-							variant="brand"
-							type="submit"
-							onClick={signupHandler}
-							isLoading={isLoading}
-						>
-							Signup
-						</Button>
-						<Text>
-							Already a user?
-							<Link as={ReachLink} to="/" color="brand.500" px="2">
-								Login
-							</Link>
-						</Text>
-					</GridItem>
-				</SimpleGrid>
-			</Flex>
+							>
+								Accept Terms And Conditions
+							</Checkbox>
+							<Button
+								w="full"
+								mb="4"
+								variant="brand"
+								type="submit"
+								onClick={signupHandler}
+								isLoading={isLoading}
+							>
+								Signup
+							</Button>
+							<Text>
+								Already a user?
+								<Link as={ReachLink} to="/" color="brand.500" px="2">
+									Login
+								</Link>
+							</Text>
+						</GridItem>
+					</SimpleGrid>
+				</Flex>
+			</Container>
 		</>
 	);
 };

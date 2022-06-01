@@ -22,31 +22,37 @@ import { follow, unfollow } from 'Redux/Thunk';
 import { getUser } from 'Utils/getUser';
 
 const Profile = ({ onOpen: onOpenPost, isOpen: isOpenPost }) => {
+	const [userPosts, setUserPosts] = useState([]);
+	const [userObj, setUserObj] = useState();
+	const [btnState, setBtnState] = useState();
+	const [loader, setLoader] = useState(false);
 	const { users } = useSelector((state) => state.users);
 	const { posts } = useSelector((state) => state.posts);
-	const { user: loggedInUser, status, token } = useSelector((state) => state.auth);
+	const { user: loggedInUser, token } = useSelector((state) => state.auth);
 	const { isOpen, onOpen, onClose } = useDisclosure();
-	const [userObj, setUserObj] = useState();
 	const { username } = useParams();
-	const [userPosts, setUserPosts] = useState([]);
 	const dispatch = useDispatch();
 	const toast = useToast();
 
 	useEffect(() => {
-		console.log('profile');
+		setLoader(true);
 		if (loggedInUser.username === username) {
-			getUser(loggedInUser._id, setUserObj);
+			getUser(loggedInUser._id, setUserObj, setLoader);
 		} else {
 			const currentUser = users.find((item) => item.username === username);
-			if (currentUser) getUser(currentUser._id, setUserObj);
+			if (currentUser) getUser(currentUser._id, setUserObj, setLoader);
 		}
 	}, [loggedInUser._id, loggedInUser.username, username, users, loggedInUser]);
 
 	useEffect(() => {
+		setLoader(true);
 		try {
 			const getUserPosts = async () => {
 				const response = await axios.get(`/api/posts/user/${username}`);
-				if (response.status === 200) setUserPosts(response.data.posts);
+				if (response.status === 200) {
+					setUserPosts(response.data.posts);
+					setLoader(false);
+				}
 			};
 			getUserPosts();
 		} catch (error) {
@@ -55,22 +61,26 @@ const Profile = ({ onOpen: onOpenPost, isOpen: isOpenPost }) => {
 	}, [username, isOpenPost, posts]);
 
 	const followHandler = async () => {
+		setBtnState(true);
 		const currentUser = users.find((item) => item.username === username);
 		const response = await dispatch(follow({ token, _id: currentUser._id }));
 		if (response.payload.status === 200) {
+			setBtnState(false);
 			dispatch(followUser(response.payload.data.user));
 		}
 	};
 
 	const unfollowHandler = async () => {
+		setBtnState(true);
 		const currentUser = users.find((item) => item.username === username);
 		const response = await dispatch(unfollow({ token, _id: currentUser._id }));
 		if (response.payload.status === 200) {
+			setBtnState(false);
 			dispatch(followUser(response.payload.data.user));
 		}
 	};
 
-	const logoutHandler = async () => {
+	const logoutHandler = () => {
 		toast({
 			status: 'success',
 			duration: 5000,
@@ -78,13 +88,13 @@ const Profile = ({ onOpen: onOpenPost, isOpen: isOpenPost }) => {
 			position: 'bottom-right',
 			isClosable: true,
 		});
-		await dispatch(logout());
+		dispatch(logout());
 		localStorage.clear();
 	};
 
 	return (
 		<PgWrapper>
-			{status === 'pending' ? <Loader /> : null}
+			{loader ? <Loader /> : null}
 			{userObj?.username ? (
 				<>
 					<ProfileModal
@@ -153,13 +163,17 @@ const Profile = ({ onOpen: onOpenPost, isOpen: isOpenPost }) => {
 						) : null}
 					</Flex>
 					{loggedInUser.username !== username ? (
-						loggedInUser.following.some((item) => item.username === username) ? (
+						userObj.followers.some((item) => item.username === loggedInUser.username) ? (
 							<Flex justifyContent="center" pb="6" borderBottom="1px solid" borderColor="gray.200">
-								<Button onClick={unfollowHandler}>Unfollow</Button>
+								<Button onClick={unfollowHandler} disabled={btnState} _disabled={{ opacity: 1 }}>
+									Unfollow
+								</Button>
 							</Flex>
 						) : (
 							<Flex justifyContent="center" pb="6" borderBottom="1px solid" borderColor="gray.200">
-								<Button onClick={followHandler}>Follow</Button>
+								<Button onClick={followHandler} disabled={btnState} _disabled={{ opacity: 1 }}>
+									Follow
+								</Button>
 							</Flex>
 						)
 					) : null}

@@ -12,7 +12,6 @@ const LeftNav = ({ onOpen }) => {
 	return (
 		<Flex
 			as="nav"
-			w="300"
 			align="flex-start"
 			gap="3"
 			mt="6"

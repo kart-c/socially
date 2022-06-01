@@ -14,6 +14,7 @@ import {
 	ButtonGroup,
 } from '@chakra-ui/react';
 import { FaEllipsisV } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteComment, editComment } from 'Redux/Thunk';
 
@@ -21,6 +22,7 @@ const Comment = ({ firstName, lastName, profilePic, text, username, _id, postId 
 	const [comment, setComment] = useState({ editable: false, content: '' });
 	const { user, token } = useSelector((state) => state.auth);
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	const editHandler = () => {
 		setComment((prev) => ({ ...prev, editable: true, content: text }));
@@ -49,9 +51,18 @@ const Comment = ({ firstName, lastName, profilePic, text, username, _id, postId 
 					src={username === user.username ? user.profilePic : profilePic}
 					size="sm"
 					fontSize="10px"
+					cursor="pointer"
+					onClick={() => navigate(`/profile/${username}`)}
 				/>
 				<Box bgColor="gray.200" p="3" flexGrow="1" borderRadius="lg" position="relative">
-					<Heading as="h4" fontWeight="700" fontSize="16" mb="2">
+					<Heading
+						as="h4"
+						fontWeight="700"
+						fontSize="16"
+						mb="2"
+						cursor="pointer"
+						onClick={() => navigate(`/profile/${username}`)}
+					>
 						{`${firstName} ${lastName}`}{' '}
 						<Text
 							as="span"
@@ -59,6 +70,8 @@ const Comment = ({ firstName, lastName, profilePic, text, username, _id, postId 
 							fontSize="14"
 							color="gray.300"
 							display={{ base: 'none', mySm: 'inline' }}
+							cursor="pointer"
+							onClick={() => navigate(`/profile/${username}`)}
 						>
 							@{username}
 						</Text>

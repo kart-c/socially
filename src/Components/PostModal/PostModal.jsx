@@ -175,6 +175,7 @@ const PostModal = ({ onClose, isOpen }) => {
 							<FormLabel cursor="pointer" mb="0" mr="2">
 								<Input
 									type="file"
+									accept="image/*, video/*"
 									position="absolute"
 									opacity="0"
 									bgColor="red.100"

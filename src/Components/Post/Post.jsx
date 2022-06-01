@@ -89,7 +89,7 @@ const Post = ({
 					cursor="pointer"
 					onClick={() => navigate(`/profile/${username}`)}
 				/>
-				<Flex mt="2" gap="3" flexDir="column">
+				<Flex gap="3" flexDir="column">
 					<Flex w="100%" justify="space-between">
 						<Heading
 							as="h3"
@@ -139,7 +139,7 @@ const Post = ({
 			<Flex ml="60px" mt="4" w="calc(100% - 60px)">
 				{likes.likedBy.some((like) => like.username === user.username) ? (
 					<Tooltip label="Unlike">
-						<Box>
+						<Box display="flex" alignItems="center">
 							<IconButton
 								aria-label="Unlike"
 								color="red.200"
@@ -153,7 +153,7 @@ const Post = ({
 								}}
 								onClick={() => dispatch(dislike({ _id, token }))}
 							/>
-							{likes.likeCount ? likes.likeCount : null}
+							{likes.likeCount ? likes.likeCount + ' likes' : null}
 						</Box>
 					</Tooltip>
 				) : (
@@ -217,7 +217,7 @@ const Post = ({
 			</Box>
 			<HStack mt="1" gap="2" position="relative">
 				<Avatar
-					name={`${firstName}  ${lastName}`}
+					name={`${user.firstName}  ${user.lastName}`}
 					src={user.username === username ? user.profilePic : user.profilePic}
 					size="sm"
 				/>

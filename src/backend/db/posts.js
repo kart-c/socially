@@ -1,5 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import { formatDate } from '../utils/authUtils';
+import RL from 'Assets/rl.jpg';
 
 /**
  * Posts can be added here.
@@ -38,9 +39,9 @@ export const posts = [
 			},
 			{
 				_id: uuid(),
-				firstName: 'Adarsh',
-				lastName: 'Balika',
-				username: 'adarshbalika',
+				firstName: 'John',
+				lastName: 'Doe',
+				username: 'johndoe',
 				profilePic:
 					'https://res.cloudinary.com/obi-wan/image/upload/v1652687739/Socially/Profiles/avataaars_jhvh1w.png',
 				text: 'Interesting',
@@ -165,9 +166,9 @@ export const posts = [
 			likedBy: [],
 			dislikedBy: [],
 		},
-		firstName: 'Adarsh',
-		lastName: 'Balika',
-		username: 'adarshbalika',
+		firstName: 'John',
+		lastName: 'Doe',
+		username: 'johndoe',
 		createdAt: new Date('04/03/2022'),
 		updatedAt: formatDate(),
 		profilePic:
@@ -244,6 +245,51 @@ export const posts = [
 				profilePic:
 					'https://res.cloudinary.com/obi-wan/image/upload/v1652698572/Socially/Profiles/bilbo.jpg',
 				text: 'Hahaha',
+				votes: {
+					upvotedBy: [],
+					downvotedBy: [],
+				},
+			},
+		],
+	},
+	{
+		_id: uuid(),
+		content: "Who's up for some RL this weekend?",
+		likes: {
+			likeCount: 2,
+			likedBy: [],
+			dislikedBy: [],
+		},
+		firstName: 'John',
+		lastName: 'Doe',
+		username: 'johndoe',
+		media: RL,
+		createdAt: new Date('01/19/2015'),
+		updatedAt: formatDate(),
+		profilePic:
+			'https://res.cloudinary.com/obi-wan/image/upload/v1652687739/Socially/Profiles/avataaars_jhvh1w.png',
+		comments: [
+			{
+				_id: uuid(),
+				firstName: 'Bruce',
+				lastName: 'Wayne',
+				username: 'not_batman',
+				profilePic:
+					'https://res.cloudinary.com/obi-wan/image/upload/v1652699201/Socially/Profiles/Bruce.jpg',
+				text: 'Count me in!!',
+				votes: {
+					upvotedBy: [],
+					downvotedBy: [],
+				},
+			},
+			{
+				_id: uuid(),
+				firstName: 'Anakin',
+				lastName: 'Skywalker',
+				username: 'vader',
+				profilePic:
+					'https://res.cloudinary.com/obi-wan/image/upload/v1652699069/Socially/Profiles/anakin.jpg',
+				text: 'I will make the popcorn!',
 				votes: {
 					upvotedBy: [],
 					downvotedBy: [],
