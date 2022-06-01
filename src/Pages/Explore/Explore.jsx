@@ -57,7 +57,9 @@ const Explore = ({ onOpen }) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [pgNumber, pageEnd]);
 
-	const filteredPosts = allPosts.filter((post) => posts.some((item) => item._id === post._id));
+	const filteredPosts = pageEnd
+		? allPosts
+		: allPosts.filter((post) => posts.some((item) => item._id === post._id));
 
 	return (
 		<PgWrapper>
