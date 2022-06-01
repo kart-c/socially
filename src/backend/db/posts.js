@@ -264,7 +264,7 @@ export const posts = [
 		lastName: 'Doe',
 		username: 'johndoe',
 		media: RL,
-		createdAt: new Date('01/19/2015'),
+		createdAt: new Date('01/19/2022'),
 		updatedAt: formatDate(),
 		profilePic:
 			'https://res.cloudinary.com/obi-wan/image/upload/v1652687739/Socially/Profiles/avataaars_jhvh1w.png',
@@ -296,5 +296,183 @@ export const posts = [
 				},
 			},
 		],
+	},
+	{
+		_id: uuid(),
+		content: 'You Either Die A Hero Or You Live Long Enough To See Yourself Become The Villain.',
+		likes: {
+			likeCount: 4,
+			likedBy: [],
+			dislikedBy: [],
+		},
+		firstName: 'Bruce',
+		lastName: 'Wayne',
+		username: 'not_batman',
+		createdAt: new Date('03/24/2010'),
+		updatedAt: formatDate(),
+		profilePic:
+			'https://res.cloudinary.com/obi-wan/image/upload/v1652699201/Socially/Profiles/Bruce.jpg',
+		comments: [
+			{
+				_id: uuid(),
+				firstName: 'Anakin',
+				lastName: 'Skywalker',
+				username: 'vader',
+				profilePic:
+					'https://res.cloudinary.com/obi-wan/image/upload/v1652699069/Socially/Profiles/anakin.jpg',
+				text: 'You are not wrong about that!',
+				votes: {
+					upvotedBy: [],
+					downvotedBy: [],
+				},
+			},
+		],
+	},
+	{
+		_id: uuid(),
+		content:
+			'I see through the lies of the Jedi. I do not fear the dark side as you do. I have brought peace, freedom, justice, and security to my new empire.',
+		likes: {
+			likeCount: 1,
+			likedBy: [],
+			dislikedBy: [],
+		},
+		firstName: 'Anakin',
+		lastName: 'Skywalker',
+		username: 'vader',
+		createdAt: new Date('04/22/2017'),
+		updatedAt: formatDate(),
+		profilePic:
+			'https://res.cloudinary.com/obi-wan/image/upload/v1652699201/Socially/Profiles/anakin.jpg',
+		comments: [
+			{
+				_id: uuid(),
+				firstName: 'Obiwan',
+				lastName: 'Kenobi',
+				username: 'ben',
+				profilePic:
+					'https://res.cloudinary.com/obi-wan/image/upload/v1652699372/Socially/Profiles/kenobi.png',
+				text: 'Only a sith deals in absolutes!',
+				votes: {
+					upvotedBy: [],
+					downvotedBy: [],
+				},
+			},
+		],
+	},
+	{
+		_id: uuid(),
+		content: "I'm Going On An Adventure!",
+		likes: {
+			likeCount: 4,
+			likedBy: [],
+			dislikedBy: [],
+		},
+		firstName: 'Bilbo',
+		lastName: 'Baggins',
+		username: 'hobbit',
+		createdAt: new Date('04/10/2014'),
+		updatedAt: formatDate(),
+		profilePic:
+			'https://res.cloudinary.com/obi-wan/image/upload/v1652698572/Socially/Profiles/bilbo.jpg',
+		comments: [
+			{
+				_id: uuid(),
+				firstName: 'Kartik',
+				lastName: 'Choudhary',
+				username: 'kart_c11',
+				profilePic:
+					'https://res.cloudinary.com/obi-wan/image/upload/v1652687739/Socially/Profiles/avataaars_jhvh1w.png',
+				text: 'Good luck!',
+				votes: {
+					upvotedBy: [],
+					downvotedBy: [],
+				},
+			},
+		],
+	},
+	{
+		_id: uuid(),
+		content: "I'm Going On An Adventure!",
+		likes: {
+			likeCount: 4,
+			likedBy: [],
+			dislikedBy: [],
+		},
+		firstName: 'Bilbo',
+		lastName: 'Baggins',
+		username: 'hobbit',
+		createdAt: new Date('04/10/2014'),
+		updatedAt: formatDate(),
+		profilePic:
+			'https://res.cloudinary.com/obi-wan/image/upload/v1652698572/Socially/Profiles/bilbo.jpg',
+		comments: [
+			{
+				_id: uuid(),
+				firstName: 'Kartik',
+				lastName: 'Choudhary',
+				username: 'kart_c11',
+				profilePic:
+					'https://res.cloudinary.com/obi-wan/image/upload/v1652687739/Socially/Profiles/avataaars_jhvh1w.png',
+				text: 'Good luck!',
+				votes: {
+					upvotedBy: [],
+					downvotedBy: [],
+				},
+			},
+		],
+	},
+	{
+		_id: uuid(),
+		content:
+			'All Men Have Limits. They Learn What They Are And Learn Not To Exceed Them. I Ignore Mine.',
+		likes: {
+			likeCount: 4,
+			likedBy: [],
+			dislikedBy: [],
+		},
+		firstName: 'Bruce',
+		lastName: 'Wayne',
+		username: 'not_batman',
+		createdAt: new Date('05/12/2018'),
+		updatedAt: formatDate(),
+		profilePic:
+			'https://res.cloudinary.com/obi-wan/image/upload/v1652699201/Socially/Profiles/Bruce.jpg',
+		comments: [],
+	},
+	{
+		_id: uuid(),
+		content:
+			'Do you believe that many of the truths we cling to depend greatly on our own point of view?',
+		likes: {
+			likeCount: 2,
+			likedBy: [],
+			dislikedBy: [],
+		},
+		firstName: 'Obiwan',
+		lastName: 'Kenobi',
+		username: 'ben',
+		createdAt: new Date('04/10/2017'),
+		updatedAt: formatDate(),
+		profilePic:
+			'https://res.cloudinary.com/obi-wan/image/upload/v1652699372/Socially/Profiles/kenobi.png',
+		comments: [],
+	},
+	{
+		_id: uuid(),
+		content: 'It is a comfort not to be mistaken at all points. Do I not know it only too well!',
+		likes: {
+			likeCount: 1,
+			likedBy: [],
+			dislikedBy: [],
+		},
+		firstName: 'Gandalf',
+		lastName: 'Grey',
+		username: 'wizard',
+		createdAt: new Date('04/10/2014'),
+		updatedAt: formatDate(),
+		profilePic:
+			'https://res.cloudinary.com/obi-wan/image/upload/v1652698930/Socially/Profiles/gandalf.jpg',
+		comments: [],
 	},
 ];

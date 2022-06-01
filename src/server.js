@@ -30,6 +30,7 @@ import {
 	unfollowUserHandler,
 	editUserHandler,
 } from './backend/controllers/UserController';
+import { getExplorePostsHandler } from 'backend/controllers/ExploreController';
 
 export function makeServer({ environment = 'development' } = {}) {
 	return new Server({
@@ -68,6 +69,8 @@ export function makeServer({ environment = 'development' } = {}) {
 			this.get('/posts', getAllpostsHandler.bind(this));
 			this.get('/posts/:postId', getPostHandler.bind(this));
 			this.get('/posts/user/:username', getAllUserPostsHandler.bind(this));
+			// explore page route for lazy loading
+			this.get('/explore/:pgNumber', getExplorePostsHandler.bind(this));
 
 			// post routes (private)
 			this.post('/posts', createPostHandler.bind(this));

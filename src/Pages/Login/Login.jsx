@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	Button,
 	Checkbox,
@@ -19,9 +19,13 @@ import { login } from 'Redux/Thunk';
 const Login = () => {
 	const [user, setUser] = useState({ username: '', password: '', rememberMe: false });
 	const dispatch = useDispatch();
-	const { isLoading } = useSelector((state) => state.auth);
+	const { isLoading, token } = useSelector((state) => state.auth);
 	const navigate = useNavigate();
 	const toast = useToast();
+
+	useEffect(() => {
+		if (token) navigate('/home');
+	}, [token, navigate]);
 
 	const inputHandler = (e) => {
 		const {
