@@ -9,3 +9,4 @@ export { Loader } from './Loader/Loader';
 export { RequireAuth } from './RequireAuth/RequireAuth';
 export { SortContainer } from './SortContainer/SortContainer';
 export { Search } from './Search/Search';
+export { FollowerModal } from './FollowerModal/FollowerModal';

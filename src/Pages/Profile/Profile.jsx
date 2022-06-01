@@ -13,7 +13,7 @@ import {
 	VStack,
 } from '@chakra-ui/react';
 import { MdLogout } from 'react-icons/md';
-import { Loader, PgWrapper, Post, ProfileModal } from 'Components';
+import { FollowerModal, Loader, PgWrapper, Post, ProfileModal } from 'Components';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,6 +26,7 @@ const Profile = ({ onOpen: onOpenPost, isOpen: isOpenPost }) => {
 	const [userObj, setUserObj] = useState();
 	const [btnState, setBtnState] = useState();
 	const [loader, setLoader] = useState(false);
+	const [modalUsers, setModalUsers] = useState([]);
 	const { users } = useSelector((state) => state.users);
 	const { posts } = useSelector((state) => state.posts);
 	const { user: loggedInUser, token } = useSelector((state) => state.auth);
@@ -33,6 +34,11 @@ const Profile = ({ onOpen: onOpenPost, isOpen: isOpenPost }) => {
 	const { username } = useParams();
 	const dispatch = useDispatch();
 	const toast = useToast();
+	const {
+		isOpen: followerIsOpen,
+		onOpen: followerOnOpen,
+		onClose: followerOnClose,
+	} = useDisclosure();
 
 	useEffect(() => {
 		setLoader(true);
@@ -42,7 +48,7 @@ const Profile = ({ onOpen: onOpenPost, isOpen: isOpenPost }) => {
 			const currentUser = users.find((item) => item.username === username);
 			if (currentUser) getUser(currentUser._id, setUserObj, setLoader);
 		}
-	}, [loggedInUser._id, loggedInUser.username, username, users, loggedInUser]);
+	}, [loggedInUser, username, users]);
 
 	useEffect(() => {
 		setLoader(true);
@@ -95,6 +101,14 @@ const Profile = ({ onOpen: onOpenPost, isOpen: isOpenPost }) => {
 	return (
 		<PgWrapper>
 			{loader ? <Loader /> : null}
+			{modalUsers.length > 0 ? (
+				<FollowerModal
+					followerIsOpen={followerIsOpen}
+					followerOnClose={followerOnClose}
+					modalUsers={modalUsers}
+					setModalUsers={setModalUsers}
+				/>
+			) : null}
 			{userObj?.username ? (
 				<>
 					<ProfileModal
@@ -126,8 +140,24 @@ const Profile = ({ onOpen: onOpenPost, isOpen: isOpenPost }) => {
 							<Text>{userObj.bio}</Text>
 							<Flex gap="4">
 								<Text as="span">{userPosts.length} Posts</Text>
-								<Text as="span">{userObj.followers.length} Followers</Text>
-								<Text as="span">{userObj.following.length} Following</Text>
+								<Text
+									as="button"
+									onClick={() => {
+										setModalUsers(userObj.followers);
+										followerOnOpen();
+									}}
+								>
+									{userObj.followers.length} Followers
+								</Text>
+								<Text
+									as="button"
+									onClick={() => {
+										setModalUsers(userObj.following);
+										followerOnOpen();
+									}}
+								>
+									{userObj.following.length} Following
+								</Text>
 							</Flex>
 							<Link href={userObj.link} isExternal color="brand.500" fontSize="14px">
 								{userObj.link}
