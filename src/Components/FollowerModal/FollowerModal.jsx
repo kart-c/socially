@@ -38,7 +38,7 @@ const FollowerModal = ({ followerIsOpen, followerOnClose, modalUsers, setModalUs
 									onClick={() => {
 										navigate(`/profile/${user.username}`);
 										followerOnClose();
-										setModalUsers([]);
+										setModalUsers((prev) => ({ ...prev, users: [] }));
 									}}
 								>
 									<Avatar

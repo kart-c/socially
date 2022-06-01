@@ -101,12 +101,14 @@ const Profile = ({ onOpen: onOpenPost, isOpen: isOpenPost }) => {
 	return (
 		<PgWrapper>
 			{loader ? <Loader /> : null}
-			<FollowerModal
-				followerIsOpen={followerIsOpen}
-				followerOnClose={followerOnClose}
-				modalUsers={modalUsers}
-				setModalUsers={setModalUsers}
-			/>
+			{modalUsers.users.length > 0 ? (
+				<FollowerModal
+					followerIsOpen={followerIsOpen}
+					followerOnClose={followerOnClose}
+					modalUsers={modalUsers}
+					setModalUsers={setModalUsers}
+				/>
+			) : null}
 			{userObj?.username ? (
 				<>
 					<ProfileModal
