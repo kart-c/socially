@@ -20,38 +20,45 @@ const FollowerModal = ({ followerIsOpen, followerOnClose, modalUsers, setModalUs
 				<ModalOverlay />
 				<ModalContent>
 					<ModalBody>
-						{modalUsers.map((user) => (
-							<HStack
-								key={user._id}
-								minH="12"
-								px="4"
-								borderBottom="1px solid"
-								borderColor="gray.400"
-								cursor="pointer"
-								_last={{
-									borderBottom: '0',
-								}}
-								onClick={() => {
-									navigate(`/profile/${user.username}`);
-									followerOnClose();
-									setModalUsers([]);
-								}}
-							>
-								<Avatar
-									src={user.profilePic}
-									alt={user.firstName + ' ' + user.lastName}
-									size="sm"
-								/>
-								<Box>
-									<Text as="span">
-										{user.firstName} {user.lastName}{' '}
-									</Text>
-									<Text as="span" fontSize="sm" color="gray.300">
-										@{user.username}
-									</Text>
-								</Box>
-							</HStack>
-						))}
+						<Text as="span" display="block" mb="4" fontWeight="700">
+							{modalUsers.title}
+						</Text>
+						{modalUsers.users.length > 0 ? (
+							modalUsers.users.map((user) => (
+								<HStack
+									key={user._id}
+									minH="12"
+									px="4"
+									borderBottom="1px solid"
+									borderColor="gray.400"
+									cursor="pointer"
+									_last={{
+										borderBottom: '0',
+									}}
+									onClick={() => {
+										navigate(`/profile/${user.username}`);
+										followerOnClose();
+										setModalUsers([]);
+									}}
+								>
+									<Avatar
+										src={user.profilePic}
+										alt={user.firstName + ' ' + user.lastName}
+										size="sm"
+									/>
+									<Box>
+										<Text as="span">
+											{user.firstName} {user.lastName}{' '}
+										</Text>
+										<Text as="span" fontSize="sm" color="gray.300">
+											@{user.username}
+										</Text>
+									</Box>
+								</HStack>
+							))
+						) : (
+							<Text>No users found</Text>
+						)}
 					</ModalBody>
 				</ModalContent>
 			</Modal>

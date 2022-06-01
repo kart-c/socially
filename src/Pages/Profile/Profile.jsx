@@ -26,7 +26,7 @@ const Profile = ({ onOpen: onOpenPost, isOpen: isOpenPost }) => {
 	const [userObj, setUserObj] = useState();
 	const [btnState, setBtnState] = useState();
 	const [loader, setLoader] = useState(false);
-	const [modalUsers, setModalUsers] = useState([]);
+	const [modalUsers, setModalUsers] = useState({ title: '', users: [] });
 	const { users } = useSelector((state) => state.users);
 	const { posts } = useSelector((state) => state.posts);
 	const { user: loggedInUser, token } = useSelector((state) => state.auth);
@@ -101,14 +101,12 @@ const Profile = ({ onOpen: onOpenPost, isOpen: isOpenPost }) => {
 	return (
 		<PgWrapper>
 			{loader ? <Loader /> : null}
-			{modalUsers.length > 0 ? (
-				<FollowerModal
-					followerIsOpen={followerIsOpen}
-					followerOnClose={followerOnClose}
-					modalUsers={modalUsers}
-					setModalUsers={setModalUsers}
-				/>
-			) : null}
+			<FollowerModal
+				followerIsOpen={followerIsOpen}
+				followerOnClose={followerOnClose}
+				modalUsers={modalUsers}
+				setModalUsers={setModalUsers}
+			/>
 			{userObj?.username ? (
 				<>
 					<ProfileModal
@@ -143,7 +141,11 @@ const Profile = ({ onOpen: onOpenPost, isOpen: isOpenPost }) => {
 								<Text
 									as="button"
 									onClick={() => {
-										setModalUsers(userObj.followers);
+										setModalUsers((prev) => ({
+											...prev,
+											users: userObj.followers,
+											title: 'Followers',
+										}));
 										followerOnOpen();
 									}}
 								>
@@ -152,7 +154,11 @@ const Profile = ({ onOpen: onOpenPost, isOpen: isOpenPost }) => {
 								<Text
 									as="button"
 									onClick={() => {
-										setModalUsers(userObj.following);
+										setModalUsers((prev) => ({
+											...prev,
+											users: userObj.following,
+											title: 'Following',
+										}));
 										followerOnOpen();
 									}}
 								>
