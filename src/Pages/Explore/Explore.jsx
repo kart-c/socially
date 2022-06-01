@@ -29,7 +29,7 @@ const Explore = ({ onOpen }) => {
 				setPgNumber((prev) => prev + 1);
 			}
 		};
-		const observer = new IntersectionObserver(intersectionHandler);
+		const observer = new IntersectionObserver(intersectionHandler, { threshold: 0.75 });
 		if (ref) observer.observe(ref);
 
 		return () => observer.unobserve(ref);
@@ -70,8 +70,12 @@ const Explore = ({ onOpen }) => {
 					))}
 				</>
 			) : null}
-			<Box w="100%" ref={intersectionRef} h="20px"></Box>
-			{loadPosts ? <Loader height="100px" /> : null}
+			{loadPosts ? (
+				<Box mb="4">
+					<Loader height="100px" />
+				</Box>
+			) : null}
+			<Box w="100%" ref={intersectionRef} h="40px"></Box>
 			{!pgLoading && pageEnd ? (
 				<Text mb="4" pb={{ base: '16', mySm: '0' }} textAlign="center">
 					Page End !
