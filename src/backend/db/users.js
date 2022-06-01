@@ -180,7 +180,7 @@ export const users = [
 				lastName: 'Choudhary',
 				username: 'kart_c11',
 				profilePic:
-					'https://res.cloudinary.com/obi-wan/image/upload/v1652687739/Socially/Profiles/avataaars_jhvh1w.png',
+					'https://res.cloudinary.com/obi-wan/image/upload/v1652698709/Socially/Profiles/kartik.jpg',
 			},
 		],
 		followers: [],
