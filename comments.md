@@ -5,3 +5,4 @@
 - Add favicon
 - Add text on login and signup pages
 - Add loading on profile
+- Add infinite scroll
