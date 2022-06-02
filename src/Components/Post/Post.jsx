@@ -236,7 +236,7 @@ const Post = ({
 					right="2.5"
 					h="auto"
 					zIndex="1"
-					disabled={!commentInput}
+					disabled={!commentInput.trim()}
 					_disabled={{
 						opacity: 0.6,
 					}}
