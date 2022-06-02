@@ -57,6 +57,7 @@ const ProfileModal = ({ onClose, isOpen, name, defaultdata }) => {
 	};
 
 	const updateUserWithPic = async (userData) => {
+		onClose();
 		try {
 			const response = await dispatch(editProfile({ userData, token }));
 			if (response.payload.status === 201) {
@@ -70,9 +71,14 @@ const ProfileModal = ({ onClose, isOpen, name, defaultdata }) => {
 				});
 			}
 		} catch (error) {
+			toast({
+				status: 'error',
+				duration: 5000,
+				title: 'Something went Wrong! Please try again',
+				position: 'bottom-right',
+				isClosable: true,
+			});
 			console.error(error);
-		} finally {
-			onClose();
 		}
 	};
 
@@ -80,12 +86,12 @@ const ProfileModal = ({ onClose, isOpen, name, defaultdata }) => {
 		e.preventDefault();
 		try {
 			if (!userData.profilePic) {
+				onClose();
 				const response = await dispatch(
 					editProfile({ userData: { ...userData, profilePic: defaultdata.profilePic }, token })
 				);
 				if (response.payload.status) {
 					setUserData({ ...response.payload.data.user, profilePic: '' });
-					onClose();
 					toast({
 						status: 'success',
 						duration: 5000,
@@ -96,13 +102,20 @@ const ProfileModal = ({ onClose, isOpen, name, defaultdata }) => {
 				}
 			} else {
 				dispatch(btnLoading());
-				await saveToCloudinary({
+				saveToCloudinary({
 					profilePic: userData.profilePic,
 					defaultdata,
 					updateUserWithPic,
 				});
 			}
 		} catch (error) {
+			toast({
+				status: 'error',
+				duration: 5000,
+				title: 'Something went Wrong! Please try again',
+				position: 'bottom-right',
+				isClosable: true,
+			});
 			console.error(error);
 		}
 	};
