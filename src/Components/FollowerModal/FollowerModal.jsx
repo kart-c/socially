@@ -10,9 +10,11 @@ import {
 	Text,
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const FollowerModal = ({ followerIsOpen, followerOnClose, modalUsers, setModalUsers }) => {
 	const navigate = useNavigate();
+	const { user: loggedInUser } = useSelector((state) => state.auth);
 
 	return (
 		<>
@@ -42,7 +44,11 @@ const FollowerModal = ({ followerIsOpen, followerOnClose, modalUsers, setModalUs
 									}}
 								>
 									<Avatar
-										src={user.profilePic}
+										src={
+											user.username === loggedInUser.username
+												? loggedInUser.profilePic
+												: user.profilePic
+										}
 										alt={user.firstName + ' ' + user.lastName}
 										size="sm"
 									/>
