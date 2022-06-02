@@ -116,7 +116,7 @@ const ProfileModal = ({ onClose, isOpen, name, defaultdata }) => {
 		<>
 			<Modal onClose={btnStatus === 'loading' ? null : onClose} isOpen={isOpen} isCentered>
 				<ModalOverlay onClose={btnStatus === 'loading' ? null : onClose} />
-				<ModalContent as="form">
+				<ModalContent as="form" onSubmit={updateHandler}>
 					<ModalBody p="4" display="flex" flexDir="column" gap="3">
 						<HStack gap="6">
 							<Text as="span">Avatar</Text>
@@ -174,12 +174,7 @@ const ProfileModal = ({ onClose, isOpen, name, defaultdata }) => {
 						</Flex>
 					</ModalBody>
 					<ModalFooter gap="4">
-						<Button
-							onClick={updateHandler}
-							variant="brand"
-							type="submit"
-							isLoading={btnStatus === 'loading'}
-						>
+						<Button variant="brand" type="submit" isLoading={btnStatus === 'loading'}>
 							Update
 						</Button>
 						<Button onClick={closeHandler} type="button" isDisabled={btnStatus === 'loading'}>
