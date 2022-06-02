@@ -74,7 +74,7 @@ const Login = () => {
 	return (
 		<>
 			<Container>
-				<Heading as="h1" mt="32" mb="4" textAlign="center" color="brand.500" fontStyle="italic">
+				<Heading as="h1" mt="10vh" mb="4" textAlign="center" color="brand.500" fontStyle="italic">
 					Socially! A place to meet all your friends
 				</Heading>
 				<Flex justifyContent="center" maxW={320} m="auto" flexDir="column" as="form">
