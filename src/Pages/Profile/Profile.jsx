@@ -57,12 +57,13 @@ const Profile = ({ onOpen: onOpenPost, isOpen: isOpenPost }) => {
 				const response = await axios.get(`/api/posts/user/${username}`);
 				if (response.status === 200) {
 					setUserPosts(response.data.posts);
-					setLoader(false);
 				}
 			};
 			getUserPosts();
 		} catch (error) {
 			console.error(error);
+		} finally {
+			setLoader(false);
 		}
 	}, [username, isOpenPost, posts]);
 
