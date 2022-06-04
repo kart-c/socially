@@ -14,7 +14,7 @@ import {
 } from '@chakra-ui/react';
 import { MdLogout } from 'react-icons/md';
 import { FollowerModal, Loader, PgWrapper, Post, ProfileModal } from 'Components';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { followUser, logout } from 'Redux/Slice';
@@ -39,6 +39,7 @@ const Profile = ({ onOpen: onOpenPost, isOpen: isOpenPost }) => {
 		onOpen: followerOnOpen,
 		onClose: followerOnClose,
 	} = useDisclosure();
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		setLoader(true);
@@ -47,8 +48,11 @@ const Profile = ({ onOpen: onOpenPost, isOpen: isOpenPost }) => {
 		} else {
 			const currentUser = users.find((item) => item.username === username);
 			if (currentUser) getUser(currentUser._id, setUserObj, setLoader);
+			else {
+				navigate('*');
+			}
 		}
-	}, [loggedInUser, username, users]);
+	}, [loggedInUser, navigate, username, users]);
 
 	useEffect(() => {
 		setLoader(true);
