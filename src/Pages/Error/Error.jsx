@@ -7,7 +7,15 @@ const Error = () => {
 
 	return (
 		<>
-			<Box position="fixed" zIndex="10" h="100vh" w="100%" bgColor="white" textAlign="center">
+			<Box
+				position="fixed"
+				zIndex="10"
+				h="100vh"
+				left="0"
+				right="0"
+				bgColor="white"
+				textAlign="center"
+			>
 				<Text pt="8" pb="4" fontSize="2xl">
 					Something Went Wrong!!
 				</Text>
