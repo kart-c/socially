@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, useDisclosure } from '@chakra-ui/react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { LeftNav, PostModal, RequireAuth, RightAside } from 'Components';
-import { Explore, Home, Login, Signup, Bookmark, Profile } from 'Pages';
+import { Explore, Home, Login, Signup, Bookmark, Profile, Error } from 'Pages';
 import './App.css';
 import { useSelector } from 'react-redux';
 
@@ -55,6 +55,7 @@ function App() {
 						</RequireAuth>
 					}
 				/>
+				<Route path="*" element={<Error />} />
 			</Routes>
 			{pathname === '/' || pathname === '/signup' || !token ? null : <RightAside />}
 		</Container>
